@@ -69,11 +69,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate , JPUSHRegisterDelegate {
         
         Bugly.start(withAppId: "2304f83592") // 腾讯Bugly接入
         
-        UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName : UIColor(red: 66/255.0, green: 83/255.0, blue: 90/255.0, alpha: 1)], for: .normal)
-        UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName : UIColor(red: 0/255.0, green: 120/255.0, blue: 201/255.0, alpha: 1)], for: .selected)
-        
-        application.setStatusBarStyle(.lightContent, animated: true)
-        
         IQKeyboardManager.sharedManager().enable = true
         
         if let username = UserDefaults.standard.object(forKey: "username") as? String {
@@ -119,6 +114,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate , JPUSHRegisterDelegate {
         */
         UIToolbar.appearance().alpha = 1
         UIToolbar.appearance().tintColor = UIColor.black
+        
+        UINavigationBar.appearance().shadowImage = UIImage.image(withColor: UIColor(red: 234/255.0, green: 234/255.0, blue: 234/255.0, alpha: 1)).resizableImage(withCapInsets: UIEdgeInsetsMake(0, 0, 0, 0))
         
         return true
     }

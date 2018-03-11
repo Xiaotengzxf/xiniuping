@@ -12,7 +12,6 @@ class DNavigationController: UINavigationController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationBar.shadowImage = UIImage()
 //        UIDevice.current.beginGeneratingDeviceOrientationNotifications()
 //        NotificationCenter.default.addObserver(self, selector: #selector(DNavigationController.deviceOrientationDidChange), name: NSNotification.Name.UIDeviceOrientationDidChange, object: self)
     }

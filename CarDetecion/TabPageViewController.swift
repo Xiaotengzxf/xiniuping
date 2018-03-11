@@ -55,7 +55,6 @@ open class TabPageViewController: UIPageViewController {
             tabView.updateCurrentIndex(currentIndex, shouldScroll: true)
         }
         
-        self.navigationController?.navigationBar.lt_setBackgroundColor(backgroundColor: UIColor(red: 55/255.0, green: 70/255.0, blue: 85/255.0, alpha: 1))
     }
 
 }

@@ -96,7 +96,6 @@ class DetectionViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.navigationBar.lt_setBackgroundColor(backgroundColor: UIColor(red: 0, green: 0, blue: 0, alpha: 0))
         
         if let orders = UserDefaults.standard.object(forKey: "orders") as? [[String : String]] {
             lblUnSubmit.text = "共有\(orders.count)单"
@@ -260,7 +259,6 @@ class DetectionViewController: UIViewController {
         }else{
             index = 3
         }
-        NotificationCenter.default.post(name: Notification.Name("tab"), object: 1, userInfo: ["index" : index])
     }
     
     // 获取审核中，未通过及通过的订单总数

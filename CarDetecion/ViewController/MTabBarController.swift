@@ -13,17 +13,16 @@ var recordIndex = -1
 class MTabBarController: UITabBarController {
     
     var btnService : UIButton!
-
+    @IBOutlet var tabView: UIView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
         NotificationCenter.default.addObserver(self, selector: #selector(MTabBarController.handleNotification(notification:)), name: Notification.Name("tab"), object: nil)
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        addCustomServiceButton()
+        self.tabBar.isHidden = true
+        tabView.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(tabView)
+        self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[tabView]|", options: .directionLeadingToTrailing, metrics: nil, views: ["tabView": tabView]))
+        self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[tabView(90)]|", options: .directionLeadingToTrailing, metrics: nil, views: ["tabView": tabView]))
     }
 
     override func didReceiveMemoryWarning() {
@@ -43,62 +42,66 @@ class MTabBarController: UITabBarController {
                     recordIndex = index
                     self.selectedIndex = 2
                 }
-            }else if tag == 2 {
-                btnService.isHidden = false
             }
         }
-    }
-    
-    
-    func addCustomServiceButton() {
-        if btnService == nil {
-            btnService = UIButton(frame: CGRect(x: WIDTH - 70, y: HEIGHT - 130, width: 60, height: 60))
-            btnService.setImage(UIImage(named: "kefu"), for: .normal)
-            btnService.backgroundColor = UIColor.rgbColorFromHex(rgb: 0x0789CD)
-            btnService.layer.cornerRadius = 30
-            btnService.clipsToBounds = true
-            btnService.layer.shadowOffset = CGSize(width: 8, height: 8)
-            btnService.layer.shadowOpacity = 0.8
-            self.view?.insertSubview(btnService, at: 0)
-            self.view?.bringSubview(toFront: btnService)
-            btnService.addTarget(self, action: #selector(MTabBarController.jumpToCustom), for: .touchUpInside)
-        }
-    }
-    
-    func jumpToCustom() {
-        DispatchQueue.global().async {
-            [weak self] in
-            let lgM = SCLoginManager.share()
-            if lgM!.loginKefuSDK() {
-//                if let userinfo = UserDefaults.standard.object(forKey: "userinfo") as? [String : Any] {
-//                    lgM?.nickname = userinfo["userChineseName"] as? String ?? "用户"
-//                }
-//                if let username = UserDefaults.standard.object(forKey: "username") as? String {
-//                    lgM?.username = username
-//                }
-                let chat = HDChatViewController(conversationChatter: "kefuchannelimid_856946")
-                chat?.hidesBottomBarWhenPushed = true
-                chat?.visitorInfo = self?.visitorInfo()
-                chat?.title = lgM!.cname
-                DispatchQueue.main.async {
-                    self?.btnService.isHidden = true
-                    let controller : UINavigationController = self!.viewControllers![self!.selectedIndex] as! UINavigationController
-                    controller.pushViewController(chat!, animated: true)
-                }
-            }
-        }
-    }
-    
-    func visitorInfo() -> HVisitorInfo {
-        let visitor = HVisitorInfo()
-        if let userinfo = UserDefaults.standard.object(forKey: "userinfo") as? [String : Any] {
-            visitor.nickName = userinfo["userChineseName"] as? String ?? "用户"
-            visitor.companyName = userinfo["companyName"] as? String ?? "东风裕隆旧车置换有限公司"
-        }
-        if let username = UserDefaults.standard.object(forKey: "username") as? String {
-            visitor.name = username
-        }
-        return visitor
     }
 
+    @IBAction func tapTab(_ sender: Any) {
+        if let button = sender as? UIButton {
+            let tag = button.tag
+            switch tag {
+            case 5:
+                if let navigation = viewControllers![selectedIndex] as? UINavigationController {
+                    jumpToCamera(navigation: navigation)
+                }
+                break;
+            default:
+                for i in 1...4 {
+                    if let label = tabView.viewWithTag(10 + i) as? UIImageView {
+                        label.image = UIImage(named: "tabtitle\(i)\(i == tag ? "1" : "0")")
+                    }
+                    if let imageView = tabView.viewWithTag(110 + i) as? UIImageView {
+                        imageView.image = UIImage(named: "tab\(i)\(i == tag ? "1" : "0")")
+                    }
+                }
+                self.selectedIndex = tag - 1
+                break;
+            }
+            
+        }
+    }
+    
+    // 跳转至评估页面
+    private func jumpToCamera(navigation: UINavigationController) {
+        let mediaType = AVMediaTypeVideo
+        let authStatus = AVCaptureDevice.authorizationStatus(forMediaType: mediaType)
+        
+        if authStatus == .restricted || authStatus == .denied {
+            
+            let alert = UIAlertController(title: nil, message: "请在设置里，先授权至信评使用相机权限", preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: "确定", style: .default, handler: { (action) in
+                
+                self.dismiss(animated: false, completion: nil)
+                
+            }))
+            
+            self.present(alert, animated: true, completion: nil)
+            
+            
+        }else if UIImagePickerController.isSourceTypeAvailable(.camera){
+            
+            if let vc = self.storyboard?.instantiateViewController(withIdentifier: "detectionnew") as? DetectionNewViewController {
+                tabView.isHidden = true
+                navigation.pushViewController(vc, animated: true)
+            }
+            
+        }else{
+            // 模拟器
+            if let vc = self.storyboard?.instantiateViewController(withIdentifier: "detectionnew") as? DetectionNewViewController {
+                tabView.isHidden = true
+                navigation.pushViewController(vc, animated: true)
+            }
+        }
+    }
 }

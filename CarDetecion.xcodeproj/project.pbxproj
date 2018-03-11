@@ -52,6 +52,8 @@
 		8953081A1E6D7A67007AF459 /* ImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 895308071E6D7A67007AF459 /* ImageCell.swift */; };
 		8953081B1E6D7A67007AF459 /* PermissionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 895308081E6D7A67007AF459 /* PermissionsView.swift */; };
 		8953081F1E6D7CEC007AF459 /* CameraView.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8953081E1E6D7CEC007AF459 /* CameraView.strings */; };
+		895B9D5720552655006D4CDA /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 895B9D5620552655006D4CDA /* ChatViewController.swift */; };
+		895B9D5920552FD1006D4CDA /* RecordSuccessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 895B9D5820552FD1006D4CDA /* RecordSuccessViewController.swift */; };
 		896232A31E8E19D600AB4B1E /* DNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 896232A21E8E19D600AB4B1E /* DNavigationController.swift */; };
 		896232A51E8E48DF00AB4B1E /* TransitionAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 896232A41E8E48DF00AB4B1E /* TransitionAnimator.swift */; };
 		896837B61EF560B000029010 /* PreDetectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 896837B51EF560B000029010 /* PreDetectionViewController.swift */; };
@@ -199,7 +201,7 @@
 		897C6E2B1EBF57F800B22203 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 897C6E2A1EBF57F800B22203 /* libsqlite3.tbd */; };
 		897C6E2E1EBF5B1F00B22203 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 897C6E2D1EBF5B1F00B22203 /* Foundation.framework */; };
 		8984662E1EC54B7600FDA2E3 /* UINavigationBar+Awesome.m in Sources */ = {isa = PBXBuildFile; fileRef = 8984662D1EC54B7600FDA2E3 /* UINavigationBar+Awesome.m */; };
-		8985C79F1E72E63A0075B6F8 /* MineTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8985C79E1E72E63A0075B6F8 /* MineTableViewController.swift */; };
+		8985C79F1E72E63A0075B6F8 /* MineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8985C79E1E72E63A0075B6F8 /* MineViewController.swift */; };
 		8985C7A21E72E7BC0075B6F8 /* Macro.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8985C7A11E72E7BC0075B6F8 /* Macro.swift */; };
 		8985C7A41E72ED850075B6F8 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8985C7A31E72ED850075B6F8 /* Extension.swift */; };
 		8985C7A61E72EECA0075B6F8 /* DetectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8985C7A51E72EECA0075B6F8 /* DetectionViewController.swift */; };
@@ -217,8 +219,6 @@
 		89965D771EA1B285006560BA /* RecordDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89965D761EA1B285006560BA /* RecordDetailViewController.swift */; };
 		899ADFC31EBE070D00E92B0E /* NewsDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 899ADFC21EBE070D00E92B0E /* NewsDetailController.swift */; };
 		899ADFC51EBE15EE00E92B0E /* NewsListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 899ADFC41EBE15EE00E92B0E /* NewsListController.swift */; };
-		89A37B491EC3543F006A4D07 /* logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 89A37B481EC3543F006A4D07 /* logo.jpg */; };
-		89A37B4B1EC35456006A4D07 /* d_logo_l.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 89A37B4A1EC35456006A4D07 /* d_logo_l.jpg */; };
 		89A37B4D1EC35754006A4D07 /* RegisterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89A37B4C1EC35754006A4D07 /* RegisterController.swift */; };
 		89B3A5E01EAADC7000949757 /* InfoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89B3A5DF1EAADC7000949757 /* InfoTableViewController.swift */; };
 		89B3A5E31EAB148100949757 /* MessageListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89B3A5E21EAB148100949757 /* MessageListTableViewController.swift */; };
@@ -302,6 +302,8 @@
 		895308071E6D7A67007AF459 /* ImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCell.swift; sourceTree = "<group>"; };
 		895308081E6D7A67007AF459 /* PermissionsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PermissionsView.swift; sourceTree = "<group>"; };
 		8953081E1E6D7CEC007AF459 /* CameraView.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = CameraView.strings; sourceTree = "<group>"; };
+		895B9D5620552655006D4CDA /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
+		895B9D5820552FD1006D4CDA /* RecordSuccessViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordSuccessViewController.swift; sourceTree = "<group>"; };
 		896232A21E8E19D600AB4B1E /* DNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DNavigationController.swift; sourceTree = "<group>"; };
 		896232A41E8E48DF00AB4B1E /* TransitionAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransitionAnimator.swift; sourceTree = "<group>"; };
 		896837B51EF560B000029010 /* PreDetectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreDetectionViewController.swift; sourceTree = "<group>"; };
@@ -634,7 +636,7 @@
 		897C6E2D1EBF5B1F00B22203 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		8984662C1EC54B7600FDA2E3 /* UINavigationBar+Awesome.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationBar+Awesome.h"; sourceTree = "<group>"; };
 		8984662D1EC54B7600FDA2E3 /* UINavigationBar+Awesome.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationBar+Awesome.m"; sourceTree = "<group>"; };
-		8985C79E1E72E63A0075B6F8 /* MineTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MineTableViewController.swift; sourceTree = "<group>"; };
+		8985C79E1E72E63A0075B6F8 /* MineViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MineViewController.swift; sourceTree = "<group>"; };
 		8985C7A11E72E7BC0075B6F8 /* Macro.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Macro.swift; sourceTree = "<group>"; };
 		8985C7A31E72ED850075B6F8 /* Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		8985C7A51E72EECA0075B6F8 /* DetectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetectionViewController.swift; sourceTree = "<group>"; };
@@ -656,8 +658,6 @@
 		8997239A1EC6827300ADAD61 /* CarDetecion.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CarDetecion.entitlements; sourceTree = "<group>"; };
 		899ADFC21EBE070D00E92B0E /* NewsDetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsDetailController.swift; sourceTree = "<group>"; };
 		899ADFC41EBE15EE00E92B0E /* NewsListController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsListController.swift; sourceTree = "<group>"; };
-		89A37B481EC3543F006A4D07 /* logo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = logo.jpg; sourceTree = "<group>"; };
-		89A37B4A1EC35456006A4D07 /* d_logo_l.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = d_logo_l.jpg; sourceTree = "<group>"; };
 		89A37B4C1EC35754006A4D07 /* RegisterController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterController.swift; sourceTree = "<group>"; };
 		89B3A5DF1EAADC7000949757 /* InfoTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoTableViewController.swift; sourceTree = "<group>"; };
 		89B3A5E21EAB148100949757 /* MessageListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageListTableViewController.swift; sourceTree = "<group>"; };
@@ -797,8 +797,6 @@
 				895307C61E6D18D9007AF459 /* Main.storyboard */,
 				895307CE1E6D18D9007AF459 /* LaunchScreen.storyboard */,
 				898916E41E7E8EBE00BE6848 /* Assets.xcassets */,
-				89A37B481EC3543F006A4D07 /* logo.jpg */,
-				89A37B4A1EC35456006A4D07 /* d_logo_l.jpg */,
 				895307D11E6D18D9007AF459 /* Info.plist */,
 				8953081E1E6D7CEC007AF459 /* CameraView.strings */,
 				895307C91E6D18D9007AF459 /* CarDetecion.xcdatamodeld */,
@@ -846,6 +844,7 @@
 		895307FE1E6D7A67007AF459 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				895B9D5520552644006D4CDA /* Chat */,
 				893CDB211EB5F2FC00AEB5D7 /* PreDetection */,
 				89B3A5E11EAB146C00949757 /* Message */,
 				89965D731EA1A51A006560BA /* Main */,
@@ -880,6 +879,14 @@
 				89D4EAC21EFA9FAA004600A6 /* Detection4TableViewCell.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		895B9D5520552644006D4CDA /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				895B9D5620552655006D4CDA /* ChatViewController.swift */,
+			);
+			name = Chat;
 			sourceTree = "<group>";
 		};
 		896AFA711E8B6957008DE6F5 /* Login */ = {
@@ -1588,6 +1595,7 @@
 			children = (
 				89965D711EA11AEA006560BA /* RNavigationController.swift */,
 				8985C7A71E72FCE80075B6F8 /* RecordViewController.swift */,
+				895B9D5820552FD1006D4CDA /* RecordSuccessViewController.swift */,
 				89965D761EA1B285006560BA /* RecordDetailViewController.swift */,
 			);
 			name = Record;
@@ -1596,7 +1604,7 @@
 		89965D6E1EA118DC006560BA /* Mine */ = {
 			isa = PBXGroup;
 			children = (
-				8985C79E1E72E63A0075B6F8 /* MineTableViewController.swift */,
+				8985C79E1E72E63A0075B6F8 /* MineViewController.swift */,
 				89965D6F1EA1196B006560BA /* MNavigationController.swift */,
 				89B3A5DF1EAADC7000949757 /* InfoTableViewController.swift */,
 			);
@@ -1758,7 +1766,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				895307D01E6D18D9007AF459 /* LaunchScreen.storyboard in Resources */,
-				89A37B491EC3543F006A4D07 /* logo.jpg in Resources */,
 				8953081F1E6D7CEC007AF459 /* CameraView.strings in Resources */,
 				893CDB301EB6D10E00AEB5D7 /* TabView.xib in Resources */,
 				895307C81E6D18D9007AF459 /* Main.storyboard in Resources */,
@@ -1767,7 +1774,6 @@
 				897C6DED1EBF578F00B22203 /* icon_star_select.png in Resources */,
 				897C6DE91EBF578F00B22203 /* MWPhotoBrowser.bundle in Resources */,
 				897C6DEC1EBF578F00B22203 /* icon_star.png in Resources */,
-				89A37B4B1EC35456006A4D07 /* d_logo_l.jpg in Resources */,
 				893CDB2E1EB6D10E00AEB5D7 /* TabCollectionCell.xib in Resources */,
 				898916E51E7E8EBE00BE6848 /* Assets.xcassets in Resources */,
 				897C6DBE1EBF578F00B22203 /* MJRefresh.bundle in Resources */,
@@ -1939,6 +1945,7 @@
 				897C6DA91EBF578F00B22203 /* amrFileCodec.mm in Sources */,
 				8985C7A81E72FCE80075B6F8 /* RecordViewController.swift in Sources */,
 				897C6DC51EBF578F00B22203 /* MWGridViewController.m in Sources */,
+				895B9D5720552655006D4CDA /* ChatViewController.swift in Sources */,
 				895308191E6D7A67007AF459 /* CropOverlay.swift in Sources */,
 				897C6E141EBF578F00B22203 /* HDBubbleView+Voice.m in Sources */,
 				897C6DC81EBF578F00B22203 /* MWTapDetectingImageView.m in Sources */,
@@ -1950,9 +1957,10 @@
 				897C6DE51EBF578F00B22203 /* PSTGridLayoutInfo.m in Sources */,
 				897C6DD31EBF578F00B22203 /* MKAnnotationView+EMWebCache.m in Sources */,
 				89217BEE1F6E7D1700E98D13 /* FileAttachViewController.swift in Sources */,
-				8985C79F1E72E63A0075B6F8 /* MineTableViewController.swift in Sources */,
+				8985C79F1E72E63A0075B6F8 /* MineViewController.swift in Sources */,
 				897C6DAF1EBF578F00B22203 /* MBProgressHUD.m in Sources */,
 				897C6DBD1EBF578F00B22203 /* MJRefreshStateHeader.m in Sources */,
+				895B9D5920552FD1006D4CDA /* RecordSuccessViewController.swift in Sources */,
 				897C6DFB1EBF578F00B22203 /* HDEmotionManager.m in Sources */,
 				897C6DF81EBF578F00B22203 /* HDEmoji.m in Sources */,
 				897C6DB61EBF578F00B22203 /* MJRefreshAutoNormalFooter.m in Sources */,

@@ -154,23 +154,4 @@ class LoginViewController: UIViewController {
             })
         }
     }
-    /*{
-     companyName = "\U5b89\U9633\U5e02\U65b0\U7eaa\U5143\U6c7d\U8f66\U9500\U552e\U670d\U52a1\U6709\U9650\U516c\U53f8--\U5e7f\U6c47";
-     superCompanyName = "\U5e7f\U6c47\U6c7d\U8f66\U670d\U52a1\U80a1\U4efd\U516c\U53f8";
-     userChineseName = "\U5f6d\U5a01";
-     userCompany = 642;
-     userId = 19720;
-     userLoginName = cy;
-     userSuperCompany = 8;
-     }*/
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-    //http://119.23.128.214:8080/carWeb/view/common/register.jsp
 }

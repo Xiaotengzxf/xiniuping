@@ -12,7 +12,6 @@ class MNavigationController: UINavigationController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationBar.shadowImage = UIImage()
         // Do any additional setup after loading the view.
     }
 

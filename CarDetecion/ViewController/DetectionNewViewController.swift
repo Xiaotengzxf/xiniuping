@@ -93,11 +93,14 @@ class DetectionNewViewController: UIViewController , UITableViewDataSource , UIT
             }
         }
         
+        let ivTitle = UIImageView(image: UIImage(named: "detection_title"))
+        ivTitle.frame = CGRect(x: 0, y: 0, width: 74, height: 23)
+        navigationItem.titleView = ivTitle
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.navigationBar.lt_setBackgroundColor(backgroundColor: UIColor(red: 55/255.0, green: 70/255.0, blue: 85/255.0, alpha: 1))
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -625,7 +628,7 @@ class DetectionNewViewController: UIViewController , UITableViewDataSource , UIT
                     cell.iv11.isHidden = true
                     cell.vCamera1.layer.borderColor = UIColor(red: 230/255.0, green: 230/255.0, blue: 230/255.0, alpha: 1).cgColor
                 }else{
-                    cell.iv1.image = nil
+                    cell.iv1.image = UIImage(named: "camera_bg")
                     cell.lbl1.isHidden = false
                     cell.iv11.isHidden = false
                     cell.lbl11.isHidden = true
@@ -640,7 +643,7 @@ class DetectionNewViewController: UIViewController , UITableViewDataSource , UIT
                     cell.iv11.isHidden = true
                     cell.vCamera1.layer.borderColor = UIColor(red: 230/255.0, green: 230/255.0, blue: 230/255.0, alpha: 1).cgColor
                 }else{
-                    cell.iv1.image = nil
+                    cell.iv1.image = UIImage(named: "camera_bg")
                     cell.lbl1.isHidden = false
                     cell.lbl11.isHidden = true
                     cell.iv11.isHidden = false
@@ -690,7 +693,7 @@ class DetectionNewViewController: UIViewController , UITableViewDataSource , UIT
                     cell.iv21.isHidden = true
                     cell.vCamera2.layer.borderColor = UIColor(red: 230/255.0, green: 230/255.0, blue: 230/255.0, alpha: 1).cgColor
                 }else{
-                    cell.iv2.image = nil
+                    cell.iv2.image = UIImage(named: "camera_bg")
                     cell.lbl2.isHidden = false
                     cell.lbl22.isHidden = true
                     cell.iv21.isHidden = false
@@ -705,7 +708,7 @@ class DetectionNewViewController: UIViewController , UITableViewDataSource , UIT
                     cell.iv21.isHidden = true
                     cell.vCamera2.layer.borderColor = UIColor(red: 230/255.0, green: 230/255.0, blue: 230/255.0, alpha: 1).cgColor
                 }else{
-                    cell.iv2.image = nil
+                    cell.iv2.image = UIImage(named: "camera_bg")
                     cell.lbl2.isHidden = false
                     cell.lbl22.isHidden = true
                     cell.iv21.isHidden = false
