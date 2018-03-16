@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="29l-ii-3r3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="29l-ii-3r3">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
@@ -122,7 +122,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" tag="1000" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="80" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="qLm-gX-1Qo" userLabel="table1">
-                                <rect key="frame" x="0.0" y="124" width="375" height="543"/>
+                                <rect key="frame" x="0.0" y="114" width="375" height="553"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="hsF-NV-Hub" customClass="RecordTableViewCell" customModule="CarDetecion" customModuleProvider="target">
@@ -188,19 +188,35 @@
                                     <outlet property="emptyDataSetSource" destination="rGi-nG-HVS" id="E3L-u3-Lnq"/>
                                 </connections>
                             </tableView>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" background="searchbar_bg" translatesAutoresizingMaskIntoConstraints="NO" id="FYh-xO-Vsz" customClass="SearchTextField" customModule="CarDetecion" customModuleProvider="target">
+                                <rect key="frame" x="10" y="69" width="296" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="FYh-xO-Vsz" secondAttribute="height" multiplier="739:100" id="yyi-Md-ICu"/>
+                                </constraints>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="rGi-nG-HVS" id="mgC-yP-IkG"/>
+                                </connections>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="qLm-gX-1Qo" firstAttribute="width" secondItem="eZm-Ak-B9Q" secondAttribute="width" id="24C-bS-5zc"/>
                             <constraint firstItem="qLm-gX-1Qo" firstAttribute="leading" secondItem="eZm-Ak-B9Q" secondAttribute="leading" id="AN1-oA-T0g"/>
+                            <constraint firstItem="qLm-gX-1Qo" firstAttribute="top" secondItem="FYh-xO-Vsz" secondAttribute="bottom" constant="5" id="BuR-HB-xhp"/>
                             <constraint firstAttribute="bottom" secondItem="qLm-gX-1Qo" secondAttribute="bottom" id="HHm-AG-n9y"/>
-                            <constraint firstItem="qLm-gX-1Qo" firstAttribute="top" secondItem="4NO-EG-e0Z" secondAttribute="bottom" constant="60" id="KIp-bY-JSb"/>
+                            <constraint firstItem="qLm-gX-1Qo" firstAttribute="top" secondItem="4NO-EG-e0Z" secondAttribute="bottom" constant="50" id="KIp-bY-JSb"/>
+                            <constraint firstItem="FYh-xO-Vsz" firstAttribute="leading" secondItem="eZm-Ak-B9Q" secondAttribute="leading" constant="10" id="L9r-pp-Bvq"/>
+                            <constraint firstItem="FYh-xO-Vsz" firstAttribute="top" secondItem="4NO-EG-e0Z" secondAttribute="bottom" constant="5" id="ObJ-Jc-IP2"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="5vg-K4-ENp"/>
                     <connections>
                         <outlet property="lcLeft" destination="AN1-oA-T0g" id="luK-Tt-IWy"/>
                         <outlet property="tableView0" destination="qLm-gX-1Qo" id="ZuP-Ex-xPG"/>
+                        <outlet property="tfSearch" destination="FYh-xO-Vsz" id="dc4-lQ-CWk"/>
                         <segue destination="Ij8-cf-yKp" kind="show" id="uni-Fd-1Kk"/>
                     </connections>
                 </viewController>
@@ -709,14 +725,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="1EV-an-MZB">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon" translatesAutoresizingMaskIntoConstraints="NO" id="1EV-an-MZB">
                                 <rect key="frame" x="112.5" y="120" width="150" height="150"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="1EV-an-MZB" secondAttribute="height" id="CNH-tj-EzD"/>
                                     <constraint firstAttribute="width" constant="150" id="bA4-M2-HqC"/>
                                 </constraints>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="d_logo_l.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="lZs-ne-KQ4">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="lZs-ne-KQ4">
                                 <rect key="frame" x="72" y="514.5" width="230" height="52.5"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="230" id="V2E-U3-YQF"/>
@@ -1206,11 +1222,12 @@
                         <viewControllerLayoutGuide type="bottom" id="kWH-Et-sW9"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="4wi-sV-PnR">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="554"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </view>
                     <navigationItem key="navigationItem" id="OUJ-Rs-we9"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QIR-Ep-LI6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -2036,7 +2053,7 @@
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t7S-XI-D6J">
-                                            <rect key="frame" x="76" y="52" width="0.0" height="0.0"/>
+                                            <rect key="frame" x="68" y="52" width="0.0" height="0.0"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -2063,7 +2080,7 @@
                                             <textInputTraits key="textInputTraits"/>
                                         </textField>
                                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Xhh-jo-73w">
-                                            <rect key="frame" x="96" y="10" width="263" height="82.5"/>
+                                            <rect key="frame" x="88" y="10" width="271" height="82.5"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -2789,6 +2806,7 @@
             <objects>
                 <navigationController id="HF4-9P-rPQ" customClass="DNavigationController" customModule="CarDetecion" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="" id="YOO-o2-L8L"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="Unf-O5-EdQ">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -2818,14 +2836,12 @@
         <image name="car_body" width="27" height="27"/>
         <image name="car_frame" width="27" height="27"/>
         <image name="car_license" width="27" height="27"/>
-        <image name="d_logo_l.jpg" width="364" height="83"/>
         <image name="defult_image" width="90" height="67"/>
         <image name="detection_cancel" width="291" height="86"/>
         <image name="detection_sumbit" width="291" height="86"/>
         <image name="icon" width="245" height="242"/>
         <image name="icon_camera" width="45" height="39"/>
         <image name="icon_detection_query" width="70" height="70"/>
-        <image name="logo.jpg" width="1575" height="1874"/>
         <image name="me_background" width="621" height="545"/>
         <image name="me_button_bg" width="132" height="132"/>
         <image name="me_button_icon_1" width="60" height="60"/>
@@ -2833,6 +2849,7 @@
         <image name="me_button_icon_3" width="60" height="66"/>
         <image name="password_show" width="24" height="9"/>
         <image name="right_arrow" width="49" height="66"/>
+        <image name="searchbar_bg" width="366" height="50"/>
         <image name="supplement" width="27" height="27"/>
         <image name="tab11" width="57" height="56"/>
         <image name="tab20" width="52" height="64"/>

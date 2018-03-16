@@ -7,39 +7,34 @@
 //
 
 import UIKit
+import WebKit
 
 class ChatViewController: UIViewController {
 
-    var chat: HDChatViewController!
+    var webView: WKWebView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.tabBarController?.tabBar.isHidden = true
-        let lgM = SCLoginManager.share()
-        if lgM!.loginKefuSDK() {
-            chat = HDChatViewController(conversationChatter: "kefuchannelimid_856946")
-            chat?.visitorInfo = visitorInfo()
-            title = lgM!.cname
-            self.addChildViewController(chat!)
-            self.view.addSubview(chat!.view)
-        }
+        
+        let webConfiguration = WKWebViewConfiguration()
+        webView = WKWebView(frame: .zero, configuration: webConfiguration)
+        webView.translatesAutoresizingMaskIntoConstraints = false
+        webView.navigationDelegate = self
+        webView.uiDelegate = self
+        self.view.addSubview(webView)
+        
+        self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[webView]|", options: .directionLeadingToTrailing, metrics: nil, views: ["webView": webView]))
+        self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[webView]|", options: .directionLeadingToTrailing, metrics: nil, views: ["webView": webView]))
+        
+        let myURL = URL(string: "https://www.apple.com")
+        let myRequest = URLRequest(url: myURL!)
+        webView.load(myRequest)
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    }
-    
-    func visitorInfo() -> HVisitorInfo {
-        let visitor = HVisitorInfo()
-        if let userinfo = UserDefaults.standard.object(forKey: "userinfo") as? [String : Any] {
-            visitor.nickName = userinfo["userChineseName"] as? String ?? "用户"
-            visitor.companyName = userinfo["companyName"] as? String ?? "东风裕隆旧车置换有限公司"
-        }
-        if let username = UserDefaults.standard.object(forKey: "username") as? String {
-            visitor.name = username
-        }
-        return visitor
     }
 
     /*
@@ -52,4 +47,58 @@ class ChatViewController: UIViewController {
     }
     */
 
+}
+
+extension ChatViewController: WKUIDelegate {
+
+    func webView(_ webView: WKWebView, runJavaScriptConfirmPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping (Bool) -> Void) {
+        completionHandler(true)
+    }
+   
+    func webView(_ webView: WKWebView, runJavaScriptAlertPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping () -> Void) {
+        completionHandler()
+    }
+    
+    func webView(_ webView: WKWebView, runJavaScriptTextInputPanelWithPrompt prompt: String, defaultText: String?, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping (String?) -> Void) {
+        completionHandler("testText")
+    }
+    
+    func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
+        
+        return webView
+    }
+    
+    @available(iOS 9.0, *)
+    func webViewDidClose(_ webView: WKWebView) {
+    }
+    
+    @available(iOS 10.0, *)
+    func webView(_ webView: WKWebView, shouldPreviewElement elementInfo: WKPreviewElementInfo) -> Bool {
+        return true
+    }
+    
+    @available(iOS 10.0, *)
+    func webView(_ webView: WKWebView, previewingViewControllerForElement elementInfo: WKPreviewElementInfo, defaultActions previewActions: [WKPreviewActionItem]) -> UIViewController? {
+        return self
+        
+    }
+    
+    @available(iOS 10.0, *)
+    func webView(_ webView: WKWebView, commitPreviewingViewController previewingViewController: UIViewController) {
+    }
+    
+}
+
+extension ChatViewController: WKNavigationDelegate {
+    func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+        
+    }
+    
+    func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
+        
+    }
+    
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        title = webView.title
+    }
 }

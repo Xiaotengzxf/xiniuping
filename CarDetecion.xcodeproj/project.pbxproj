@@ -7,13 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		891034E31EC447F700EDBD23 /* HFileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 891034E01EC447F700EDBD23 /* HFileViewController.m */; };
-		891034E41EC447F700EDBD23 /* HDChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 891034E21EC447F700EDBD23 /* HDChatViewController.m */; };
-		891034E71EC4480D00EDBD23 /* HDLeaveMsgViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 891034E61EC4480D00EDBD23 /* HDLeaveMsgViewController.m */; };
 		8920A31D1EB84B1B005DC01B /* PreDetectionListTVController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8920A31C1EB84B1B005DC01B /* PreDetectionListTVController.swift */; };
 		8920A31F1EB8964E005DC01B /* CarModelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8920A31E1EB8964E005DC01B /* CarModelController.swift */; };
 		89217BEE1F6E7D1700E98D13 /* FileAttachViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89217BED1F6E7D1700E98D13 /* FileAttachViewController.swift */; };
 		892D10311EF7B7510045D8A3 /* FastPreDetectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 892D10301EF7B7510045D8A3 /* FastPreDetectionViewController.swift */; };
+		893018802056D52A00DA94D0 /* SearchTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8930187F2056D52A00DA94D0 /* SearchTextField.swift */; };
 		893100F31F04A8A200B65426 /* FastPreDetectionDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 893100F21F04A8A200B65426 /* FastPreDetectionDetailViewController.swift */; };
 		893CDB2A1EB6D10E00AEB5D7 /* TabCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 893CDB231EB6D10E00AEB5D7 /* TabCollectionCell.swift */; };
 		893CDB2B1EB6D10E00AEB5D7 /* TabPageOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 893CDB241EB6D10E00AEB5D7 /* TabPageOption.swift */; };
@@ -54,6 +52,11 @@
 		8953081F1E6D7CEC007AF459 /* CameraView.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8953081E1E6D7CEC007AF459 /* CameraView.strings */; };
 		895B9D5720552655006D4CDA /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 895B9D5620552655006D4CDA /* ChatViewController.swift */; };
 		895B9D5920552FD1006D4CDA /* RecordSuccessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 895B9D5820552FD1006D4CDA /* RecordSuccessViewController.swift */; };
+		8961AC21205ABC3800F9CAAC /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8961AC20205ABC3800F9CAAC /* LoadingView.swift */; };
+		8961AC23205ABC4600F9CAAC /* LoadingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8961AC22205ABC4600F9CAAC /* LoadingView.xib */; };
+		8961AC25205AC01E00F9CAAC /* RejectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8961AC24205AC01E00F9CAAC /* RejectView.swift */; };
+		8961AC27205AC02C00F9CAAC /* RejectView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8961AC26205AC02C00F9CAAC /* RejectView.xib */; };
+		8961AC29205AC65500F9CAAC /* ImageHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8961AC28205AC65500F9CAAC /* ImageHandler.swift */; };
 		896232A31E8E19D600AB4B1E /* DNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 896232A21E8E19D600AB4B1E /* DNavigationController.swift */; };
 		896232A51E8E48DF00AB4B1E /* TransitionAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 896232A41E8E48DF00AB4B1E /* TransitionAnimator.swift */; };
 		896837B61EF560B000029010 /* PreDetectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 896837B51EF560B000029010 /* PreDetectionViewController.swift */; };
@@ -212,7 +215,6 @@
 		898653641EED9AC600B276C3 /* Detection3TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 898653631EED9AC600B276C3 /* Detection3TableViewCell.swift */; };
 		898916E51E7E8EBE00BE6848 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 898916E41E7E8EBE00BE6848 /* Assets.xcassets */; };
 		898916E91E7ED5B500BE6848 /* PlaceholderTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 898916E81E7ED5B500BE6848 /* PlaceholderTextView.swift */; };
-		898B0AA01EC49CAB00810620 /* SCLoginManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 898B0A9F1EC49CAB00810620 /* SCLoginManager.m */; };
 		89965D701EA1196B006560BA /* MNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89965D6F1EA1196B006560BA /* MNavigationController.swift */; };
 		89965D721EA11AEA006560BA /* RNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89965D711EA11AEA006560BA /* RNavigationController.swift */; };
 		89965D751EA1A542006560BA /* INavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89965D741EA1A542006560BA /* INavigationController.swift */; };
@@ -248,16 +250,11 @@
 		1E2CC0138EACBF25DE67C2E1 /* Pods_CarDetecion.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CarDetecion.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		559B80C1EF4266A3585E999D /* Pods-CarDetecion.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CarDetecion.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CarDetecion/Pods-CarDetecion.debug.xcconfig"; sourceTree = "<group>"; };
 		7FA2B127C77D69B2B4084750 /* Pods-CarDetecion.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CarDetecion.release.xcconfig"; path = "Pods/Target Support Files/Pods-CarDetecion/Pods-CarDetecion.release.xcconfig"; sourceTree = "<group>"; };
-		891034DF1EC447F700EDBD23 /* HFileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HFileViewController.h; sourceTree = "<group>"; };
-		891034E01EC447F700EDBD23 /* HFileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HFileViewController.m; sourceTree = "<group>"; };
-		891034E11EC447F700EDBD23 /* HDChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HDChatViewController.h; sourceTree = "<group>"; };
-		891034E21EC447F700EDBD23 /* HDChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HDChatViewController.m; sourceTree = "<group>"; };
-		891034E51EC4480D00EDBD23 /* HDLeaveMsgViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HDLeaveMsgViewController.h; sourceTree = "<group>"; };
-		891034E61EC4480D00EDBD23 /* HDLeaveMsgViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HDLeaveMsgViewController.m; sourceTree = "<group>"; };
 		8920A31C1EB84B1B005DC01B /* PreDetectionListTVController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreDetectionListTVController.swift; sourceTree = "<group>"; };
 		8920A31E1EB8964E005DC01B /* CarModelController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarModelController.swift; sourceTree = "<group>"; };
 		89217BED1F6E7D1700E98D13 /* FileAttachViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileAttachViewController.swift; sourceTree = "<group>"; };
 		892D10301EF7B7510045D8A3 /* FastPreDetectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FastPreDetectionViewController.swift; sourceTree = "<group>"; };
+		8930187F2056D52A00DA94D0 /* SearchTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTextField.swift; sourceTree = "<group>"; };
 		893100F21F04A8A200B65426 /* FastPreDetectionDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FastPreDetectionDetailViewController.swift; sourceTree = "<group>"; };
 		893CDB231EB6D10E00AEB5D7 /* TabCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabCollectionCell.swift; sourceTree = "<group>"; };
 		893CDB241EB6D10E00AEB5D7 /* TabPageOption.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabPageOption.swift; sourceTree = "<group>"; };
@@ -304,6 +301,11 @@
 		8953081E1E6D7CEC007AF459 /* CameraView.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = CameraView.strings; sourceTree = "<group>"; };
 		895B9D5620552655006D4CDA /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		895B9D5820552FD1006D4CDA /* RecordSuccessViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordSuccessViewController.swift; sourceTree = "<group>"; };
+		8961AC20205ABC3800F9CAAC /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+		8961AC22205ABC4600F9CAAC /* LoadingView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoadingView.xib; sourceTree = "<group>"; };
+		8961AC24205AC01E00F9CAAC /* RejectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RejectView.swift; sourceTree = "<group>"; };
+		8961AC26205AC02C00F9CAAC /* RejectView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RejectView.xib; sourceTree = "<group>"; };
+		8961AC28205AC65500F9CAAC /* ImageHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageHandler.swift; sourceTree = "<group>"; };
 		896232A21E8E19D600AB4B1E /* DNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DNavigationController.swift; sourceTree = "<group>"; };
 		896232A41E8E48DF00AB4B1E /* TransitionAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransitionAnimator.swift; sourceTree = "<group>"; };
 		896837B51EF560B000029010 /* PreDetectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreDetectionViewController.swift; sourceTree = "<group>"; };
@@ -647,8 +649,6 @@
 		898653631EED9AC600B276C3 /* Detection3TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Detection3TableViewCell.swift; sourceTree = "<group>"; };
 		898916E41E7E8EBE00BE6848 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		898916E81E7ED5B500BE6848 /* PlaceholderTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceholderTextView.swift; sourceTree = "<group>"; };
-		898B0A9E1EC49CAB00810620 /* SCLoginManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCLoginManager.h; sourceTree = "<group>"; };
-		898B0A9F1EC49CAB00810620 /* SCLoginManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCLoginManager.m; sourceTree = "<group>"; };
 		898B0AA11EC49D0200810620 /* LocalDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalDefine.h; sourceTree = "<group>"; };
 		899601421EBA2DF500BE9436 /* CarDetecion-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CarDetecion-Bridging-Header.h"; sourceTree = "<group>"; };
 		89965D6F1EA1196B006560BA /* MNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MNavigationController.swift; sourceTree = "<group>"; };
@@ -716,14 +716,6 @@
 				8984662C1EC54B7600FDA2E3 /* UINavigationBar+Awesome.h */,
 				8984662D1EC54B7600FDA2E3 /* UINavigationBar+Awesome.m */,
 				898B0AA11EC49D0200810620 /* LocalDefine.h */,
-				891034DF1EC447F700EDBD23 /* HFileViewController.h */,
-				891034E01EC447F700EDBD23 /* HFileViewController.m */,
-				891034E11EC447F700EDBD23 /* HDChatViewController.h */,
-				891034E21EC447F700EDBD23 /* HDChatViewController.m */,
-				891034E51EC4480D00EDBD23 /* HDLeaveMsgViewController.h */,
-				891034E61EC4480D00EDBD23 /* HDLeaveMsgViewController.m */,
-				898B0A9E1EC49CAB00810620 /* SCLoginManager.h */,
-				898B0A9F1EC49CAB00810620 /* SCLoginManager.m */,
 			);
 			name = ObjectC;
 			sourceTree = "<group>";
@@ -1575,6 +1567,7 @@
 				893F5F6A1E76EE3100834FA1 /* NetworkManager.swift */,
 				896AFA7A1E8D10F2008DE6F5 /* UINavigationBarExtension.swift */,
 				896232A41E8E48DF00AB4B1E /* TransitionAnimator.swift */,
+				8961AC28205AC65500F9CAAC /* ImageHandler.swift */,
 			);
 			path = Kit;
 			sourceTree = "<group>";
@@ -1597,6 +1590,11 @@
 				8985C7A71E72FCE80075B6F8 /* RecordViewController.swift */,
 				895B9D5820552FD1006D4CDA /* RecordSuccessViewController.swift */,
 				89965D761EA1B285006560BA /* RecordDetailViewController.swift */,
+				8930187F2056D52A00DA94D0 /* SearchTextField.swift */,
+				8961AC20205ABC3800F9CAAC /* LoadingView.swift */,
+				8961AC22205ABC4600F9CAAC /* LoadingView.xib */,
+				8961AC24205AC01E00F9CAAC /* RejectView.swift */,
+				8961AC26205AC02C00F9CAAC /* RejectView.xib */,
 			);
 			name = Record;
 			sourceTree = "<group>";
@@ -1772,8 +1770,10 @@
 				897C6E1F1EBF578F00B22203 /* HelpDeskUIResource.bundle in Resources */,
 				893CDB2F1EB6D10E00AEB5D7 /* TabPageViewController.storyboard in Resources */,
 				897C6DED1EBF578F00B22203 /* icon_star_select.png in Resources */,
+				8961AC27205AC02C00F9CAAC /* RejectView.xib in Resources */,
 				897C6DE91EBF578F00B22203 /* MWPhotoBrowser.bundle in Resources */,
 				897C6DEC1EBF578F00B22203 /* icon_star.png in Resources */,
+				8961AC23205ABC4600F9CAAC /* LoadingView.xib in Resources */,
 				893CDB2E1EB6D10E00AEB5D7 /* TabCollectionCell.xib in Resources */,
 				898916E51E7E8EBE00BE6848 /* Assets.xcassets in Resources */,
 				897C6DBE1EBF578F00B22203 /* MJRefresh.bundle in Resources */,
@@ -1906,7 +1906,6 @@
 				8953080D1E6D7A67007AF459 /* SingleImageFetcher.swift in Sources */,
 				897C6DE11EBF578F00B22203 /* PSTCollectionViewFlowLayout.m in Sources */,
 				897C6DA51EBF578E00B22203 /* HDCDDeviceManager+Microphone.m in Sources */,
-				891034E71EC4480D00EDBD23 /* HDLeaveMsgViewController.m in Sources */,
 				897C6DD01EBF578F00B22203 /* EMSDWebImageDownloaderOperation.m in Sources */,
 				8920A31D1EB84B1B005DC01B /* PreDetectionListTVController.swift in Sources */,
 				897C6DF11EBF578F00B22203 /* HDUserModel.m in Sources */,
@@ -1922,7 +1921,6 @@
 				897C6E091EBF578F00B22203 /* HDBubbleView+Evaluate.m in Sources */,
 				897C6DC41EBF578F00B22203 /* MWGridCell.m in Sources */,
 				897C6DB31EBF578F00B22203 /* MJRefreshFooter.m in Sources */,
-				891034E31EC447F700EDBD23 /* HFileViewController.m in Sources */,
 				897C6DA31EBF578E00B22203 /* HDAudioRecorderUtil.m in Sources */,
 				897C6E011EBF578F00B22203 /* HDMessageViewController.m in Sources */,
 				897C6E191EBF578F00B22203 /* HDChatToolbarItem.m in Sources */,
@@ -1930,6 +1928,7 @@
 				8920A31F1EB8964E005DC01B /* CarModelController.swift in Sources */,
 				894E4F131E95149100D9BF55 /* DefaultViewController.swift in Sources */,
 				897C6DBB1EBF578F00B22203 /* MJRefreshGifHeader.m in Sources */,
+				8961AC25205AC01E00F9CAAC /* RejectView.swift in Sources */,
 				897C6DC31EBF578F00B22203 /* MWCaptionView.m in Sources */,
 				897C6DEB1EBF578F00B22203 /* CWStarRateView.m in Sources */,
 				8978CAE71E928EF300BBC926 /* Detection1TableViewCell.swift in Sources */,
@@ -1968,6 +1967,7 @@
 				89D4EAC31EFA9FAA004600A6 /* Detection4TableViewCell.swift in Sources */,
 				8953080A1E6D7A67007AF459 /* CameraShot.swift in Sources */,
 				897C6DAB1EBF578F00B22203 /* HDVoiceConverter.mm in Sources */,
+				8961AC21205ABC3800F9CAAC /* LoadingView.swift in Sources */,
 				8985C7A41E72ED850075B6F8 /* Extension.swift in Sources */,
 				897C6DD11EBF578F00B22203 /* EMSDWebImageManager.m in Sources */,
 				89B3A5E01EAADC7000949757 /* InfoTableViewController.swift in Sources */,
@@ -1999,7 +1999,6 @@
 				897C6DF91EBF578F00B22203 /* HDEmojiEmoticons.m in Sources */,
 				897C6DAA1EBF578F00B22203 /* wav.mm in Sources */,
 				897C6DC71EBF578F00B22203 /* MWPhotoBrowser.m in Sources */,
-				891034E41EC447F700EDBD23 /* HDChatViewController.m in Sources */,
 				897C6DFD1EBF578F00B22203 /* HDChineseToPinyin.m in Sources */,
 				897C6E0E1EBF578F00B22203 /* HDBubbleView+Order.m in Sources */,
 				897C6DDB1EBF578F00B22203 /* UIView+EMWebCacheOperation.m in Sources */,
@@ -2020,6 +2019,7 @@
 				8985C7A21E72E7BC0075B6F8 /* Macro.swift in Sources */,
 				897C6E081EBF578F00B22203 /* HDMessageTimeCell.m in Sources */,
 				897C6DCF1EBF578F00B22203 /* EMSDWebImageDownloader.m in Sources */,
+				893018802056D52A00DA94D0 /* SearchTextField.swift in Sources */,
 				897C6DA41EBF578E00B22203 /* HDCDDeviceManager+Media.m in Sources */,
 				897C6DEE1EBF578F00B22203 /* UIView+FLExtension.m in Sources */,
 				897C6DDF1EBF578F00B22203 /* PSTCollectionViewController.m in Sources */,
@@ -2039,6 +2039,7 @@
 				897C6DDC1EBF578F00B22203 /* NSIndexPath+PSTCollectionViewAdditions.m in Sources */,
 				892D10311EF7B7510045D8A3 /* FastPreDetectionViewController.swift in Sources */,
 				897C6E0A1EBF578F00B22203 /* HDBubbleView+File.m in Sources */,
+				8961AC29205AC65500F9CAAC /* ImageHandler.swift in Sources */,
 				893100F31F04A8A200B65426 /* FastPreDetectionDetailViewController.swift in Sources */,
 				897C6E151EBF578F00B22203 /* HDBubbleView.m in Sources */,
 				897C6DB81EBF578F00B22203 /* MJRefreshBackGifFooter.m in Sources */,
@@ -2062,7 +2063,6 @@
 				897C6DFF1EBF578F00B22203 /* HDMessageReadManager.m in Sources */,
 				8953081B1E6D7A67007AF459 /* PermissionsView.swift in Sources */,
 				896232A31E8E19D600AB4B1E /* DNavigationController.swift in Sources */,
-				898B0AA01EC49CAB00810620 /* SCLoginManager.m in Sources */,
 				897C6DD41EBF578F00B22203 /* NSData+EMImageContentType.m in Sources */,
 				897C6DF31EBF578F00B22203 /* NSDateFormatter+Category.m in Sources */,
 				897C6DAE1EBF578F00B22203 /* MBProgressHUD+Add.m in Sources */,
@@ -2228,7 +2228,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "${PROJECT_DIR}/CarDetecion/PrefixHeader.pch";
 				INFOPLIST_FILE = CarDetecion/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2260,7 +2260,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "${PROJECT_DIR}/CarDetecion/PrefixHeader.pch";
 				INFOPLIST_FILE = CarDetecion/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="RejectView" customModule="CarDetecion" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8sN-WC-avr">
+                    <rect key="frame" x="15" y="124" width="345" height="439"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="rejectview_bg" translatesAutoresizingMaskIntoConstraints="NO" id="zM6-hP-NEp">
+                            <rect key="frame" x="0.0" y="0.0" width="345" height="439"/>
+                        </imageView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yAB-mj-5Wv">
+                            <rect key="frame" x="99.5" y="380" width="145" height="44"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="yAB-mj-5Wv" secondAttribute="height" multiplier="390:118" id="p8A-ok-rRN"/>
+                                <constraint firstAttribute="height" constant="44" id="pnk-M7-7o7"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <state key="normal" title="确定" backgroundImage="rejectview_button">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                            <connections>
+                                <action selector="hideRejectView:" destination="iN0-l3-epB" eventType="touchUpInside" id="CDy-lh-17w"/>
+                            </connections>
+                        </button>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="驳回意见" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4ha-cP-0qq">
+                            <rect key="frame" x="137.5" y="15" width="69.5" height="21"/>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="8sN-WC-avr" secondAttribute="height" multiplier="1064:1354" id="1L8-DT-ky3"/>
+                        <constraint firstAttribute="bottom" secondItem="yAB-mj-5Wv" secondAttribute="bottom" constant="15" id="BXR-c6-E3b"/>
+                        <constraint firstItem="4ha-cP-0qq" firstAttribute="top" secondItem="8sN-WC-avr" secondAttribute="top" constant="15" id="CEd-Dq-pWP"/>
+                        <constraint firstItem="4ha-cP-0qq" firstAttribute="centerX" secondItem="zM6-hP-NEp" secondAttribute="centerX" id="I62-wm-aTr"/>
+                        <constraint firstItem="yAB-mj-5Wv" firstAttribute="centerX" secondItem="zM6-hP-NEp" secondAttribute="centerX" id="JQy-xg-fPq"/>
+                        <constraint firstAttribute="trailing" secondItem="zM6-hP-NEp" secondAttribute="trailing" id="JbG-Y1-zxx"/>
+                        <constraint firstAttribute="bottom" secondItem="zM6-hP-NEp" secondAttribute="bottom" id="XqE-KJ-rO7"/>
+                        <constraint firstItem="zM6-hP-NEp" firstAttribute="leading" secondItem="8sN-WC-avr" secondAttribute="leading" id="bfo-Uj-kYl"/>
+                        <constraint firstItem="zM6-hP-NEp" firstAttribute="top" secondItem="8sN-WC-avr" secondAttribute="top" id="rhC-KV-ATJ"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="8sN-WC-avr" firstAttribute="centerY" secondItem="vUN-kp-3ea" secondAttribute="centerY" id="0Z0-A7-ckd"/>
+                <constraint firstItem="8sN-WC-avr" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="15" id="Tcr-w8-3zh"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="8sN-WC-avr" secondAttribute="trailing" constant="15" id="nJW-hS-wca"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="rejectview_bg" width="532" height="677"/>
+        <image name="rejectview_button" width="195" height="59"/>
+    </resources>
+</document>

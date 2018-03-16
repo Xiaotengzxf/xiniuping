@@ -17,6 +17,7 @@ class RecordViewController: UIViewController , DZNEmptyDataSetDelegate , DZNEmpt
 
     @IBOutlet weak var tableView0: UITableView!
     @IBOutlet weak var lcLeft: NSLayoutConstraint!
+    @IBOutlet weak var tfSearch: SearchTextField!
     let orderList = "external/app/getAppBillList.html"
     var curPage1 = 1
     var curPage2 = 1
@@ -46,6 +47,15 @@ class RecordViewController: UIViewController , DZNEmptyDataSetDelegate , DZNEmpt
         })
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.handleNotification(notification:)), name: Notification.Name("recordVC"), object: nil)
+        
+        let ivSearch = UIImageView(image: UIImage(named: "search"))
+        ivSearch.frame = CGRect(x: 0, y: 0, width: 35, height: 20)
+        ivSearch.contentMode = .scaleAspectFit
+        tfSearch.leftView = ivSearch
+        tfSearch.leftViewMode = .always
+        tfSearch.textColor = UIColor.white
+        tfSearch.attributedPlaceholder = NSAttributedString(string: "评估单号搜索", attributes: [NSForegroundColorAttributeName: UIColor.white])
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {

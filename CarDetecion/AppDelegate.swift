@@ -81,15 +81,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate , JPUSHRegisterDelegate {
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.handleNotification(notification:)), name: Notification.Name("app"), object: nil)
         
-        let option = HOptions()
-        option.appkey = "1112170506115622#kefuchannelapp41042"
-        option.tenantId = "41042"
-        //option.apnsCertName = ""
-        let initError = HChatClient.shared().initializeSDK(with: option)
-        if initError != nil {
-            print("环信客服初始化失败")
-        }
-        
         // 通知注册实体类
         let entity = JPUSHRegisterEntity()
         entity.types = Int(JPAuthorizationOptions.alert.rawValue) |  Int(JPAuthorizationOptions.sound.rawValue) |  Int(JPAuthorizationOptions.badge.rawValue)

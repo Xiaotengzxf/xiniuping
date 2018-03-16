@@ -151,20 +151,6 @@ class DetectionNewViewController: UIViewController , UITableViewDataSource , UIT
         }
     }
     
-    // 拍照类型
-//    func setCameraType() {
-//        let action = UIAlertController(title: "拍照类型", message: nil, preferredStyle: .actionSheet)
-//        action.addAction(UIAlertAction(title: "取消", style: .cancel, handler: { (action) in
-//            
-//        }))
-//        action.addAction(UIAlertAction(title: "单拍", style: .default, handler: {[weak self] (action) in
-//            self?.cameraType = 0
-//        }))
-//        action.addAction(UIAlertAction(title: "连拍", style: .default, handler: {[weak self] (action) in
-//            self?.cameraType = 1
-//        }))
-//    }
-    
     // 通知处理
     func handleNotification(notification : Notification) {
         if let tag = notification.object as? Int {
@@ -208,28 +194,6 @@ class DetectionNewViewController: UIViewController , UITableViewDataSource , UIT
             }else{
                 getWaterMark(tag: tag)
             }
-//            if companyOtherNeed.contains(tag) {
-//                if waterMarks.count > 0{
-//                    pushToCamera(tag: tag)
-//                }else{
-//                    getWaterMark(tag: tag)
-//                }
-//            }else{
-//                let section = tag / 1000
-//                //let row = tag % 1000 % 100
-//                //let right = tag % 100 >= 100
-//                let array = companyOtherNeed.sorted()
-//                for value in array {
-//                    if value / 1000 == section {
-//                        if value < tag {
-//                            if images[value] == nil {
-//                                self.showAlert(title: nil, message: "请先拍照：\(titles[value / 1000][((value % 1000) % 100) * 2 + (value % 1000 >= 100 ? 1 : 0)])" , button: "确定")
-//                                return
-//                            }
-//                        }
-//                    }
-//                }
-//            }
         }
         
     }
@@ -244,13 +208,11 @@ class DetectionNewViewController: UIViewController , UITableViewDataSource , UIT
                 self?.tableView.reloadData()
             }
         }
-        //camera.cameraType = cameraType
         camera.nTag = nTag
         camera.sectionTiltes = sectionTitles
         camera.titles = titles
         camera.waterMarks = waterMarks
         camera.companyNeed = companyOtherNeed
-        //camera.transitioningDelegate = self
         self.present(camera, animated: true) {
             
         }

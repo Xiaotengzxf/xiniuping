@@ -18,9 +18,7 @@ class RecordSuccessViewController: UIViewController , DZNEmptyDataSetDelegate , 
     @IBOutlet weak var tableView1: UITableView!
     let orderList = "external/app/getAppBillList.html"
     var curPage1 = 1
-    var status1 = "21,22,24,31,32,34,41,42,44,51,52"
-    var status2 = "23,33,43,53"
-    var status3 = "54,80"
+    let status1 = "21,22,24,31,32,34,41,42,44,51,52,23,33,43,53,54,80"
     let pageSize = 10
     var data1 : [JSON] = []
     var nShowEmpty1 = 0 // 1 无数据 2 加载中 3 无网络

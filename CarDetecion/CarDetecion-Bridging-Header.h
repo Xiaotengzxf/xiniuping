@@ -7,7 +7,7 @@
 #import "helpdesk_sdk.h"
 #import "HelpDeskUI.h"
 
-#import "HDChatViewController.h"
+//#import "HDChatViewController.h"
 #import "SCLoginManager.h"
 
 #import "JPUSHService.h"

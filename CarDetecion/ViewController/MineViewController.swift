@@ -70,7 +70,14 @@ class MineViewController: UIViewController {
                 }
                 break
             case 2:
-                print("账号管理")
+                if let controller = self.storyboard?.instantiateViewController(withIdentifier: "info") as? InfoTableViewController {
+                    controller.title = "个人资料"
+                    controller.hidesBottomBarWhenPushed = true
+                    if let tabController = self.navigationController?.tabBarController as? MTabBarController {
+                        tabController.tabView.isHidden = true
+                    }
+                    self.navigationController?.pushViewController(controller, animated: true)
+                }
                 break
             default:
                 showAlet(title: "提示", message: "您确定退出吗？")
@@ -102,7 +109,6 @@ class MineViewController: UIViewController {
                 }
             }
             UserDefaults.standard.removeObject(forKey: "userinfo")
-            //UserDefaults.standard.removeObject(forKey: "username")
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let login = storyboard.instantiateViewController(withIdentifier: "login")
             self?.view?.window?.rootViewController = login
