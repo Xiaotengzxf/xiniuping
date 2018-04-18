@@ -9,32 +9,31 @@
 import UIKit
 import WebKit
 
-class ChatViewController: UIViewController {
+class ChatViewController: UIViewController, UIWebViewDelegate {
 
-    var webView: WKWebView!
+    @IBOutlet weak var webView: UIWebView!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.tabBarController?.tabBar.isHidden = true
-        
-        let webConfiguration = WKWebViewConfiguration()
-        webView = WKWebView(frame: .zero, configuration: webConfiguration)
-        webView.translatesAutoresizingMaskIntoConstraints = false
-        webView.navigationDelegate = self
-        webView.uiDelegate = self
-        self.view.addSubview(webView)
-        
-        self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[webView]|", options: .directionLeadingToTrailing, metrics: nil, views: ["webView": webView]))
-        self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[webView]|", options: .directionLeadingToTrailing, metrics: nil, views: ["webView": webView]))
-        
-        let myURL = URL(string: "https://www.apple.com")
-        let myRequest = URLRequest(url: myURL!)
-        webView.load(myRequest)
+        if let username = UserDefaults.standard.object(forKey: "username") as? String {
+            let url = URL(string: NetworkManager.sharedInstall.domain + "/view/external/chat/chatlist.php?clientUser=moth\(username)")
+            let request = URLRequest(url: url!)
+            webView.loadRequest(request)
+        }
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func webViewDidStartLoad(_ webView: UIWebView) {
+        
+    }
+    
+    func webViewDidFinishLoad(_ webView: UIWebView) {
+        title = webView.stringByEvaluatingJavaScript(from: "document.title")
     }
 
     /*

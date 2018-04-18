@@ -265,6 +265,10 @@
 		893CDB291EB6D10E00AEB5D7 /* TabView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TabView.xib; sourceTree = "<group>"; };
 		893CDB311EB6D38100AEB5D7 /* PreDetectionTVController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreDetectionTVController.swift; sourceTree = "<group>"; };
 		893CDB331EB6D7C600AEB5D7 /* PreDetectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreDetectionCell.swift; sourceTree = "<group>"; };
+		893E8EB42087A196000557E2 /* PopViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopViewController.swift; sourceTree = "<group>"; };
+		893E8EB52087A196000557E2 /* CommonTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonTool.swift; sourceTree = "<group>"; };
+		893E8EB62087A196000557E2 /* PopoverAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopoverAnimation.swift; sourceTree = "<group>"; };
+		893E8EB72087A196000557E2 /* PopverPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopverPresentationController.swift; sourceTree = "<group>"; };
 		893F5F6A1E76EE3100834FA1 /* NetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		894B4BF11E6EDCE600FE9D90 /* TestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
 		894E4F121E95149100D9BF55 /* DefaultViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultViewController.swift; sourceTree = "<group>"; };
@@ -749,6 +753,17 @@
 				893CDB291EB6D10E00AEB5D7 /* TabView.xib */,
 			);
 			name = TabPage;
+			sourceTree = "<group>";
+		};
+		893E8EB32087A196000557E2 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				893E8EB42087A196000557E2 /* PopViewController.swift */,
+				893E8EB52087A196000557E2 /* CommonTool.swift */,
+				893E8EB62087A196000557E2 /* PopoverAnimation.swift */,
+				893E8EB72087A196000557E2 /* PopverPresentationController.swift */,
+			);
+			path = Resource;
 			sourceTree = "<group>";
 		};
 		895307B61E6D18D9007AF459 = {
@@ -1562,6 +1577,7 @@
 		8985C7A01E72E7800075B6F8 /* Kit */ = {
 			isa = PBXGroup;
 			children = (
+				893E8EB32087A196000557E2 /* Resource */,
 				8985C7A11E72E7BC0075B6F8 /* Macro.swift */,
 				8985C7A31E72ED850075B6F8 /* Extension.swift */,
 				893F5F6A1E76EE3100834FA1 /* NetworkManager.swift */,
@@ -1602,8 +1618,8 @@
 		89965D6E1EA118DC006560BA /* Mine */ = {
 			isa = PBXGroup;
 			children = (
-				8985C79E1E72E63A0075B6F8 /* MineViewController.swift */,
 				89965D6F1EA1196B006560BA /* MNavigationController.swift */,
+				8985C79E1E72E63A0075B6F8 /* MineViewController.swift */,
 				89B3A5DF1EAADC7000949757 /* InfoTableViewController.swift */,
 			);
 			name = Mine;
@@ -1655,7 +1671,6 @@
 				895307BC1E6D18D9007AF459 /* Frameworks */,
 				895307BD1E6D18D9007AF459 /* Resources */,
 				6CA38B7F20E2CB71024844D4 /* [CP] Embed Pods Frameworks */,
-				D360B67D7AE642A4B8248198 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1853,21 +1868,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CarDetecion/Pods-CarDetecion-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		D360B67D7AE642A4B8248198 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CarDetecion/Pods-CarDetecion-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -2236,7 +2236,7 @@
 					"$(PROJECT_DIR)/CarDetecion/HelpDeskUI/HDUIKit/3rdparty/DeviceHelper/VoiceConvert/opencore-amrnb",
 					"$(PROJECT_DIR)/CarDetecion/HelpDeskUI/HDUIKit/3rdparty/DeviceHelper/VoiceConvert/opencore-amrwb",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.zhixingping.CarDetection;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zhixingping.xiniuping;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2268,7 +2268,7 @@
 					"$(PROJECT_DIR)/CarDetecion/HelpDeskUI/HDUIKit/3rdparty/DeviceHelper/VoiceConvert/opencore-amrnb",
 					"$(PROJECT_DIR)/CarDetecion/HelpDeskUI/HDUIKit/3rdparty/DeviceHelper/VoiceConvert/opencore-amrwb",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.zhixingping.CarDetection;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zhixingping.xiniuping;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "CarDetecion/CarDetecion-Bridging-Header.h";

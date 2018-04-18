@@ -45,38 +45,30 @@
                             </constraints>
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="XC8888888888" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZBT-xB-GVC">
-                            <rect key="frame" x="87" y="71" width="120.5" height="19.5"/>
+                            <rect key="frame" x="87" y="81" width="120.5" height="19.5"/>
                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="[12/25]上传中..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tZx-ZG-bGQ">
-                            <rect key="frame" x="91" y="95.5" width="114.5" height="19.5"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                            <nil key="textColor"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="需要大约23s，请耐心等待" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cGA-dn-ftx">
-                            <rect key="frame" x="52.5" y="120" width="190.5" height="19.5"/>
+                            <rect key="frame" x="91" y="105.5" width="114.5" height="19.5"/>
                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstItem="cGA-dn-ftx" firstAttribute="top" secondItem="tZx-ZG-bGQ" secondAttribute="bottom" constant="5" id="0Xn-Jm-lAV"/>
                         <constraint firstItem="Ytx-ij-DTx" firstAttribute="centerY" secondItem="BLx-vZ-elE" secondAttribute="centerY" id="1X8-yI-uQ3"/>
                         <constraint firstAttribute="bottom" secondItem="tg2-ak-4ku" secondAttribute="bottom" id="7Zs-ak-J28"/>
                         <constraint firstItem="ZBT-xB-GVC" firstAttribute="centerX" secondItem="tg2-ak-4ku" secondAttribute="centerX" id="9po-Ud-2A9"/>
-                        <constraint firstItem="cGA-dn-ftx" firstAttribute="centerX" secondItem="EeB-3f-R5K" secondAttribute="centerX" id="9zI-Zj-rgy"/>
                         <constraint firstItem="QTD-Ir-hXR" firstAttribute="leading" secondItem="BLx-vZ-elE" secondAttribute="trailing" constant="20" id="DoX-OB-7J3"/>
                         <constraint firstItem="BLx-vZ-elE" firstAttribute="centerX" secondItem="EeB-3f-R5K" secondAttribute="centerX" id="K3i-US-0rd"/>
                         <constraint firstItem="tg2-ak-4ku" firstAttribute="top" secondItem="EeB-3f-R5K" secondAttribute="top" id="MxN-2F-qxE"/>
                         <constraint firstItem="BLx-vZ-elE" firstAttribute="top" secondItem="EeB-3f-R5K" secondAttribute="top" constant="30" id="Pfx-2N-ssd"/>
                         <constraint firstItem="tg2-ak-4ku" firstAttribute="leading" secondItem="EeB-3f-R5K" secondAttribute="leading" id="Rxe-Kk-hvf"/>
                         <constraint firstItem="QTD-Ir-hXR" firstAttribute="centerY" secondItem="BLx-vZ-elE" secondAttribute="centerY" id="Y6b-ox-aT0"/>
-                        <constraint firstItem="ZBT-xB-GVC" firstAttribute="top" secondItem="BLx-vZ-elE" secondAttribute="bottom" constant="20" id="bne-us-Peb"/>
+                        <constraint firstItem="ZBT-xB-GVC" firstAttribute="top" secondItem="BLx-vZ-elE" secondAttribute="bottom" constant="30" id="bne-us-Peb"/>
                         <constraint firstItem="BLx-vZ-elE" firstAttribute="leading" secondItem="Ytx-ij-DTx" secondAttribute="trailing" constant="20" id="dky-JC-RhB"/>
                         <constraint firstItem="tZx-ZG-bGQ" firstAttribute="centerX" secondItem="EeB-3f-R5K" secondAttribute="centerX" id="dsf-6B-r9m"/>
                         <constraint firstItem="tZx-ZG-bGQ" firstAttribute="top" secondItem="ZBT-xB-GVC" secondAttribute="bottom" constant="5" id="e1k-a8-kuR"/>
@@ -85,7 +77,7 @@
                     </constraints>
                 </view>
             </subviews>
-            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="EeB-3f-R5K" firstAttribute="centerY" secondItem="vUN-kp-3ea" secondAttribute="centerY" id="AGi-F1-411"/>
                 <constraint firstItem="EeB-3f-R5K" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="40" id="AV7-Cr-SWN"/>
@@ -95,7 +87,6 @@
             <connections>
                 <outlet property="lblLoading" destination="tZx-ZG-bGQ" id="oTL-0v-0ut"/>
                 <outlet property="lblOrderId" destination="ZBT-xB-GVC" id="PTy-hQ-sXF"/>
-                <outlet property="lblTime" destination="cGA-dn-ftx" id="WmE-6g-XjT"/>
             </connections>
             <point key="canvasLocation" x="51.5" y="54.5"/>
         </view>

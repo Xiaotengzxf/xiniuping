@@ -100,13 +100,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate , JPUSHRegisterDelegate {
         }
         
         application.applicationIconBadgeNumber = 0
-        /*
-        
-        */
-        UIToolbar.appearance().alpha = 1
-        UIToolbar.appearance().tintColor = UIColor.black
         
         UINavigationBar.appearance().shadowImage = UIImage.image(withColor: UIColor(red: 234/255.0, green: 234/255.0, blue: 234/255.0, alpha: 1)).resizableImage(withCapInsets: UIEdgeInsetsMake(0, 0, 0, 0))
+        
+        window?.backgroundColor = UIColor.white
         
         return true
     }
@@ -354,7 +351,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , JPUSHRegisterDelegate {
             UserDefaults.standard.set(orders, forKey: "orders")
             UserDefaults.standard.synchronize()
             DispatchQueue.main.async {
-                NotificationCenter.default.post(name: Notification.Name("recordVC"), object: nil)
+                NotificationCenter.default.post(name: Notification.Name("recordVC"), object: 2, userInfo: ["orderNo": orderNo])
             }
         }
     }
@@ -458,7 +455,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , JPUSHRegisterDelegate {
                             }
                             
                             DispatchQueue.main.async {
-                                NotificationCenter.default.post(name: Notification.Name("recordVC"), object: nil)
+                                NotificationCenter.default.post(name: Notification.Name("recordVC"), object: 0)
                             }
                             
                         }else{
@@ -508,7 +505,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , JPUSHRegisterDelegate {
         }
         
         DispatchQueue.main.async {
-            NotificationCenter.default.post(name: Notification.Name("recordVC"), object: nil)
+            NotificationCenter.default.post(name: Notification.Name("recordVC"), object: 1, userInfo: ["orderNo": orderNo])
         }
         
         let key = keys[keys.index(keys.startIndex, offsetBy: i)]
@@ -605,6 +602,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate , JPUSHRegisterDelegate {
                                         if images2.count > 0 {
                                             //uploadDictCount[oldOrderNo] = images2.keys.count
                                             self?.uploadImageQueue(i: 0, keys: images2.keys, orderNo: oldOrderNo, images: images2)
+                                        } else {
+                                            DispatchQueue.main.async {
+                                                NotificationCenter.default.post(name: Notification.Name("app"), object: 2 , userInfo: ["orderNo" : oldOrderNo])
+                                            }
                                         }
                                     }
                                 }
@@ -699,11 +700,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate , JPUSHRegisterDelegate {
         }
         
         DispatchQueue.main.async {
-            NotificationCenter.default.post(name: Notification.Name("recordVC"), object: nil)
+            NotificationCenter.default.post(name: Notification.Name("recordVC"), object: 1, userInfo: ["orderNo": orderNo])
         }
         
         let key = keys[keys.index(keys.startIndex, offsetBy: i)]
-        let value = images[key]!
+        let value = ImageHandler.sharedInstance.handleImage(data: images[key]!)
         let section = key / 1000
         let row = (key % 1000) % 100
         let right = key % 1000 >= 100

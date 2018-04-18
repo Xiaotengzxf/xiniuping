@@ -44,7 +44,7 @@
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="width" secondItem="8sN-WC-avr" secondAttribute="height" multiplier="1064:1354" id="1L8-DT-ky3"/>
                         <constraint firstAttribute="bottom" secondItem="yAB-mj-5Wv" secondAttribute="bottom" constant="15" id="BXR-c6-E3b"/>
@@ -58,13 +58,16 @@
                     </constraints>
                 </view>
             </subviews>
-            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="8sN-WC-avr" firstAttribute="centerY" secondItem="vUN-kp-3ea" secondAttribute="centerY" id="0Z0-A7-ckd"/>
                 <constraint firstItem="8sN-WC-avr" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="15" id="Tcr-w8-3zh"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="8sN-WC-avr" secondAttribute="trailing" constant="15" id="nJW-hS-wca"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <connections>
+                <outlet property="contentView" destination="8sN-WC-avr" id="b2r-EJ-Kdj"/>
+            </connections>
         </view>
     </objects>
     <resources>

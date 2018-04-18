@@ -35,17 +35,6 @@ class MainViewController: UIViewController , UITableViewDataSource , UITableView
         let tap = UITapGestureRecognizer(target: self, action: #selector(MainViewController.handleTap(recognizer:)))
         vNewsMore.addGestureRecognizer(tap)
         
-        if #available(iOS 11.0, *) {
-            tableView.contentInset = UIEdgeInsetsMake(-44, 0, 0, 0)
-        }
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
     }
 
     override func didReceiveMemoryWarning() {
@@ -145,7 +134,7 @@ class MainViewController: UIViewController , UITableViewDataSource , UITableView
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         if let imageView = cell.contentView.viewWithTag(2) as? UIImageView {
-            imageView.sd_setImage(with: URL(string: arrNewsData[indexPath.row]["imageThumb"].stringValue), placeholderImage: UIImage(named: "defult_image"))
+            imageView.sd_setImage(with: URL(string: arrNewsData[indexPath.row]["imageThumb"].stringValue), placeholderImage: UIImage(named: "empty_default"))
         }
         if let label = cell.contentView.viewWithTag(3) as? UILabel {
             label.text = arrNewsData[indexPath.row]["title"].string

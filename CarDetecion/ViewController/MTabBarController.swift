@@ -18,11 +18,12 @@ class MTabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(MTabBarController.handleNotification(notification:)), name: Notification.Name("tab"), object: nil)
-        self.tabBar.isHidden = true
         tabView.translatesAutoresizingMaskIntoConstraints = false
-        self.view.addSubview(tabView)
-        self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[tabView]|", options: .directionLeadingToTrailing, metrics: nil, views: ["tabView": tabView]))
-        self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[tabView(90)]|", options: .directionLeadingToTrailing, metrics: nil, views: ["tabView": tabView]))
+        self.tabBar.addSubview(tabView)
+        self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:[tabView(90)]", options: .directionLeadingToTrailing, metrics: nil, views: ["tabView": tabView]))
+        self.view.addConstraint(NSLayoutConstraint(item: tabView, attribute: .centerX, relatedBy: .equal, toItem: tabBar, attribute: .centerX, multiplier: 1, constant: 0))
+        self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[tabView(90)]", options: .directionLeadingToTrailing, metrics: nil, views: ["tabView": tabView]))
+        self.view.addConstraint(NSLayoutConstraint(item: tabView, attribute: .top, relatedBy: .equal, toItem: tabBar, attribute: .top, multiplier: 1, constant: -35))
     }
 
     override func didReceiveMemoryWarning() {
@@ -42,6 +43,10 @@ class MTabBarController: UITabBarController {
                     recordIndex = index
                     self.selectedIndex = 2
                 }
+            } else if tag == 10 {
+                if let button = tabView.viewWithTag(1) as? UIButton {
+                    tapTab(button)
+                }
             }
         }
     }
@@ -56,14 +61,6 @@ class MTabBarController: UITabBarController {
                 }
                 break;
             default:
-                for i in 1...4 {
-                    if let label = tabView.viewWithTag(10 + i) as? UIImageView {
-                        label.image = UIImage(named: "tabtitle\(i)\(i == tag ? "1" : "0")")
-                    }
-                    if let imageView = tabView.viewWithTag(110 + i) as? UIImageView {
-                        imageView.image = UIImage(named: "tab\(i)\(i == tag ? "1" : "0")")
-                    }
-                }
                 self.selectedIndex = tag - 1
                 break;
             }
@@ -92,14 +89,12 @@ class MTabBarController: UITabBarController {
         }else if UIImagePickerController.isSourceTypeAvailable(.camera){
             
             if let vc = self.storyboard?.instantiateViewController(withIdentifier: "detectionnew") as? DetectionNewViewController {
-                tabView.isHidden = true
                 navigation.pushViewController(vc, animated: true)
             }
             
         }else{
             // 模拟器
             if let vc = self.storyboard?.instantiateViewController(withIdentifier: "detectionnew") as? DetectionNewViewController {
-                tabView.isHidden = true
                 navigation.pushViewController(vc, animated: true)
             }
         }

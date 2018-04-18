@@ -15,10 +15,13 @@ import SDWebImage
 
 class RecordSuccessViewController: UIViewController , DZNEmptyDataSetDelegate , DZNEmptyDataSetSource , UITableViewDelegate , UITableViewDataSource {
 
+    @IBOutlet weak var statusIndexButton: UIButton!
+    @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView1: UITableView!
     let orderList = "external/app/getAppBillList.html"
     var curPage1 = 1
-    let status1 = "21,22,24,31,32,34,41,42,44,51,52,23,33,43,53,54,80"
+    let status1 = "21,22,24,31,32,34,41,42,44,51,52"
+    var status3 = "54,80"
     let pageSize = 10
     var data1 : [JSON] = []
     var nShowEmpty1 = 0 // 1 无数据 2 加载中 3 无网络
@@ -27,10 +30,12 @@ class RecordSuccessViewController: UIViewController , DZNEmptyDataSetDelegate , 
                       "41": "等待中评" , "42": "中评中" , "43": "中评驳回" , "44": "中评通过",
                       "51": "等待高评" , "52": "高评中" , "53": "高评驳回" , "54": "高评通过",
                       "80": "评估完成"] // 0, "提取图片"
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        title = "已提交"
+        searchBar.backgroundImage = UIImage()
         tableView1.mj_header = MJRefreshNormalHeader(refreshingBlock: {
             [weak self] in
             self?.curPage1 = 1
@@ -48,17 +53,12 @@ class RecordSuccessViewController: UIViewController , DZNEmptyDataSetDelegate , 
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.handleNotification(notification:)), name: Notification.Name("recordVC"), object: nil)
         
-        let ivTitle = UIImageView(image: UIImage(named: "tabtitle23"))
-        ivTitle.frame = CGRect(x: 0, y: 0, width: 59, height: 23)
-        navigationItem.titleView = ivTitle
+        statusIndexButton.set(title: "所有的", titlePosition: .left, additionalSpacing: 5, state: .normal)
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if let tabController = self.navigationController?.tabBarController as? MTabBarController {
-            tabController.tabView.isHidden = false
-            tabController.tabBar.isHidden = true
-        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -70,8 +70,27 @@ class RecordSuccessViewController: UIViewController , DZNEmptyDataSetDelegate , 
         NotificationCenter.default.removeObserver(self)
     }
     
+    @IBAction func chooseStatus(_ sender: Any) {
+        
+    }
+    
+//    private func modalPopView(type: PopViewType) {
+//        let popVc = PopViewController()
+//        popVc.popType = type
+//        popVc.transitioningDelegate = animationDelegate
+//        popVc.modalPresentationStyle = UIModalPresentationStyle.Custom
+//        popVc.selectDelegate = self
+//        animationDelegate.popViewType = type
+//        presentViewController(popVc, animated: true, completion: nil)
+//
+//    }
+    
     func handleNotification(notification : Notification)  {
-        self.tableView1.mj_header.beginRefreshing()
+        if let tag = notification.object as? Int {
+            if tag == 0 {
+                self.tableView1.mj_header.beginRefreshing()
+            }
+        }
     }
     
     func getBillList1() {
@@ -80,7 +99,7 @@ class RecordSuccessViewController: UIViewController , DZNEmptyDataSetDelegate , 
         var page = 0
         var status = ""
         page = curPage1
-        status = status1
+        status = status1 + status3
         params["curPage"] = "\(page)"
         params["pageSize"] = "\(pageSize)"
         params["status"] = status
@@ -129,26 +148,40 @@ class RecordSuccessViewController: UIViewController , DZNEmptyDataSetDelegate , 
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell1", for: indexPath) as! RecordTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! RecordTableViewCell
         cell.tag = indexPath.row
         if let label = cell.contentView.viewWithTag(3) as? UILabel {
             label.text = "单号：\(data1[indexPath.row]["carBillId"].string ?? "")"
         }
         if let label = cell.contentView.viewWithTag(5) as? UILabel {
-            label.text = "审核进度：\(statusInfo["\(data1[indexPath.row]["status"].int ?? 0)"]!)"
-            label.textColor = UIColor.rgbColorFromHex(rgb: 0xF86765)
+            label.text = "评估价格：\(data1[indexPath.row]["evaluatePrice"].string ?? "")"
             
         }
         if let label = cell.contentView.viewWithTag(4) as? UILabel {
             label.text = "创建时间：\(data1[indexPath.row]["createTime"].string ?? "")"
-            label.textColor = UIColor.darkGray
         }
         if let imageView = cell.contentView.viewWithTag(2) as? UIImageView {
             let imagePath = data1[indexPath.row]["imageThumbPath"].string ?? ""
             if imagePath.characters.count > 0 {
-                imageView.sd_setImage(with: URL(string: "\(NetworkManager.sharedInstall.domain)\(imagePath)"), placeholderImage: UIImage(named: "defult_image"))
+                imageView.sd_setImage(with: URL(string: "\(NetworkManager.sharedInstall.domain)\(imagePath)"), placeholderImage: UIImage(named: "empty_default"))
             }else{
-                imageView.image = UIImage(named: "defult_image")
+                imageView.image = UIImage(named: "empty_default")
+            }
+        }
+        if let imageView = cell.contentView.viewWithTag(20) as? UIImageView {
+            let status = "\(data1[indexPath.row]["status"].int ?? 0)"
+            if status3.contains(status) {
+                imageView.image = UIImage(named: "icon_finished")
+            } else {
+                imageView.image = UIImage(named: "icon_refresh")
+            }
+        }
+        if let label = cell.contentView.viewWithTag(21) as? UILabel {
+            let status = "\(data1[indexPath.row]["status"].int ?? 0)"
+            if status3.contains(status) {
+                label.text = "已完成"
+            } else {
+                label.text = "评估中"
             }
         }
         return cell
@@ -156,11 +189,23 @@ class RecordSuccessViewController: UIViewController , DZNEmptyDataSetDelegate , 
  
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        if let controller = self.storyboard?.instantiateViewController(withIdentifier: "recorddetail") as? RecordDetailViewController {
-            controller.json = data1[indexPath.row]
-            controller.statusInfo = statusInfo
-            controller.flag = 1
-            self.navigationController?.pushViewController(controller, animated: true)
+        let status = "\(data1[indexPath.row]["status"].int ?? 0)"
+        if status3.contains(status) {
+            if let controller = self.storyboard?.instantiateViewController(withIdentifier: "recorddetail") as? RecordDetailViewController {
+                controller.json = data1[indexPath.row]
+                controller.statusInfo = statusInfo
+                controller.flag = 3
+                controller.hidesBottomBarWhenPushed = true
+                self.navigationController?.pushViewController(controller, animated: true)
+            }
+        } else {
+            if let controller = self.storyboard?.instantiateViewController(withIdentifier: "recorddetail") as? RecordDetailViewController {
+                controller.json = data1[indexPath.row]
+                controller.statusInfo = statusInfo
+                controller.flag = 1
+                controller.hidesBottomBarWhenPushed = true
+                self.navigationController?.pushViewController(controller, animated: true)
+            }
         }
     }
 
@@ -218,3 +263,10 @@ class RecordSuccessViewController: UIViewController , DZNEmptyDataSetDelegate , 
     }
 
 }
+
+//extension RecordSuccessViewController: DidSelectPopViewCellDelegate { 
+//    func didSelectRowAtIndexPath(_ indexPath: IndexPath) {
+//        print("点击了第\(indexPath.row)个")
+//    }
+//}
+

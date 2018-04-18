@@ -15,6 +15,7 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var tfUserName: UITextField!
     @IBOutlet weak var tfPwd: UITextField!
     @IBOutlet weak var btnLogin: UIButton!
+    @IBOutlet weak var btnPwdShow: UIButton!
     let login = "external/app/checkUser.html"
     
     override func viewDidLoad() {
@@ -152,6 +153,16 @@ class LoginViewController: UIViewController {
             self.present(controller, animated: true, completion: { 
                 
             })
+        }
+    }
+    
+    @IBAction func showPWD(_ sender: Any) {
+        if btnPwdShow.isSelected {
+            btnPwdShow.isSelected = false
+            tfPwd.isSecureTextEntry = true
+        } else {
+            btnPwdShow.isSelected = true
+            tfPwd.isSecureTextEntry = false
         }
     }
 }

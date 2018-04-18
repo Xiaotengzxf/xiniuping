@@ -12,7 +12,6 @@ class LoadingView: UIView {
 
     @IBOutlet weak var lblOrderId: UILabel!
     @IBOutlet weak var lblLoading: UILabel!
-    @IBOutlet weak var lblTime: UILabel!
     
 
 }

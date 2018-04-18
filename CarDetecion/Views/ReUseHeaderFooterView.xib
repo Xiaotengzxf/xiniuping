@@ -32,6 +32,16 @@
                             <color key="textColor" red="0.31372549019607843" green="0.62745098039215685" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
+                        <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eNy-fh-9KC">
+                            <rect key="frame" x="326" y="0.0" width="44" height="44"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="44" id="InX-zv-nNW"/>
+                            </constraints>
+                            <state key="normal" image="icon_reject"/>
+                            <connections>
+                                <action selector="showRejectView:" destination="-2" eventType="touchUpInside" id="5bq-57-Qva"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" red="0.94901960784313721" green="0.94901960784313721" blue="0.94901960784313721" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
@@ -39,6 +49,9 @@
                         <constraint firstItem="NhZ-jW-gfj" firstAttribute="centerY" secondItem="5ex-Vo-8fM" secondAttribute="centerY" id="Dfu-wH-Aey"/>
                         <constraint firstItem="5ex-Vo-8fM" firstAttribute="leading" secondItem="mm4-c7-maz" secondAttribute="leading" constant="10" id="KIi-Od-NM9"/>
                         <constraint firstItem="NhZ-jW-gfj" firstAttribute="leading" secondItem="5ex-Vo-8fM" secondAttribute="trailing" constant="10" id="Ufo-I0-dNd"/>
+                        <constraint firstAttribute="bottom" secondItem="eNy-fh-9KC" secondAttribute="bottom" id="Vvk-sr-Hmw"/>
+                        <constraint firstAttribute="trailing" secondItem="eNy-fh-9KC" secondAttribute="trailing" constant="5" id="Y6b-Ow-owk"/>
+                        <constraint firstItem="eNy-fh-9KC" firstAttribute="top" secondItem="mm4-c7-maz" secondAttribute="top" id="kKA-S9-Rml"/>
                     </constraints>
                 </view>
             </subviews>
@@ -53,6 +66,7 @@
             <nil key="simulatedTopBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
+                <outlet property="btnReject" destination="eNy-fh-9KC" id="iLZ-a1-NO6"/>
                 <outlet property="lblTitle" destination="NhZ-jW-gfj" id="Nv0-Hf-RTw"/>
             </connections>
             <point key="canvasLocation" x="34.5" y="-384"/>
@@ -60,5 +74,6 @@
     </objects>
     <resources>
         <image name="icon_circle" width="52" height="36"/>
+        <image name="icon_reject" width="33" height="43"/>
     </resources>
 </document>

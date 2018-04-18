@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -20,7 +21,38 @@
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon" translatesAutoresizingMaskIntoConstraints="NO" id="r1r-NL-XJ0">
+                                <rect key="frame" x="112" y="140" width="150" height="150"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="150" id="feT-Gb-ydH"/>
+                                    <constraint firstAttribute="width" secondItem="r1r-NL-XJ0" secondAttribute="height" id="pbN-XI-4bJ"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="犀牛二手车评估软件" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0k2-ek-VzK">
+                                <rect key="frame" x="50" y="419" width="275" height="24"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="欢迎使用" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hpa-yi-Ohq">
+                                <rect key="frame" x="50" y="390" width="275" height="24"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="hpa-yi-Ohq" secondAttribute="trailing" constant="50" id="1Qe-YG-EDo"/>
+                            <constraint firstItem="0k2-ek-VzK" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" constant="50" id="7Tw-EO-O4q"/>
+                            <constraint firstItem="hpa-yi-Ohq" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" constant="50" id="Aab-au-hl7"/>
+                            <constraint firstItem="hpa-yi-Ohq" firstAttribute="top" secondItem="r1r-NL-XJ0" secondAttribute="bottom" constant="100" id="BCe-ZW-7s2"/>
+                            <constraint firstItem="0k2-ek-VzK" firstAttribute="top" secondItem="hpa-yi-Ohq" secondAttribute="bottom" constant="5" id="E8u-8Y-20e"/>
+                            <constraint firstAttribute="trailing" secondItem="0k2-ek-VzK" secondAttribute="trailing" constant="50" id="ESb-4M-rcM"/>
+                            <constraint firstItem="r1r-NL-XJ0" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" constant="120" id="KM7-Et-p5X"/>
+                            <constraint firstItem="r1r-NL-XJ0" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="bc2-ma-3Sj"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -28,4 +60,7 @@
             <point key="canvasLocation" x="53" y="375"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="icon" width="245" height="242"/>
+    </resources>
 </document>

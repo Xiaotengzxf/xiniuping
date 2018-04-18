@@ -663,6 +663,13 @@ public class CameraViewController: UIViewController {
     
     internal func saveImage(image: UIImage) {
         self.layoutCameraResult(image: image)
+        UIImageWriteToSavedPhotosAlbum(image, self, #selector(self.image(image:didFinishSavingWithError:contextInfo:)), nil)
+    }
+    
+    func image(image:UIImage,didFinishSavingWithError error:NSError?,contextInfo:AnyObject) {
+        if error != nil {
+            print("保存相册失败")
+        }
     }
     
     // 关闭按钮事件

@@ -12,16 +12,22 @@ class ImageHandler: NSObject {
     
     static let sharedInstance = ImageHandler()
     
-    func handleImage(image: UIImage) -> UIImage {
+    func handleImage(image: UIImage) -> Data {
         if var data = UIImageJPEGRepresentation(image, 0.9) {
             var i = 9
             while NSData(data: data).length > 500 * 1024 {
                 i -= 1
                 data = UIImageJPEGRepresentation(image, CGFloat(i) / 10)!
             }
-            return UIImage(data: data)!
+            print("图片大小：\(NSData(data: data).length)")
+            return data
         } else {
-            return image
+            return UIImageJPEGRepresentation(image, 1)!
         }
+    }
+    
+    func handleImage(data: Data) -> Data {
+        let image = UIImage(data: data)!
+        return handleImage(image: image)
     }
 }

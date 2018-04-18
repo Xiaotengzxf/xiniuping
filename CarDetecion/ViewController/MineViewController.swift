@@ -13,70 +13,75 @@ class MineViewController: UIViewController {
     var titles : [[String]]!
     var icons : [[String]]!
     @IBOutlet weak var lblUserInfo: UILabel!
-    @IBOutlet weak var rightConstraint: NSLayoutConstraint!
-    @IBOutlet weak var leftConstraint: NSLayoutConstraint!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        title = "我的"
+        let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? ""
         if let userinfo = UserDefaults.standard.object(forKey: "userinfo") as? [String : Any] {
             lblUserInfo.text = "所属公司：\(userinfo["companyName"] as? String ?? "") \n" +
-                               "账号：\(userinfo["userChineseName"] as? String ?? "") \n" +
-                               "电话： \n" +
-                               "QQ:  \n" +
-                               "微信： \n"
+                "\n" +
+                "账       号：\(userinfo["userChineseName"] as? String ?? "") \n" +
+                "\n" +
+               "版       本： V\(version)\n" +
+                "\n" +
+               "手       机： \n" +
+                "\n" +
+               "Q         Q:  \n" +
+                "\n" +
+               "微       信： \n"
         }
-        
-        let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? ""
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "V\(version)", style: .plain, target: nil, action: nil)
-        let constant = (WIDTH - 300) / 8
-        leftConstraint.constant = constant
-        rightConstraint.constant = constant
-        
-        let ivTitle = UIImageView(image: UIImage(named: "tabtitle43"))
-        ivTitle.frame = CGRect(x: 0, y: 0, width: 47, height: 23)
-        navigationItem.titleView = ivTitle
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        if let tabController = self.navigationController?.tabBarController as? MTabBarController {
-            tabController.tabView.isHidden = false
-        }
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
- 
+    
     @IBAction func handleTap(_ sender: Any) {
-        if let button = sender as? UIButton {
-            let tag = button.tag
+        if let recognizer = sender as? UITapGestureRecognizer {
+            let tag = recognizer.view?.tag ?? 0
             switch tag {
             case 1:
                 if let controller = self.storyboard?.instantiateViewController(withIdentifier: "default") as? DefaultViewController {
                     controller.title = "关于"
                     controller.hidesBottomBarWhenPushed = true
                     controller.flag = 1
-                    if let tabController = self.navigationController?.tabBarController as? MTabBarController {
-                        tabController.tabView.isHidden = true
-                    }
                     self.navigationController?.pushViewController(controller, animated: true)
                 }
                 break
             case 2:
-                if let controller = self.storyboard?.instantiateViewController(withIdentifier: "info") as? InfoTableViewController {
-                    controller.title = "个人资料"
-                    controller.hidesBottomBarWhenPushed = true
-                    if let tabController = self.navigationController?.tabBarController as? MTabBarController {
-                        tabController.tabView.isHidden = true
+                let pageDetail = "external/pageelement/pageDetail.html"
+                NetworkManager.sharedInstall.request(url: pageDetail, params: ["id" : 4, "clientName" : "iOS"]) {[weak self](json, error) in
+                    if error != nil {
+                        print(error!.localizedDescription)
+                    }else{
+                        if let data = json {
+                            if let controller = self?.storyboard?.instantiateViewController(withIdentifier: "newsdetail") as? NewsDetailController {
+                                controller.title = "拒评规则"
+                                controller.json = data
+                                self?.navigationController?.pushViewController(controller, animated: true)
+                            }
+                        }
                     }
+                }
+                break
+            case 3:
+                if let controller = self.storyboard?.instantiateViewController(withIdentifier: "info") as? InfoTableViewController {
+                    controller.title = "我的信息"
+                    controller.hidesBottomBarWhenPushed = true
                     self.navigationController?.pushViewController(controller, animated: true)
+                }
+                break
+            case 4:
+                if let username = UserDefaults.standard.object(forKey: "username") as? String {
+                    let strUrl = "\(NetworkManager.sharedInstall.domain)/external/app/getAppPageElement.html?id=3&userName=\(username)&clientName=iOS"
+                    if let controller = self.storyboard?.instantiateViewController(withIdentifier: "detectionweb") as? DetectionWebViewController {
+                        controller.title = "拍照手册"
+                        controller.strUrl = strUrl
+                        controller.hidesBottomBarWhenPushed = true
+                        self.navigationController?.pushViewController(controller, animated: true)
+                    }
                 }
                 break
             default:

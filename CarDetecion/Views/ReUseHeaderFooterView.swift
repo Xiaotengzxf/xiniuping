@@ -11,5 +11,14 @@ import UIKit
 class ReUseHeaderFooterView: UITableViewHeaderFooterView {
 
     @IBOutlet weak var lblTitle: UILabel!
+    weak var delegate: ReUseHeaderFooterViewDelegate?
+    @IBOutlet weak var btnReject: UIButton!
+    
+    @IBAction func showRejectView(_ sender: Any) {
+        delegate?.showRejectView()
+    }
+}
 
+protocol ReUseHeaderFooterViewDelegate: NSObjectProtocol {
+    func showRejectView()
 }

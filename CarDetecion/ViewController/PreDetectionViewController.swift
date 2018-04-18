@@ -322,7 +322,7 @@ class PreDetectionViewController: UIViewController, UITableViewDelegate, UITable
                         imageView.image = image
                     }
                 }else{
-                    imageView.image = UIImage(named: "defult_image")
+                    imageView.image = UIImage(named: "empty_default")
                 }
             }
             
@@ -362,9 +362,9 @@ class PreDetectionViewController: UIViewController, UITableViewDelegate, UITable
             if let imageView = cell.contentView.viewWithTag(2) as? UIImageView {
                 let imagePath = data1[indexPath.row]["imageThumbPath"].string ?? ""
                 if imagePath.characters.count > 0 {
-                    imageView.sd_setImage(with: URL(string: "\(NetworkManager.sharedInstall.domain)\(imagePath)"), placeholderImage: UIImage(named: "defult_image"))
+                    imageView.sd_setImage(with: URL(string: "\(NetworkManager.sharedInstall.domain)\(imagePath)"), placeholderImage: UIImage(named: "empty_default"))
                 }else{
-                    imageView.image = UIImage(named: "defult_image")
+                    imageView.image = UIImage(named: "empty_default")
                 }
             }
             if let label = cell.contentView.viewWithTag(8) as? UILabel {
@@ -398,9 +398,9 @@ class PreDetectionViewController: UIViewController, UITableViewDelegate, UITable
             if let imageView = cell.contentView.viewWithTag(2) as? UIImageView {
                 let imagePath = data2[indexPath.row]["imageThumbPath"].string ?? ""
                 if imagePath.characters.count > 0 {
-                    imageView.sd_setImage(with: URL(string: "\(NetworkManager.sharedInstall.domain)\(imagePath)"), placeholderImage: UIImage(named: "defult_image"))
+                    imageView.sd_setImage(with: URL(string: "\(NetworkManager.sharedInstall.domain)\(imagePath)"), placeholderImage: UIImage(named: "empty_default"))
                 }else{
-                    imageView.image = UIImage(named: "defult_image")
+                    imageView.image = UIImage(named: "empty_default")
                 }
                 
             }

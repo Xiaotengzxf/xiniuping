@@ -13,11 +13,11 @@ import SwiftyJSON
 class NetworkManager {
     
     static let sharedInstall = NetworkManager() // 单例
-    // 119.23.128.214 开发环境 112.74.65.110 生产环境
+    // 119.23.128.214 开发环境 119.23.19.66 生产环境
 //    #if DEBUG
-//        let domain = "http://119.23.128.214:8080/carWeb"
+        let domain = "http://119.23.128.214:8080/carWeb"
 //    #else
-        let domain = "http://112.74.65.110:8080/carWeb"
+ //       let domain = "http://119.23.19.66:8080/carWeb"
    // #endif
     
     

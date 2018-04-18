@@ -52,6 +52,7 @@ class DetectionNewViewController: UIViewController , UITableViewDataSource , UIT
     var fWebViewCellHeight : Float = 100
     var unfinished = false
     var onceOrderId = ""
+    var rejectView: RejectView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -115,6 +116,7 @@ class DetectionNewViewController: UIViewController , UITableViewDataSource , UIT
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         if (!self.navigationController!.viewControllers.contains(self)) && bSave == false && source != 1 {
+            NotificationCenter.default.post(name: Notification.Name("tab"), object: 10)
             self.save(UIButton())
         }
     }
@@ -338,6 +340,7 @@ class DetectionNewViewController: UIViewController , UITableViewDataSource , UIT
         let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: button, style: .cancel, handler: {[weak self] (action) in
             if message == "保存成功" {
+                NotificationCenter.default.post(name: Notification.Name("tab"), object: 10)
                 self?.navigationController?.popViewController(animated: true)
             }
         }))
@@ -473,18 +476,15 @@ class DetectionNewViewController: UIViewController , UITableViewDataSource , UIT
         }else{
             count = sectionTitles.count - 1
         }
-        if source == 1 {
-            count += 1
-        }
         return count
         
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let nMin = source == 1 ? 1 : 0
-        let nMax = source == 1 ? 9 : 8
+        let nMin = 0
+        let nMax = 8
         if section < nMax && section >= nMin {
-            let nSection = source==1 ? section - 1 : section
+            let nSection = section
             var count = titles[nSection].count + 1
             if images.count > 0 {
                 let array = images.keys.filter{$0 >= nSection * 1000 && $0 < (nSection + 1) * 1000}
@@ -507,10 +507,10 @@ class DetectionNewViewController: UIViewController , UITableViewDataSource , UIT
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let nMin = source == 1 ? 1 : 0
-        let nMax = source == 1 ? 9 : 8
+        let nMin = 0
+        let nMax = 8
         if indexPath.section < nMax && indexPath.section >= nMin {
-            let nSection = source==1 ? indexPath.section - 1 : indexPath.section
+            let nSection = indexPath.section
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! DetectionTableViewCell
             cell.vCamera1.layer.cornerRadius = 6.0
             cell.vCamera2.layer.cornerRadius = 6.0
@@ -718,17 +718,6 @@ class DetectionNewViewController: UIViewController , UITableViewDataSource , UIT
             }
             return cell
         }else{
-            if source == 1 && indexPath.section == 0 {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "cell4", for: indexPath) as! Detection4TableViewCell
-                cell.contentView.layer.borderWidth = 0.5
-                cell.delegate = self
-                cell.showWebView(htmlString: json?["applyAllOpinion"].string ?? "")
-                cell.contentView.layer.borderColor = UIColor.clear.cgColor
-                if unfinished {
-                    cell.isUserInteractionEnabled = false
-                }
-                return cell
-            }
             if bGuanghui {
                 if indexPath.section == nMax + 1 {
                     let cell = tableView.dequeueReusableCell(withIdentifier: "cell3", for: indexPath) as! Detection3TableViewCell
@@ -796,16 +785,16 @@ class DetectionNewViewController: UIViewController , UITableViewDataSource , UIT
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let nMin = source == 1 ? 1 : 0
-        let nMax = source == 1 ? 9 : 8
+        let nMin = 0
+        let nMax = 8
         if indexPath.section < nMax && indexPath.section >= nMin {
             return 10 + (WIDTH / 2 - 15) / 3 * 2.0
         }else if indexPath.section == nMax {
             return 44
         }else{
-            if source == 1 && indexPath.section == 0 {
-                return CGFloat(fWebViewCellHeight + 20)
-            }
+//            if source == 1 && indexPath.section == 0 {
+//                return CGFloat(fWebViewCellHeight + 20)
+//            }
             if bGuanghui {
                 if indexPath.section == nMax + 1 {
                     return 60
@@ -821,24 +810,23 @@ class DetectionNewViewController: UIViewController , UITableViewDataSource , UIT
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: "header") as! ReUseHeaderFooterView
-        let nMin = source == 1 ? 1 : 0
-        let nMax = source == 1 ? 9 : 8
-        let nSection = source==1 ? section - 1 : section
+        view.delegate = self
+        let nMin = 0
+        let nMax = 8
+        let nSection = section
         if section < nMax && section >= nMin {
             view.lblTitle.text = sectionTitles[nSection]
+            view.btnReject.isHidden = !(source == 1 && section == 0)
         }else if section == nMax {
+            view.btnReject.isHidden = true
             view.lblTitle.text = sectionTitles[nSection]
         }else{
-            if source == 1 && section == 0 {
-                view.lblTitle.text = "退回原因"
+            view.btnReject.isHidden = true
+            if bGuanghui {
+                view.lblTitle.text = sectionTitles[nSection]
             }else{
-                if bGuanghui {
-                    view.lblTitle.text = sectionTitles[nSection]
-                }else{
-                    view.lblTitle.text = sectionTitles[nSection + 1]
-                }
+                view.lblTitle.text = sectionTitles[nSection + 1]
             }
-            
         }
         return view
     }
@@ -895,4 +883,25 @@ class DetectionNewViewController: UIViewController , UITableViewDataSource , UIT
         }
     }
     
+}
+
+extension DetectionNewViewController: ReUseHeaderFooterViewDelegate {
+    func showRejectView() {
+        rejectView = Bundle.main.loadNibNamed("RejectView", owner: nil, options: nil)?.first as? RejectView
+        rejectView?.translatesAutoresizingMaskIntoConstraints = false
+        rejectView?.delegate = self
+        rejectView?.showWebView(htmlString: json?["applyAllOpinion"].string ?? "")
+        self.view.addSubview(rejectView!)
+            
+        self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[rejectView]|", options: .directionLeadingToTrailing, metrics: nil, views: ["rejectView": rejectView!]))
+        self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[rejectView]|", options: .directionLeadingToTrailing, metrics: nil, views: ["rejectView": rejectView!]))
+        
+    }
+}
+
+extension DetectionNewViewController: RejectViewDelegate {
+    func hideRejectView() {
+        rejectView?.removeFromSuperview()
+        rejectView = nil
+    }
 }
