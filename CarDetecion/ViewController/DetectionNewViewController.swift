@@ -52,7 +52,6 @@ class DetectionNewViewController: UIViewController , UITableViewDataSource , UIT
     var fWebViewCellHeight : Float = 100
     var unfinished = false
     var onceOrderId = ""
-    var rejectView: RejectView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -94,14 +93,11 @@ class DetectionNewViewController: UIViewController , UITableViewDataSource , UIT
             }
         }
         
-        let ivTitle = UIImageView(image: UIImage(named: "detection_title"))
-        ivTitle.frame = CGRect(x: 0, y: 0, width: 74, height: 23)
-        navigationItem.titleView = ivTitle
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.navigationController?.navigationBar.lt_setBackgroundColor(backgroundColor: UIColor(red: 55/255.0, green: 70/255.0, blue: 85/255.0, alpha: 1))
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -116,7 +112,6 @@ class DetectionNewViewController: UIViewController , UITableViewDataSource , UIT
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         if (!self.navigationController!.viewControllers.contains(self)) && bSave == false && source != 1 {
-            NotificationCenter.default.post(name: Notification.Name("tab"), object: 10)
             self.save(UIButton())
         }
     }
@@ -152,6 +147,20 @@ class DetectionNewViewController: UIViewController , UITableViewDataSource , UIT
             }
         }
     }
+    
+    // 拍照类型
+//    func setCameraType() {
+//        let action = UIAlertController(title: "拍照类型", message: nil, preferredStyle: .actionSheet)
+//        action.addAction(UIAlertAction(title: "取消", style: .cancel, handler: { (action) in
+//            
+//        }))
+//        action.addAction(UIAlertAction(title: "单拍", style: .default, handler: {[weak self] (action) in
+//            self?.cameraType = 0
+//        }))
+//        action.addAction(UIAlertAction(title: "连拍", style: .default, handler: {[weak self] (action) in
+//            self?.cameraType = 1
+//        }))
+//    }
     
     // 通知处理
     func handleNotification(notification : Notification) {
@@ -196,6 +205,28 @@ class DetectionNewViewController: UIViewController , UITableViewDataSource , UIT
             }else{
                 getWaterMark(tag: tag)
             }
+//            if companyOtherNeed.contains(tag) {
+//                if waterMarks.count > 0{
+//                    pushToCamera(tag: tag)
+//                }else{
+//                    getWaterMark(tag: tag)
+//                }
+//            }else{
+//                let section = tag / 1000
+//                //let row = tag % 1000 % 100
+//                //let right = tag % 100 >= 100
+//                let array = companyOtherNeed.sorted()
+//                for value in array {
+//                    if value / 1000 == section {
+//                        if value < tag {
+//                            if images[value] == nil {
+//                                self.showAlert(title: nil, message: "请先拍照：\(titles[value / 1000][((value % 1000) % 100) * 2 + (value % 1000 >= 100 ? 1 : 0)])" , button: "确定")
+//                                return
+//                            }
+//                        }
+//                    }
+//                }
+//            }
         }
         
     }
@@ -210,11 +241,13 @@ class DetectionNewViewController: UIViewController , UITableViewDataSource , UIT
                 self?.tableView.reloadData()
             }
         }
+        //camera.cameraType = cameraType
         camera.nTag = nTag
         camera.sectionTiltes = sectionTitles
         camera.titles = titles
         camera.waterMarks = waterMarks
         camera.companyNeed = companyOtherNeed
+        //camera.transitioningDelegate = self
         self.present(camera, animated: true) {
             
         }
@@ -340,7 +373,6 @@ class DetectionNewViewController: UIViewController , UITableViewDataSource , UIT
         let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: button, style: .cancel, handler: {[weak self] (action) in
             if message == "保存成功" {
-                NotificationCenter.default.post(name: Notification.Name("tab"), object: 10)
                 self?.navigationController?.popViewController(animated: true)
             }
         }))
@@ -476,15 +508,18 @@ class DetectionNewViewController: UIViewController , UITableViewDataSource , UIT
         }else{
             count = sectionTitles.count - 1
         }
+        if source == 1 {
+            count += 1
+        }
         return count
         
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let nMin = 0
-        let nMax = 8
+        let nMin = source == 1 ? 1 : 0
+        let nMax = source == 1 ? 9 : 8
         if section < nMax && section >= nMin {
-            let nSection = section
+            let nSection = source==1 ? section - 1 : section
             var count = titles[nSection].count + 1
             if images.count > 0 {
                 let array = images.keys.filter{$0 >= nSection * 1000 && $0 < (nSection + 1) * 1000}
@@ -507,10 +542,10 @@ class DetectionNewViewController: UIViewController , UITableViewDataSource , UIT
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let nMin = 0
-        let nMax = 8
+        let nMin = source == 1 ? 1 : 0
+        let nMax = source == 1 ? 9 : 8
         if indexPath.section < nMax && indexPath.section >= nMin {
-            let nSection = indexPath.section
+            let nSection = source==1 ? indexPath.section - 1 : indexPath.section
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! DetectionTableViewCell
             cell.vCamera1.layer.cornerRadius = 6.0
             cell.vCamera2.layer.cornerRadius = 6.0
@@ -590,7 +625,7 @@ class DetectionNewViewController: UIViewController , UITableViewDataSource , UIT
                     cell.iv11.isHidden = true
                     cell.vCamera1.layer.borderColor = UIColor(red: 230/255.0, green: 230/255.0, blue: 230/255.0, alpha: 1).cgColor
                 }else{
-                    cell.iv1.image = UIImage(named: "camera_bg")
+                    cell.iv1.image = nil
                     cell.lbl1.isHidden = false
                     cell.iv11.isHidden = false
                     cell.lbl11.isHidden = true
@@ -605,7 +640,7 @@ class DetectionNewViewController: UIViewController , UITableViewDataSource , UIT
                     cell.iv11.isHidden = true
                     cell.vCamera1.layer.borderColor = UIColor(red: 230/255.0, green: 230/255.0, blue: 230/255.0, alpha: 1).cgColor
                 }else{
-                    cell.iv1.image = UIImage(named: "camera_bg")
+                    cell.iv1.image = nil
                     cell.lbl1.isHidden = false
                     cell.lbl11.isHidden = true
                     cell.iv11.isHidden = false
@@ -655,7 +690,7 @@ class DetectionNewViewController: UIViewController , UITableViewDataSource , UIT
                     cell.iv21.isHidden = true
                     cell.vCamera2.layer.borderColor = UIColor(red: 230/255.0, green: 230/255.0, blue: 230/255.0, alpha: 1).cgColor
                 }else{
-                    cell.iv2.image = UIImage(named: "camera_bg")
+                    cell.iv2.image = nil
                     cell.lbl2.isHidden = false
                     cell.lbl22.isHidden = true
                     cell.iv21.isHidden = false
@@ -670,7 +705,7 @@ class DetectionNewViewController: UIViewController , UITableViewDataSource , UIT
                     cell.iv21.isHidden = true
                     cell.vCamera2.layer.borderColor = UIColor(red: 230/255.0, green: 230/255.0, blue: 230/255.0, alpha: 1).cgColor
                 }else{
-                    cell.iv2.image = UIImage(named: "camera_bg")
+                    cell.iv2.image = nil
                     cell.lbl2.isHidden = false
                     cell.lbl22.isHidden = true
                     cell.iv21.isHidden = false
@@ -718,6 +753,17 @@ class DetectionNewViewController: UIViewController , UITableViewDataSource , UIT
             }
             return cell
         }else{
+            if source == 1 && indexPath.section == 0 {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "cell4", for: indexPath) as! Detection4TableViewCell
+                cell.contentView.layer.borderWidth = 0.5
+                cell.delegate = self
+                cell.showWebView(htmlString: json?["applyAllOpinion"].string ?? "")
+                cell.contentView.layer.borderColor = UIColor.clear.cgColor
+                if unfinished {
+                    cell.isUserInteractionEnabled = false
+                }
+                return cell
+            }
             if bGuanghui {
                 if indexPath.section == nMax + 1 {
                     let cell = tableView.dequeueReusableCell(withIdentifier: "cell3", for: indexPath) as! Detection3TableViewCell
@@ -785,16 +831,16 @@ class DetectionNewViewController: UIViewController , UITableViewDataSource , UIT
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let nMin = 0
-        let nMax = 8
+        let nMin = source == 1 ? 1 : 0
+        let nMax = source == 1 ? 9 : 8
         if indexPath.section < nMax && indexPath.section >= nMin {
             return 10 + (WIDTH / 2 - 15) / 3 * 2.0
         }else if indexPath.section == nMax {
             return 44
         }else{
-//            if source == 1 && indexPath.section == 0 {
-//                return CGFloat(fWebViewCellHeight + 20)
-//            }
+            if source == 1 && indexPath.section == 0 {
+                return CGFloat(fWebViewCellHeight + 20)
+            }
             if bGuanghui {
                 if indexPath.section == nMax + 1 {
                     return 60
@@ -810,23 +856,24 @@ class DetectionNewViewController: UIViewController , UITableViewDataSource , UIT
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: "header") as! ReUseHeaderFooterView
-        view.delegate = self
-        let nMin = 0
-        let nMax = 8
-        let nSection = section
+        let nMin = source == 1 ? 1 : 0
+        let nMax = source == 1 ? 9 : 8
+        let nSection = source==1 ? section - 1 : section
         if section < nMax && section >= nMin {
             view.lblTitle.text = sectionTitles[nSection]
-            view.btnReject.isHidden = !(source == 1 && section == 0)
         }else if section == nMax {
-            view.btnReject.isHidden = true
             view.lblTitle.text = sectionTitles[nSection]
         }else{
-            view.btnReject.isHidden = true
-            if bGuanghui {
-                view.lblTitle.text = sectionTitles[nSection]
+            if source == 1 && section == 0 {
+                view.lblTitle.text = "退回原因"
             }else{
-                view.lblTitle.text = sectionTitles[nSection + 1]
+                if bGuanghui {
+                    view.lblTitle.text = sectionTitles[nSection]
+                }else{
+                    view.lblTitle.text = sectionTitles[nSection + 1]
+                }
             }
+            
         }
         return view
     }
@@ -883,25 +930,4 @@ class DetectionNewViewController: UIViewController , UITableViewDataSource , UIT
         }
     }
     
-}
-
-extension DetectionNewViewController: ReUseHeaderFooterViewDelegate {
-    func showRejectView() {
-        rejectView = Bundle.main.loadNibNamed("RejectView", owner: nil, options: nil)?.first as? RejectView
-        rejectView?.translatesAutoresizingMaskIntoConstraints = false
-        rejectView?.delegate = self
-        rejectView?.showWebView(htmlString: json?["applyAllOpinion"].string ?? "")
-        self.view.addSubview(rejectView!)
-            
-        self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[rejectView]|", options: .directionLeadingToTrailing, metrics: nil, views: ["rejectView": rejectView!]))
-        self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[rejectView]|", options: .directionLeadingToTrailing, metrics: nil, views: ["rejectView": rejectView!]))
-        
-    }
-}
-
-extension DetectionNewViewController: RejectViewDelegate {
-    func hideRejectView() {
-        rejectView?.removeFromSuperview()
-        rejectView = nil
-    }
 }
