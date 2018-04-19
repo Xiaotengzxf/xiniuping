@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		891B57432088161200ED83CE /* PopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 893E8EB42087A196000557E2 /* PopViewController.swift */; };
+		891B57442088161200ED83CE /* CommonTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 893E8EB52087A196000557E2 /* CommonTool.swift */; };
+		891B57452088161200ED83CE /* PopoverAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 893E8EB62087A196000557E2 /* PopoverAnimation.swift */; };
+		891B57462088161200ED83CE /* PopverPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 893E8EB72087A196000557E2 /* PopverPresentationController.swift */; };
 		8920A31D1EB84B1B005DC01B /* PreDetectionListTVController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8920A31C1EB84B1B005DC01B /* PreDetectionListTVController.swift */; };
 		8920A31F1EB8964E005DC01B /* CarModelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8920A31E1EB8964E005DC01B /* CarModelController.swift */; };
 		89217BEE1F6E7D1700E98D13 /* FileAttachViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89217BED1F6E7D1700E98D13 /* FileAttachViewController.swift */; };
@@ -1877,6 +1881,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				891B57432088161200ED83CE /* PopViewController.swift in Sources */,
+				891B57442088161200ED83CE /* CommonTool.swift in Sources */,
+				891B57452088161200ED83CE /* PopoverAnimation.swift in Sources */,
+				891B57462088161200ED83CE /* PopverPresentationController.swift in Sources */,
 				897C6E111EBF578F00B22203 /* HDBubbleView+Track.m in Sources */,
 				897C6DFC1EBF578F00B22203 /* FixFopen.c in Sources */,
 				897C6DEF1EBF578F00B22203 /* HDSDKHelper.m in Sources */,

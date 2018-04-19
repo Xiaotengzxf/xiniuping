@@ -35,6 +35,7 @@ class RecordViewController: UIViewController , DZNEmptyDataSetDelegate , DZNEmpt
                       "80": "评估完成"] // 0, "提取图片"
     var loadingView: LoadingView?
     var shadow: UIView?
+    let animationDelegate = PopoverAnimation()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,7 +57,7 @@ class RecordViewController: UIViewController , DZNEmptyDataSetDelegate , DZNEmpt
         
         getBillList2()
         
-        statusIndexButton.set(title: "所有", titlePosition: .left, additionalSpacing: 5, state: .normal)
+        statusIndexButton.set(title: "所有的", titlePosition: .left, additionalSpacing: 5, state: .normal)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -78,6 +79,21 @@ class RecordViewController: UIViewController , DZNEmptyDataSetDelegate , DZNEmpt
     }
     
     @IBAction func chooseStatus(_ sender: Any) {
+        modalPopView(type: .right)
+    }
+    
+    private func modalPopView(type: PopViewType) {
+        let popVc = PopViewController()
+        popVc.dataSource = ["所有", "未提交", "驳回"]
+        popVc.popType = type
+        popVc.transitioningDelegate = animationDelegate
+        popVc.modalPresentationStyle = .custom
+        popVc.selectDelegate = self
+        animationDelegate.popViewType = type
+        present(popVc, animated: true, completion: nil)
+        
+    }
+    @IBAction func refresh(_ sender: Any) {
     }
     
     func handleNotification(notification : Notification)  {
@@ -211,16 +227,19 @@ class RecordViewController: UIViewController , DZNEmptyDataSetDelegate , DZNEmpt
             
             if let label = cell.contentView.viewWithTag(3) as? UILabel {
                 if strOrderNo.characters.count == 0 {
-                    label.text = "暂无单号"
+                    label.text = "单号：暂无单号"
                 }else{
                     label.text = "单号：\(strOrderNo)"
                 }
             }
             if let label = cell.contentView.viewWithTag(4) as? UILabel {
-                label.text = "时间：\(data[indexPath.row]["addtime"].string ?? "") "
+                label.text = "创建时间：\(data[indexPath.row]["addtime"].string ?? "") "
             }
             if let label = cell.contentView.viewWithTag(5) as? UILabel {
-                label.text = "评估价格：无"
+                let aStr = NSMutableAttributedString(string: "状态:已保存")
+                aStr.addAttributes([NSForegroundColorAttributeName: UIColor.darkGray], range: NSMakeRange(0, 3))
+                aStr.addAttributes([NSForegroundColorAttributeName: UIColor.rgbColorFromHex(rgb: 0xF86765)], range: NSMakeRange(3, aStr.length - 3))
+                label.attributedText = aStr
             }
             if let imageView = cell.contentView.viewWithTag(2) as? UIImageView {
                 let json = data[indexPath.row]
@@ -473,4 +492,10 @@ extension RecordViewController: UITextFieldDelegate {
         return true
     }
     
+}
+
+extension RecordViewController: DidSelectPopViewCellDelegate {
+    func didSelectRowAtIndexPath(_ indexPath: IndexPath) {
+        print("点击了第\(indexPath.row)个")
+    }
 }

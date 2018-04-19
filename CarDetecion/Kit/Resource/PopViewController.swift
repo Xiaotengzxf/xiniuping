@@ -16,8 +16,6 @@ enum PopViewType{
 
 let RowHeight:CGFloat = 44
 
-var dataSource = ["发布","扫一扫","添加好友"]
-
 /**
  *  popView展现位置的代理
  */
@@ -35,7 +33,7 @@ protocol DidSelectPopViewCellDelegate:NSObjectProtocol{
 class PopViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
     var myTableView = UITableView()
-    
+    var dataSource = ["所有","已提交","已完成"]
     var popType:PopViewType?
     
     weak var delegate:PopViewControllerDelegate?
@@ -51,17 +49,17 @@ class PopViewController: UIViewController,UITableViewDelegate,UITableViewDataSou
         var imgStr = ""
         switch popViewtype{
         case .left:
-            imgStr = "popover_background_left"
+            imgStr = "popover_background_right"
         case .center:
-            imgStr = "popover_background_center"
+            imgStr = "popover_background_right"
         default:
             imgStr = "popover_background_right"
         }
-        let img = UIImage(named: imgStr)
+        let img = UIImage(named: imgStr)?.resizableImage(withCapInsets: UIEdgeInsetsMake(30, 30, 30, 30))
         let imgView = UIImageView(image: img)
-        imgView.frame.size = CGSize(width: 130, height: 170)
+        imgView.frame = CGRect(x: 10, y: 58, width: 130, height: 170)
         view.addSubview(imgView)
-        myTableView.frame = CGRect(x: 10, y: 17, width: 110, height: 140)
+        myTableView.frame = CGRect(x: 20, y: 73, width: 110, height: 140)
         myTableView.delegate = self
         myTableView.dataSource = self
         view.addSubview(myTableView)

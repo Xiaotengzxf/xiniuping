@@ -172,7 +172,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="aKv-fX-zC6">
-                        <barButtonItem key="rightBarButtonItem" image="btn_refresh_normal" id="vW6-Nc-VuY"/>
+                        <barButtonItem key="rightBarButtonItem" image="btn_refresh_normal" id="vW6-Nc-VuY">
+                            <connections>
+                                <action selector="refresh:" destination="iMX-yZ-EZN" id="ZyI-BJ-LU4"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="searchBar" destination="xPK-j1-326" id="4Ha-EP-pKN"/>
@@ -342,7 +346,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="5vg-K4-ENp">
-                        <barButtonItem key="rightBarButtonItem" image="btn_refresh_normal" style="plain" id="lDP-Et-2Up"/>
+                        <barButtonItem key="rightBarButtonItem" image="btn_refresh_normal" style="plain" id="lDP-Et-2Up">
+                            <connections>
+                                <action selector="refresh:" destination="rGi-nG-HVS" id="QhC-Rt-JNk"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="lcLeft" destination="AN1-oA-T0g" id="luK-Tt-IWy"/>

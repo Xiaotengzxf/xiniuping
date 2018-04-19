@@ -30,7 +30,7 @@ class RecordSuccessViewController: UIViewController , DZNEmptyDataSetDelegate , 
                       "41": "等待中评" , "42": "中评中" , "43": "中评驳回" , "44": "中评通过",
                       "51": "等待高评" , "52": "高评中" , "53": "高评驳回" , "54": "高评通过",
                       "80": "评估完成"] // 0, "提取图片"
-
+    let animationDelegate = PopoverAnimation()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,7 +54,6 @@ class RecordSuccessViewController: UIViewController , DZNEmptyDataSetDelegate , 
         NotificationCenter.default.addObserver(self, selector: #selector(self.handleNotification(notification:)), name: Notification.Name("recordVC"), object: nil)
         
         statusIndexButton.set(title: "所有的", titlePosition: .left, additionalSpacing: 5, state: .normal)
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -71,19 +70,23 @@ class RecordSuccessViewController: UIViewController , DZNEmptyDataSetDelegate , 
     }
     
     @IBAction func chooseStatus(_ sender: Any) {
-        
+        modalPopView(type: .right)
     }
     
-//    private func modalPopView(type: PopViewType) {
-//        let popVc = PopViewController()
-//        popVc.popType = type
-//        popVc.transitioningDelegate = animationDelegate
-//        popVc.modalPresentationStyle = UIModalPresentationStyle.Custom
-//        popVc.selectDelegate = self
-//        animationDelegate.popViewType = type
-//        presentViewController(popVc, animated: true, completion: nil)
-//
-//    }
+    private func modalPopView(type: PopViewType) {
+        let popVc = PopViewController()
+        popVc.popType = type
+        popVc.transitioningDelegate = animationDelegate
+        popVc.modalPresentationStyle = .custom
+        popVc.selectDelegate = self
+        animationDelegate.popViewType = type
+        present(popVc, animated: true, completion: nil)
+
+    }
+    
+    @IBAction func refresh(_ sender: Any) {
+        
+    }
     
     func handleNotification(notification : Notification)  {
         if let tag = notification.object as? Int {
@@ -264,9 +267,9 @@ class RecordSuccessViewController: UIViewController , DZNEmptyDataSetDelegate , 
 
 }
 
-//extension RecordSuccessViewController: DidSelectPopViewCellDelegate { 
-//    func didSelectRowAtIndexPath(_ indexPath: IndexPath) {
-//        print("点击了第\(indexPath.row)个")
-//    }
-//}
+extension RecordSuccessViewController: DidSelectPopViewCellDelegate {
+    func didSelectRowAtIndexPath(_ indexPath: IndexPath) {
+        print("点击了第\(indexPath.row)个")
+    }
+}
 
