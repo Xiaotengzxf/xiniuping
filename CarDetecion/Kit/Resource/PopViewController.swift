@@ -14,23 +14,23 @@ enum PopViewType{
     case right
 }
 
-let RowHeight:CGFloat = 44
+let RowHeight: CGFloat = 44
 
 /**
  *  popView展现位置的代理
  */
-protocol PopViewControllerDelegate:NSObjectProtocol{
+protocol PopViewControllerDelegate: NSObjectProtocol {
     func didClickedPopButton(_ type:PopViewType)
 }
 
 /**
  *  popViewCell选择的代理
  */
-protocol DidSelectPopViewCellDelegate:NSObjectProtocol{
+protocol DidSelectPopViewCellDelegate: NSObjectProtocol {
     func didSelectRowAtIndexPath(_ indexPath: IndexPath)
 }
 
-class PopViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
+class PopViewController: UIViewController {
     
     var myTableView = UITableView()
     var dataSource = ["所有","已提交","已完成"]
@@ -45,7 +45,7 @@ class PopViewController: UIViewController,UITableViewDelegate,UITableViewDataSou
         setupViews(popType!)
     }
     
-    func setupViews(_ popViewtype:PopViewType) {
+    func setupViews(_ popViewtype: PopViewType) {
         var imgStr = ""
         switch popViewtype{
         case .left:
@@ -67,13 +67,9 @@ class PopViewController: UIViewController,UITableViewDelegate,UITableViewDataSou
 
 }
 
-extension PopViewController{
+extension PopViewController: UITableViewDelegate,UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return RowHeight
-    }
-    
-    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         return RowHeight
     }
     

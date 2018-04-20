@@ -69,7 +69,7 @@ class FastPreDetectionViewController: UIViewController , UITableViewDataSource ,
         }
             
         
-        if imagesPath.characters.count > 0 {
+        if imagesPath.count > 0 {
             let hud = self.showHUD(text: "读取中...")
             DispatchQueue.global().async {
                 [weak self] in
@@ -240,7 +240,7 @@ class FastPreDetectionViewController: UIViewController , UITableViewDataSource ,
             return
         }
         bSave = true
-        if images.count > 0 || remark.characters.count > 0 {
+        if images.count > 0 || remark.count > 0 {
             var orders : [[String : String]] = []
             if let order = UserDefaults.standard.object(forKey: "preorders") as? [[String : String]] {
                 orders += order
@@ -251,7 +251,7 @@ class FastPreDetectionViewController: UIViewController , UITableViewDataSource ,
             }
             let fileManager = FileManager.default
             var path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first
-            let name = pathName.characters.count > 0 ? pathName : "\(Date().timeIntervalSince1970)"
+            let name = pathName.count > 0 ? pathName : "\(Date().timeIntervalSince1970)"
             if pathName != name {
                 orderKeys.insert(name, at: 0)
             }
@@ -271,25 +271,25 @@ class FastPreDetectionViewController: UIViewController , UITableViewDataSource ,
                 }
                 let formatter = DateFormatter()
                 formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-                let str = imageStr.characters.count > 0 ? imageStr.substring(to: imageStr.index(before: imageStr.endIndex)) : ""
+                let str = imageStr.count > 0 ? imageStr.substring(to: imageStr.index(before: imageStr.endIndex)) : ""
                 if pathName == name {
                     let i = orderKeys.index(of: pathName) ?? 0
                     if i == 0 && orders.count == 0 {
                         var order = [ "mark" : remark , "images" : str , "addtime" : formatter.string(from: Date())]
-                        if bSubmitSuccess && orderNo.characters.count > 0 {
+                        if bSubmitSuccess && orderNo.count > 0 {
                             order["orderNo"] = orderNo
                         }
                         orders.append(order)
                     }else{
                         var order = [ "mark" : remark , "images" : str , "addtime" : formatter.string(from: Date())]
-                        if bSubmitSuccess && orderNo.characters.count > 0 {
+                        if bSubmitSuccess && orderNo.count > 0 {
                             order["orderNo"] = orderNo
                         }
                         orders[i] = order
                     }
                 }else{
                     var order = [ "mark" : remark , "images" : str , "addtime" : formatter.string(from: Date())]
-                    if bSubmitSuccess && orderNo.characters.count > 0 {
+                    if bSubmitSuccess && orderNo.count > 0 {
                         order["orderNo"] = orderNo
                     }
                     orders.insert(order, at: 0)
@@ -351,7 +351,7 @@ class FastPreDetectionViewController: UIViewController , UITableViewDataSource ,
 
         if source == 1 {
             orderNo = json?["carBillId"].string ?? ""
-            if orderNo.characters.count > 0 {
+            if orderNo.count > 0 {
                 if self.images.count > 0 {
                     var arrPictureName : Set<String> = []
                     for key in self.images.keys {
@@ -392,7 +392,7 @@ class FastPreDetectionViewController: UIViewController , UITableViewDataSource ,
                             NotificationCenter.default.post(name: Notification.Name("app"), object: 15, userInfo: ["orderNo" : self!.orderNo , "images" : self!.images])
                         }
                         
-                        if self!.pathName.characters.count > 0 {
+                        if self!.pathName.count > 0 {
                             var orderKeys = UserDefaults.standard.object(forKey: "preorderKeys") as! [String]
                             var orders = UserDefaults.standard.object(forKey: "preorders") as! [[String : String]]
                             let i = orderKeys.index(of: self!.pathName) ?? 0
@@ -651,10 +651,10 @@ class FastPreDetectionViewController: UIViewController , UITableViewDataSource ,
             if source == 1 {
                 cell.contentView.layer.borderColor = UIColor(red: 230/255.0, green: 230/255.0, blue: 230/255.0, alpha: 1).cgColor
                 cell.tvMark.text = json?["mark"].string
-            }else if remark.characters.count == 0 && bSubmit {
+            }else if remark.count == 0 && bSubmit {
                 cell.contentView.layer.borderColor = UIColor.red.cgColor
             }else{
-                if remark.characters.count > 0 {
+                if remark.count > 0 {
                     cell.tvMark.text = remark
                 }
                 cell.contentView.layer.borderColor = UIColor(red: 230/255.0, green: 230/255.0, blue: 230/255.0, alpha: 1).cgColor

@@ -274,7 +274,7 @@ class PreDetectionViewController: UIViewController, UITableViewDelegate, UITable
             let json = data[indexPath.row]
             var bUnfinished = false
             var strOrderNo = ""
-            if let orderNo = json["orderNo"].string, orderNo.characters.count > 0 {
+            if let orderNo = json["orderNo"].string, orderNo.count > 0 {
                 if let unfinished = json["unfinished"].string, unfinished == "1" {
                     bUnfinished = true
                 }else{
@@ -283,7 +283,7 @@ class PreDetectionViewController: UIViewController, UITableViewDelegate, UITable
             }
             
             if let label = cell.contentView.viewWithTag(3) as? UILabel {
-                if strOrderNo.characters.count == 0 {
+                if strOrderNo.count == 0 {
                     label.text = "暂无单号"
                 }else{
                     label.text = "单号：\(strOrderNo)"
@@ -299,7 +299,7 @@ class PreDetectionViewController: UIViewController, UITableViewDelegate, UITable
                 label.textColor = UIColor.rgbColorFromHex(rgb: 0xF86765)
             }
             if let label = cell.contentView.viewWithTag(5) as? UILabel {
-                if strOrderNo.characters.count > 0 {
+                if strOrderNo.count > 0 {
                     if bUnfinished {
                         label.text = "提交状态：提交失败"
                     }else{
@@ -361,7 +361,7 @@ class PreDetectionViewController: UIViewController, UITableViewDelegate, UITable
             }
             if let imageView = cell.contentView.viewWithTag(2) as? UIImageView {
                 let imagePath = data1[indexPath.row]["imageThumbPath"].string ?? ""
-                if imagePath.characters.count > 0 {
+                if imagePath.count > 0 {
                     imageView.sd_setImage(with: URL(string: "\(NetworkManager.sharedInstall.domain)\(imagePath)"), placeholderImage: UIImage(named: "empty_default"))
                 }else{
                     imageView.image = UIImage(named: "empty_default")
@@ -397,7 +397,7 @@ class PreDetectionViewController: UIViewController, UITableViewDelegate, UITable
             }
             if let imageView = cell.contentView.viewWithTag(2) as? UIImageView {
                 let imagePath = data2[indexPath.row]["imageThumbPath"].string ?? ""
-                if imagePath.characters.count > 0 {
+                if imagePath.count > 0 {
                     imageView.sd_setImage(with: URL(string: "\(NetworkManager.sharedInstall.domain)\(imagePath)"), placeholderImage: UIImage(named: "empty_default"))
                 }else{
                     imageView.image = UIImage(named: "empty_default")
@@ -414,7 +414,7 @@ class PreDetectionViewController: UIViewController, UITableViewDelegate, UITable
         if  tableView == tableView0 {
             let json = data[indexPath.row]
             var bUnfinished = false
-            if let orderNo = json["orderNo"].string, orderNo.characters.count > 0 {
+            if let orderNo = json["orderNo"].string, orderNo.count > 0 {
                 if let unfinished = json["unfinished"].string, unfinished == "1" {
                     bUnfinished = true
                 }else{
@@ -437,7 +437,7 @@ class PreDetectionViewController: UIViewController, UITableViewDelegate, UITable
                 controller.remark = json["mark"].string ?? ""
                 controller.pathName = orderKeys[indexPath.row]
                 controller.unfinished = bUnfinished
-                if let orderNo = json["orderNo"].string, orderNo.characters.count > 0 {
+                if let orderNo = json["orderNo"].string, orderNo.count > 0 {
                     controller.orderNo = orderNo
                 }
                 self.navigationController?.pushViewController(controller, animated: true)

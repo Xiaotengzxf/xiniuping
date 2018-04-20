@@ -30,7 +30,10 @@ class RecordSuccessViewController: UIViewController , DZNEmptyDataSetDelegate , 
                       "41": "等待中评" , "42": "中评中" , "43": "中评驳回" , "44": "中评通过",
                       "51": "等待高评" , "52": "高评中" , "53": "高评驳回" , "54": "高评通过",
                       "80": "评估完成"] // 0, "提取图片"
+    let arrTitle = ["所有","已提交","已完成"]
     let animationDelegate = PopoverAnimation()
+    var index = 0
+    var popVc: PopViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,7 +56,7 @@ class RecordSuccessViewController: UIViewController , DZNEmptyDataSetDelegate , 
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.handleNotification(notification:)), name: Notification.Name("recordVC"), object: nil)
         
-        statusIndexButton.set(title: "所有的", titlePosition: .left, additionalSpacing: 5, state: .normal)
+        statusIndexButton.set(title: "所有    ", titlePosition: .left, additionalSpacing: 5, state: .normal)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -74,24 +77,24 @@ class RecordSuccessViewController: UIViewController , DZNEmptyDataSetDelegate , 
     }
     
     private func modalPopView(type: PopViewType) {
-        let popVc = PopViewController()
-        popVc.popType = type
-        popVc.transitioningDelegate = animationDelegate
-        popVc.modalPresentationStyle = .custom
-        popVc.selectDelegate = self
+        popVc = PopViewController()
+        popVc?.popType = type
+        popVc?.transitioningDelegate = animationDelegate
+        popVc?.modalPresentationStyle = .custom
+        popVc?.selectDelegate = self
         animationDelegate.popViewType = type
-        present(popVc, animated: true, completion: nil)
+        present(popVc!, animated: true, completion: nil)
 
     }
     
     @IBAction func refresh(_ sender: Any) {
-        
+        tableView1.mj_header.beginRefreshing()
     }
     
     func handleNotification(notification : Notification)  {
         if let tag = notification.object as? Int {
             if tag == 0 {
-                self.tableView1.mj_header.beginRefreshing()
+                tableView1.mj_header.beginRefreshing()
             }
         }
     }
@@ -102,7 +105,16 @@ class RecordSuccessViewController: UIViewController , DZNEmptyDataSetDelegate , 
         var page = 0
         var status = ""
         page = curPage1
-        status = status1 + status3
+        switch index {
+        case 0:
+            status = status1 + "," + status3
+        case 1:
+            status = status1
+        case 2:
+            status = status3
+        default:
+            fatalError()
+        }
         params["curPage"] = "\(page)"
         params["pageSize"] = "\(pageSize)"
         params["status"] = status
@@ -165,7 +177,7 @@ class RecordSuccessViewController: UIViewController , DZNEmptyDataSetDelegate , 
         }
         if let imageView = cell.contentView.viewWithTag(2) as? UIImageView {
             let imagePath = data1[indexPath.row]["imageThumbPath"].string ?? ""
-            if imagePath.characters.count > 0 {
+            if imagePath.count > 0 {
                 imageView.sd_setImage(with: URL(string: "\(NetworkManager.sharedInstall.domain)\(imagePath)"), placeholderImage: UIImage(named: "empty_default"))
             }else{
                 imageView.image = UIImage(named: "empty_default")
@@ -269,7 +281,12 @@ class RecordSuccessViewController: UIViewController , DZNEmptyDataSetDelegate , 
 
 extension RecordSuccessViewController: DidSelectPopViewCellDelegate {
     func didSelectRowAtIndexPath(_ indexPath: IndexPath) {
-        print("点击了第\(indexPath.row)个")
+        index = indexPath.row
+        tableView1.mj_header.beginRefreshing()
+        statusIndexButton.setTitle(arrTitle[indexPath.row], for: .normal)
+        popVc?.dismiss(animated: true, completion: {
+            
+        })
     }
 }
 

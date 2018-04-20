@@ -63,17 +63,17 @@ class PreDetectionTVController: UITableViewController {
         }
         var cell = tableView.cellForRow(at: IndexPath(row: 1, section: 0)) as! PreDetectionCell
         let carColor = cell.tfContent.text?.trimmingCharacters(in: .whitespacesAndNewlines)
-        if carColor == nil || carColor!.characters.count == 0 {
+        if carColor == nil || carColor!.count == 0 {
             Toast(text: "请输入车颜色").show()
             return
         }
-        if strDate.characters.count == 0 {
+        if strDate.count == 0 {
             Toast(text: "请选择上牌时间").show()
             return
         }
         cell = tableView.cellForRow(at: IndexPath(row: 3, section: 0)) as! PreDetectionCell
         let gongli = cell.tfContent.text?.trimmingCharacters(in: .whitespacesAndNewlines)
-        if gongli == nil || gongli!.characters.count == 0 {
+        if gongli == nil || gongli!.count == 0 {
             Toast(text: "请输入公里数").show()
             return
         }
@@ -161,7 +161,7 @@ class PreDetectionTVController: UITableViewController {
             cell.tfContent.isHidden = true
             cell.lblContent.isHidden = false
             cell.tvContent.isHidden = true
-            if strDate.characters.count > 0 {
+            if strDate.count > 0 {
                 cell.lblContent.text = strDate
             }else{
                 cell.lblContent.text = "请选择上牌时间"

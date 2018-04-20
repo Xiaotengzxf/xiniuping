@@ -334,7 +334,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , JPUSHRegisterDelegate {
     
     // 标志订单提交失败
     func isBadOrder(orderNo : String) {
-        if orderNo.characters.count > 0 {
+        if orderNo.count > 0 {
             var orders = UserDefaults.standard.object(forKey: "orders") as! [[String : String]]
             var i = 0
             for (index , order) in orders.enumerated() {
@@ -358,7 +358,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , JPUSHRegisterDelegate {
     
     // 标志预评估订单提交失败
     func isBadOrderpre(orderNo : String) {
-        if orderNo.characters.count > 0 {
+        if orderNo.count > 0 {
             var preorders = UserDefaults.standard.object(forKey: "preorders") as! [[String : String]]
             var i = 0
             for (index , order) in preorders.enumerated() {
@@ -411,7 +411,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , JPUSHRegisterDelegate {
     
     // 提交订单
     func submitBill(orderNo : String)  {
-        if orderNo.characters.count > 0 {
+        if orderNo.count > 0 {
             DispatchQueue.global().async {
                 [weak self] in
                 let username = UserDefaults.standard.string(forKey: "username")
@@ -550,7 +550,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , JPUSHRegisterDelegate {
     }
     
     func reuploadOrder(oldOrderNo: String) {
-        if oldOrderNo.characters.count > 0 {
+        if oldOrderNo.count > 0 {
             if var orders = UserDefaults.standard.object(forKey: "orders") as? [[String : String]] {
                 if orders.count > 0 {
                     var dicTem : [String : String] = [:]
@@ -619,7 +619,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , JPUSHRegisterDelegate {
     
     
     func reuploadOrderpre(oldOrderNo: String) {
-        if oldOrderNo.characters.count > 0 {
+        if oldOrderNo.count > 0 {
             if var orders = UserDefaults.standard.object(forKey: "preorders") as? [[String : String]] {
                 if orders.count > 0 {
                     var dicTem : [String : String] = [:]

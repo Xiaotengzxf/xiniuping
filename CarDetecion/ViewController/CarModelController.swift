@@ -41,16 +41,16 @@ class CarModelController: UIViewController , UITableViewDataSource , UITableView
     
     func getCarTypeList() {
         var params : [String : String]?
-        if carBrandId.characters.count > 0 {
+        if carBrandId.count > 0 {
             params = ["carBrandId" : carBrandId]
         }
-        if carSetId.characters.count > 0 {
+        if carSetId.count > 0 {
             params?["carSetId"] = carSetId
         }
         var url = carType
-        if carSetId.characters.count > 0 {
+        if carSetId.count > 0 {
             url = carType2
-        }else if carBrandId.characters.count > 0 {
+        }else if carBrandId.count > 0 {
             url = carSet
         }
         NetworkManager.sharedInstall.request(url: url, params: params) {[weak self](json, error) in
@@ -64,11 +64,11 @@ class CarModelController: UIViewController , UITableViewDataSource , UITableView
                         self?.arrCarBrand.removeAll()
                         self?.arrCarBrand += arr
                         for j in arr {
-                            if self!.carSetId.characters.count > 0 {
+                            if self!.carSetId.count > 0 {
                                 if self!.arrKey.count == 0 {
                                     self?.arrKey.append("车型")
                                 }
-                            }else if self!.carBrandId.characters.count > 0 {
+                            }else if self!.carBrandId.count > 0 {
                                 if let carSetFirstName = j["carSetFirstName"].string {
                                     if !self!.arrKey.contains(carSetFirstName) {
                                         self!.arrKey.append(carSetFirstName)
@@ -100,7 +100,7 @@ class CarModelController: UIViewController , UITableViewDataSource , UITableView
     }
     
     func addSelf() {
-        if carSetId.characters.count > 0 {
+        if carSetId.count > 0 {
             car2 = self.storyboard?.instantiateViewController(withIdentifier: "carmodel") as? CarModelController
             car2?.carSetId = carSetId
             car2?.carBrandId = carBrandId
@@ -142,9 +142,9 @@ class CarModelController: UIViewController , UITableViewDataSource , UITableView
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if carSetId.characters.count > 0 {
+        if carSetId.count > 0 {
             return self.arrCarBrand.count
-        }else if carBrandId.characters.count > 0 {
+        }else if carBrandId.count > 0 {
             return arrCarBrand.filter{$0["carSetFirstName"].stringValue == arrKey[section]}.count
         }else{
             return arrCarBrand.filter{$0["brandFirstName"].stringValue == arrKey[section]}.count
@@ -153,12 +153,12 @@ class CarModelController: UIViewController , UITableViewDataSource , UITableView
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CarModelCell
-        if  carSetId.characters.count > 0 {
+        if  carSetId.count > 0 {
             cell.lblCar?.text = arrCarBrand[indexPath.row]["carTypeName"].string
             cell.lcRight.constant = WIDTH / 3 - 20
             cell.ivIcon?.image = nil
             cell.lcLeft.constant = 16
-        }else if carBrandId.characters.count > 0 {
+        }else if carBrandId.count > 0 {
             let arr = arrCarBrand.filter{$0["carSetFirstName"].stringValue == arrKey[indexPath.section]}
             let json = arr[indexPath.row]
             cell.lblCar?.text = json["carSetName"].string
@@ -187,14 +187,14 @@ class CarModelController: UIViewController , UITableViewDataSource , UITableView
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        if carSetId.characters.count > 0 {
+        if carSetId.count > 0 {
             
             let json = arrCarBrand[indexPath.row]
             NotificationCenter.default.post(name: Notification.Name("preDetection"), object: 1, userInfo: ["json" : json.dictionaryObject!, "brandName" : brandName , "carSetName" : carSetName])
             self.navigationController?.popViewController(animated: true)
             
         }else {
-            if carBrandId.characters.count == 0 {
+            if carBrandId.count == 0 {
                 if car1 != nil {
                     UIView.animate(withDuration: 0.3, animations: {
                         [weak self] in

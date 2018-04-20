@@ -1733,7 +1733,7 @@
 				TargetAttributes = {
 					895307BE1E6D18D9007AF459 = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = JHBA8HY2R5;
+						DevelopmentTeam = DVHGAMT4X8;
 						LastSwiftMigration = 0830;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
@@ -2231,7 +2231,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = CarDetecion/CarDetecion.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = JHBA8HY2R5;
+				DEVELOPMENT_TEAM = DVHGAMT4X8;
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "${PROJECT_DIR}/CarDetecion/PrefixHeader.pch";
@@ -2244,7 +2244,7 @@
 					"$(PROJECT_DIR)/CarDetecion/HelpDeskUI/HDUIKit/3rdparty/DeviceHelper/VoiceConvert/opencore-amrnb",
 					"$(PROJECT_DIR)/CarDetecion/HelpDeskUI/HDUIKit/3rdparty/DeviceHelper/VoiceConvert/opencore-amrwb",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.zhixingping.xiniuping;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zhixingping.xiniuping1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2263,7 +2263,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = CarDetecion/CarDetecion.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = JHBA8HY2R5;
+				DEVELOPMENT_TEAM = DVHGAMT4X8;
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "${PROJECT_DIR}/CarDetecion/PrefixHeader.pch";
@@ -2276,7 +2276,7 @@
 					"$(PROJECT_DIR)/CarDetecion/HelpDeskUI/HDUIKit/3rdparty/DeviceHelper/VoiceConvert/opencore-amrnb",
 					"$(PROJECT_DIR)/CarDetecion/HelpDeskUI/HDUIKit/3rdparty/DeviceHelper/VoiceConvert/opencore-amrwb",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.zhixingping.xiniuping;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zhixingping.xiniuping1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "CarDetecion/CarDetecion-Bridging-Header.h";

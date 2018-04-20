@@ -72,7 +72,7 @@ class DetectionNewViewController: UIViewController , UITableViewDataSource , UIT
             
         }
         
-        if imagesPath.characters.count > 0 {
+        if imagesPath.count > 0 {
             let hud = self.showHUD(text: "读取中...")
             DispatchQueue.global().async {
                 [weak self] in
@@ -93,11 +93,6 @@ class DetectionNewViewController: UIViewController , UITableViewDataSource , UIT
                 }
             }
         }
-        
-        let ivTitle = UIImageView(image: UIImage(named: "detection_title"))
-        ivTitle.frame = CGRect(x: 0, y: 0, width: 74, height: 23)
-        navigationItem.titleView = ivTitle
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -262,7 +257,7 @@ class DetectionNewViewController: UIViewController , UITableViewDataSource , UIT
             return
         }
         bSave = true
-        if images.count > 0 || price.characters.count > 0 || remark.characters.count > 0 {
+        if images.count > 0 || price.count > 0 || remark.count > 0 {
             var orders : [[String : String]] = []
             if let order = UserDefaults.standard.object(forKey: "orders") as? [[String : String]] {
                 orders += order
@@ -273,7 +268,7 @@ class DetectionNewViewController: UIViewController , UITableViewDataSource , UIT
             }
             let fileManager = FileManager.default
             var path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first
-            let name = pathName.characters.count > 0 ? pathName : "\(Date().timeIntervalSince1970)"
+            let name = pathName.count > 0 ? pathName : "\(Date().timeIntervalSince1970)"
             orderKeys.insert(name, at: 0)
             path = path! + "/\(name)"
             do{
@@ -291,25 +286,25 @@ class DetectionNewViewController: UIViewController , UITableViewDataSource , UIT
                 }
                 let formatter = DateFormatter()
                 formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-                let str = imageStr.characters.count > 0 ? imageStr.substring(to: imageStr.index(before: imageStr.endIndex)) : ""
+                let str = imageStr.count > 0 ? imageStr.substring(to: imageStr.index(before: imageStr.endIndex)) : ""
                 if pathName == name {
                     let i = orderKeys.index(of: pathName) ?? 0
                     if i == 0 && orders.count == 0 {
                         var order = ["preSalePrice" : self.price , "mark" : remark ,"leaseTerm" : "\(self.leaseTerm)" , "images" : str , "addtime" : formatter.string(from: Date())]
-                        if bSubmitSuccess && orderNo.characters.count > 0 {
+                        if bSubmitSuccess && orderNo.count > 0 {
                             order["orderNo"] = orderNo
                         }
                         orders.append(order)
                     }else{
                         var order = ["preSalePrice" : self.price , "mark" : remark ,"leaseTerm" : "\(self.leaseTerm)" , "images" : str , "addtime" : formatter.string(from: Date())]
-                        if bSubmitSuccess && orderNo.characters.count > 0 {
+                        if bSubmitSuccess && orderNo.count > 0 {
                             order["orderNo"] = orderNo
                         }
                         orders[i] = order
                     }
                 }else{
                     var order = ["preSalePrice" : self.price , "mark" : remark ,"leaseTerm" : "\(self.leaseTerm)" , "images" : str , "addtime" : formatter.string(from: Date())]
-                    if bSubmitSuccess && orderNo.characters.count > 0 {
+                    if bSubmitSuccess && orderNo.count > 0 {
                         order["orderNo"] = orderNo
                     }
                     orders.insert(order, at: 0)
@@ -367,13 +362,13 @@ class DetectionNewViewController: UIViewController , UITableViewDataSource , UIT
             showAlert(title: nil, message: "您没有做任何图片修改，无法提交！" , button:"确定")
             return
         }
-        if price.characters.count == 0 {
+        if price.count == 0 {
             Toast(text : "请输入预售价格").show()
             return
         }
         if source == 1 {
             orderNo = json?["carBillId"].string ?? ""
-            if orderNo.characters.count > 0 {
+            if orderNo.count > 0 {
                 var arrPictureName : Set<String> = []
                 for key in self.images.keys {
                     arrPictureName.insert("\(key)")
@@ -404,7 +399,7 @@ class DetectionNewViewController: UIViewController , UITableViewDataSource , UIT
                             NotificationCenter.default.post(name: Notification.Name("app"), object: 5, userInfo: ["orderNo" : self!.orderNo , "images" : self!.images])
                             NotificationCenter.default.post(name: Notification.Name("app"), object: 1, userInfo: ["orderNo" : self!.orderNo , "price" : self!.price , "remark" : self!.remark, "leaseTerm" : "\(self!.leaseTerm)"])
                         }
-                        if self!.pathName.characters.count > 0 {
+                        if self!.pathName.count > 0 {
                             var orderKeys = UserDefaults.standard.object(forKey: "orderKeys") as! [String]
                             var orders = UserDefaults.standard.object(forKey: "orders") as! [[String : String]]
                             let i = orderKeys.index(of: self!.pathName) ?? 0
@@ -705,10 +700,10 @@ class DetectionNewViewController: UIViewController , UITableViewDataSource , UIT
             if source == 1 {
                 cell.contentView.layer.borderColor = UIColor(red: 230/255.0, green: 230/255.0, blue: 230/255.0, alpha: 1).cgColor
                 cell.tfPrice.text = "\(json?["preSalePrice"].int ?? 0)"
-            }else if price.characters.count == 0 && bSubmit {
+            }else if price.count == 0 && bSubmit {
                 cell.contentView.layer.borderColor = UIColor.red.cgColor
             }else{
-                if price.characters.count > 0 {
+                if price.count > 0 {
                     cell.tfPrice.text = price
                 }
                 cell.contentView.layer.borderColor = UIColor(red: 230/255.0, green: 230/255.0, blue: 230/255.0, alpha: 1).cgColor
@@ -744,10 +739,10 @@ class DetectionNewViewController: UIViewController , UITableViewDataSource , UIT
                     if source == 1 {
                         cell.contentView.layer.borderColor = UIColor(red: 230/255.0, green: 230/255.0, blue: 230/255.0, alpha: 1).cgColor
                         cell.tvMark.text = json?["mark"].string
-                    }else if remark.characters.count == 0 && bSubmit {
+                    }else if remark.count == 0 && bSubmit {
                         cell.contentView.layer.borderColor = UIColor.red.cgColor
                     }else{
-                        if remark.characters.count > 0 {
+                        if remark.count > 0 {
                             cell.tvMark.text = remark
                         }
                         cell.contentView.layer.borderColor = UIColor(red: 230/255.0, green: 230/255.0, blue: 230/255.0, alpha: 1).cgColor
@@ -763,10 +758,10 @@ class DetectionNewViewController: UIViewController , UITableViewDataSource , UIT
                 if source == 1 {
                     cell.contentView.layer.borderColor = UIColor(red: 230/255.0, green: 230/255.0, blue: 230/255.0, alpha: 1).cgColor
                     cell.tvMark.text = json?["mark"].string
-                }else if remark.characters.count == 0 && bSubmit {
+                }else if remark.count == 0 && bSubmit {
                     cell.contentView.layer.borderColor = UIColor.red.cgColor
                 }else{
-                    if remark.characters.count > 0 {
+                    if remark.count > 0 {
                         cell.tvMark.text = remark
                     }
                     cell.contentView.layer.borderColor = UIColor(red: 230/255.0, green: 230/255.0, blue: 230/255.0, alpha: 1).cgColor

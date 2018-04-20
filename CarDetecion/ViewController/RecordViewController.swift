@@ -27,15 +27,16 @@ class RecordViewController: UIViewController , DZNEmptyDataSetDelegate , DZNEmpt
     var data : [JSON] = []
     var data2 : [JSON] = []
     var nShowEmpty = 0 // 1 无数据 2 加载中 3 无网络
-    var nShowEmpty2 = 0 // 1 无数据 2 加载中 3 无网络
     var statusInfo : [String : String] = ["21": "等待初审" , "22": "初审中" , "23": "初审驳回" , "24": "初审通过",
                       "31": "等待初评" , "32": "初评中" , "33": "初评驳回" , "34": "初评通过",
                       "41": "等待中评" , "42": "中评中" , "43": "中评驳回" , "44": "中评通过",
                       "51": "等待高评" , "52": "高评中" , "53": "高评驳回" , "54": "高评通过",
                       "80": "评估完成"] // 0, "提取图片"
+    let arrTitle = ["所有", "未提交", "驳回"]
     var loadingView: LoadingView?
     var shadow: UIView?
     let animationDelegate = PopoverAnimation()
+    var popVc: PopViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,7 +58,7 @@ class RecordViewController: UIViewController , DZNEmptyDataSetDelegate , DZNEmpt
         
         getBillList2()
         
-        statusIndexButton.set(title: "所有的", titlePosition: .left, additionalSpacing: 5, state: .normal)
+        statusIndexButton.set(title: "所有    ", titlePosition: .left, additionalSpacing: 5, state: .normal)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -83,17 +84,40 @@ class RecordViewController: UIViewController , DZNEmptyDataSetDelegate , DZNEmpt
     }
     
     private func modalPopView(type: PopViewType) {
-        let popVc = PopViewController()
-        popVc.dataSource = ["所有", "未提交", "驳回"]
-        popVc.popType = type
-        popVc.transitioningDelegate = animationDelegate
-        popVc.modalPresentationStyle = .custom
-        popVc.selectDelegate = self
+        popVc = PopViewController()
+        popVc?.dataSource = arrTitle
+        popVc?.popType = type
+        popVc?.transitioningDelegate = animationDelegate
+        popVc?.modalPresentationStyle = .custom
+        popVc?.selectDelegate = self
         animationDelegate.popViewType = type
-        present(popVc, animated: true, completion: nil)
+        present(popVc!, animated: true, completion: nil)
         
     }
+    
     @IBAction func refresh(_ sender: Any) {
+        switch statusIndexButton.titleLabel!.text!.trimmingCharacters(in: .whitespacesAndNewlines) {
+        case arrTitle[0]:
+            data.removeAll()
+            if let orders = UserDefaults.standard.object(forKey: "orders") as? [[String : String]] {
+                if orders.count > 0 {
+                    for dic in orders {
+                        data.append(JSON(dic))
+                    }
+                }
+            }
+            if data.count == 0 && data2.count == 0 {
+                nShowEmpty = 1
+            }
+            self.tableView0.mj_header.beginRefreshing()
+        case arrTitle[1]:
+            refreshTableView0()
+        case arrTitle[2]:
+            self.tableView0.mj_header.beginRefreshing()
+        default:
+            fatalError()
+        }
+        
     }
     
     func handleNotification(notification : Notification)  {
@@ -104,7 +128,7 @@ class RecordViewController: UIViewController , DZNEmptyDataSetDelegate , DZNEmpt
                 if let dic = notification.userInfo as? [String : String] {
                     if let orderNo2 = dic["orderNo"] {
                         for json in data {
-                            if let orderNo = json["orderNo"].string, orderNo.characters.count > 0 {
+                            if let orderNo = json["orderNo"].string, orderNo.count > 0 {
                                 if orderNo == orderNo2 {
                                     let normal = uploadDict[orderNo]?.count ?? 0
                                     let total = uploadDictCount[orderNo] ?? 0
@@ -175,7 +199,7 @@ class RecordViewController: UIViewController , DZNEmptyDataSetDelegate , DZNEmpt
             if error != nil {
                 print(error!.localizedDescription)
                 if self!.curPage2 == 1 {
-                    self?.nShowEmpty2 = 3
+                    self?.nShowEmpty = 3
                     self?.tableView0.reloadData()
                 }
             }else{
@@ -195,11 +219,11 @@ class RecordViewController: UIViewController , DZNEmptyDataSetDelegate , DZNEmpt
                         self?.tableView0.mj_footer.endRefreshingWithNoMoreData()
                     }
                     if self!.curPage2 == 1 && self!.data2.count == 0 {
-                        self?.nShowEmpty2 = 1
+                        self?.nShowEmpty = 1
                     }
                 }else{
                     if self!.curPage2 == 1 && self!.data2.count == 0 {
-                        self?.nShowEmpty2 = 1
+                        self?.nShowEmpty = 1
                     }
                 }
                 self?.tableView0.reloadData()
@@ -221,12 +245,12 @@ class RecordViewController: UIViewController , DZNEmptyDataSetDelegate , DZNEmpt
             cell.addLongTap()
             let json = data[indexPath.row]
             var strOrderNo = ""
-            if let orderNo = json["orderNo"].string, orderNo.characters.count > 0 {
+            if let orderNo = json["orderNo"].string, orderNo.count > 0 {
                 strOrderNo = orderNo
             }
             
             if let label = cell.contentView.viewWithTag(3) as? UILabel {
-                if strOrderNo.characters.count == 0 {
+                if strOrderNo.count == 0 {
                     label.text = "单号：暂无单号"
                 }else{
                     label.text = "单号：\(strOrderNo)"
@@ -259,7 +283,7 @@ class RecordViewController: UIViewController , DZNEmptyDataSetDelegate , DZNEmpt
             }
             
             if let imageView = cell.contentView.viewWithTag(20) as? UIImageView {
-                if strOrderNo.characters.count > 0 {
+                if strOrderNo.count > 0 {
                     if let unfinished = json["unfinished"].string, unfinished == "1" {
                         imageView.image = UIImage(named: "icon_unfinished")
                     } else {
@@ -271,7 +295,7 @@ class RecordViewController: UIViewController , DZNEmptyDataSetDelegate , DZNEmpt
                 }
             }
             if let label = cell.contentView.viewWithTag(21) as? UILabel {
-                if strOrderNo.characters.count > 0 {
+                if strOrderNo.count > 0 {
                     if let unfinished = json["unfinished"].string, unfinished == "1" {
                         label.text = "未完成"
                     } else {
@@ -299,7 +323,7 @@ class RecordViewController: UIViewController , DZNEmptyDataSetDelegate , DZNEmpt
             }
             if let imageView = cell.contentView.viewWithTag(2) as? UIImageView {
                 let imagePath = data2[index]["imageThumbPath"].string ?? ""
-                if imagePath.characters.count > 0 {
+                if imagePath.count > 0 {
                     imageView.sd_setImage(with: URL(string: "\(NetworkManager.sharedInstall.domain)\(imagePath)"), placeholderImage: UIImage(named: "empty_default"))
                 }else{
                     imageView.image = UIImage(named: "empty_default")
@@ -321,14 +345,14 @@ class RecordViewController: UIViewController , DZNEmptyDataSetDelegate , DZNEmpt
             if let controller = self.storyboard?.instantiateViewController(withIdentifier: "detectionnew") as? DetectionNewViewController {
                 controller.source = 1
                 controller.json = data2[indexPath.row - data.count]
-                controller.title = data2[indexPath.row - data.count]["carBillId"].string ?? ""
+                controller.title = "已驳回-\(data2[indexPath.row - data.count]["carBillId"].string ?? "")"
                 controller.hidesBottomBarWhenPushed = true
                 self.navigationController?.pushViewController(controller, animated: true)
             }
         } else {
             let json = data[indexPath.row]
             var bUnfinished = false
-            if let orderNo = json["orderNo"].string, orderNo.characters.count > 0 {
+            if let orderNo = json["orderNo"].string, orderNo.count > 0 {
                 if let unfinished = json["unfinished"].string, unfinished == "1" {
                     bUnfinished = true
                 }else{
@@ -360,9 +384,10 @@ class RecordViewController: UIViewController , DZNEmptyDataSetDelegate , DZNEmpt
                 controller.remark = json["mark"].string ?? ""
                 controller.leaseTerm = Int(json["leaseTerm"].string ?? "0")!
                 controller.unfinished = bUnfinished
-                if let orderNo = json["orderNo"].string, orderNo.characters.count > 0 {
+                if let orderNo = json["orderNo"].string, orderNo.count > 0 {
                     controller.onceOrderId = orderNo
                 }
+                controller.title = "评估任务创建"
                 controller.hidesBottomBarWhenPushed = true
                 self.navigationController?.pushViewController(controller, animated: true)
             }
@@ -496,6 +521,32 @@ extension RecordViewController: UITextFieldDelegate {
 
 extension RecordViewController: DidSelectPopViewCellDelegate {
     func didSelectRowAtIndexPath(_ indexPath: IndexPath) {
-        print("点击了第\(indexPath.row)个")
+        switch indexPath.row {
+        case 0:
+            data.removeAll()
+            if let orders = UserDefaults.standard.object(forKey: "orders") as? [[String : String]] {
+                if orders.count > 0 {
+                    for dic in orders {
+                        data.append(JSON(dic))
+                    }
+                }
+            }
+            if data.count == 0 && data2.count == 0 {
+                nShowEmpty = 1
+            }
+            self.tableView0.mj_header.beginRefreshing()
+        case 1:
+            data2 = []
+            refreshTableView0()
+        case 2:
+            data = []
+            self.tableView0.mj_header.beginRefreshing()
+        default:
+            fatalError()
+        }
+        statusIndexButton.setTitle(arrTitle[indexPath.row], for: .normal)
+        popVc?.dismiss(animated: true, completion: {
+
+        })
     }
 }

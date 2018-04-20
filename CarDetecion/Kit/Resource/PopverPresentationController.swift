@@ -17,7 +17,7 @@ enum PopViewFrame{
 var popViewY : CGFloat = 65.0
 var mainScreenWidth = UIScreen.main.bounds.size.width
 var popViewWidth : CGFloat = 100.0
-var popViewHeight : CGFloat = 150.0
+var popViewHeight : CGFloat = 300.0
 
 class PopverPresentationController: UIPresentationController {
     /// 展现视图的大小
@@ -87,6 +87,6 @@ class PopverPresentationController: UIPresentationController {
         
         // 设置遮罩的frame
         coverView.frame = containerView!.bounds
-        containerView! .insertSubview(coverView, at: 0)
+        containerView!.insertSubview(coverView, at: 0)
     }
 }

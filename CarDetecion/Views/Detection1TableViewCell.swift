@@ -24,7 +24,7 @@ class Detection1TableViewCell: UITableViewCell , UITextFieldDelegate {
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        if let text = textField.text?.trimmingCharacters(in: .whitespacesAndNewlines) , text.characters.count > 0 {
+        if let text = textField.text?.trimmingCharacters(in: .whitespacesAndNewlines) , text.count > 0 {
             NotificationCenter.default.post(name: Notification.Name("detectionnew"), object: 1, userInfo: ["text" : text])
         }
     }

@@ -95,7 +95,7 @@ private let kPlaceholderTextViewInsetSpan: CGFloat = 8
         super.draw(rect)
         
         // in case we don't have a text, put the placeholder (if any)
-        if text.characters.count == 0 && self.placeholder != nil {
+        if text.count == 0 && self.placeholder != nil {
             let baseRect = placeholderBoundsContainedIn(self.bounds)
             let font = self.font ?? self.typingAttributes[NSFontAttributeName] as? UIFont ?? UIFont.systemFont(ofSize: UIFont.systemFontSize)
             

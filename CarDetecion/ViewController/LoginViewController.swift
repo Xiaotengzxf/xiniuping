@@ -53,7 +53,7 @@ class LoginViewController: UIViewController {
     @IBAction func loginIn(_ sender: Any) {
         tfUserName.resignFirstResponder()
         tfPwd.resignFirstResponder()
-        guard let username = tfUserName.text?.trimmingCharacters(in: .whitespacesAndNewlines) , username.characters.count > 0 else {
+        guard let username = tfUserName.text?.trimmingCharacters(in: .whitespacesAndNewlines) , username.count > 0 else {
             Toast(text: "请输入用户名").show()
             return
         }
@@ -106,7 +106,7 @@ class LoginViewController: UIViewController {
             }
         }
         
-        guard let pwd = tfPwd.text?.trimmingCharacters(in: .whitespacesAndNewlines) , pwd.characters.count > 0 else {
+        guard let pwd = tfPwd.text?.trimmingCharacters(in: .whitespacesAndNewlines) , pwd.count > 0 else {
             Toast(text: "请输入密码").show()
             return
         }

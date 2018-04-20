@@ -18,12 +18,8 @@ class MTabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(MTabBarController.handleNotification(notification:)), name: Notification.Name("tab"), object: nil)
-        tabView.translatesAutoresizingMaskIntoConstraints = false
+        tabView.frame = CGRect(x: WIDTH / 2 - 45, y: -35, width: 90, height: 90)
         self.tabBar.addSubview(tabView)
-        self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:[tabView(90)]", options: .directionLeadingToTrailing, metrics: nil, views: ["tabView": tabView]))
-        self.view.addConstraint(NSLayoutConstraint(item: tabView, attribute: .centerX, relatedBy: .equal, toItem: tabBar, attribute: .centerX, multiplier: 1, constant: 0))
-        self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[tabView(90)]", options: .directionLeadingToTrailing, metrics: nil, views: ["tabView": tabView]))
-        self.view.addConstraint(NSLayoutConstraint(item: tabView, attribute: .top, relatedBy: .equal, toItem: tabBar, attribute: .top, multiplier: 1, constant: -35))
     }
 
     override func didReceiveMemoryWarning() {
