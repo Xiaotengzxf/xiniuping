@@ -67,7 +67,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , JPUSHRegisterDelegate {
             uploadDictCount = uploadDicCount
         }
         
-        Bugly.start(withAppId: "2304f83592") // 腾讯Bugly接入
+        Bugly.start(withAppId: "a1a3047cc5") // 腾讯Bugly接入
         
         IQKeyboardManager.sharedManager().enable = true
         

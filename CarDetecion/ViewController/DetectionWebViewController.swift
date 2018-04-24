@@ -21,9 +21,20 @@ class DetectionWebViewController: UIViewController {
         webView = WKWebView()
         webView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(webView)
-        let username = UserDefaults.standard.string(forKey: "username")
-        let url = URL(string: strUrl)
-        webView.load(URLRequest(url: url!))
+        
+        if strUrl.count > 0 {
+            let url = URL(string: strUrl)
+            webView.load(URLRequest(url: url!))
+        } else {
+            var str = ""
+            for i in 1...27 {
+                str += "<img src=\"\(NetworkManager.sharedInstall.domain)/external/source/photorules/\(i).jpg\">\n"
+            }
+            webView.loadHTMLString(str, baseURL: nil)
+        }
+        
+        
+        
         self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[webView]|", options: .directionLeadingToTrailing, metrics: nil, views: ["webView" : webView]))
         self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[webView]|", options: .directionLeadingToTrailing, metrics: nil, views: ["webView" : webView]))
     }

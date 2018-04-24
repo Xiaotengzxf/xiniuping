@@ -14,8 +14,8 @@ import MBProgressHUD
 
 class DetectionNewViewController: UIViewController , UITableViewDataSource , UITableViewDelegate , DetectionTableViewCellDelegate , UIViewControllerTransitioningDelegate , Detection3TableViewCellDelegate, Detection4TableViewCellDelegate {
 
+    @IBOutlet weak var submitButton: UIButton!
     @IBOutlet weak var lcBottom: NSLayoutConstraint!
-    @IBOutlet weak var btnSave: UIButton!
     @IBOutlet weak var vBottom: UIView!
     @IBOutlet weak var tableView: UITableView!
     let sectionTitles = ["登记证" , "行驶证" , "铭牌" , "车身外观" , "车体骨架" , "车辆内饰" , "差异补充" , "原车保险" , "估价" , "租赁期限(非残值租赁产品就选无租期)", "备注"]
@@ -37,10 +37,9 @@ class DetectionNewViewController: UIViewController , UITableViewDataSource , UIT
     var bSubmitSuccess = false // 是否提交成功
     var companyNo = 0 // 单位代号
     var nTag = 0 // 临时tag
-    //var cameraType = 0 // 单拍，连拍
     var waterMarks : [JSON] = []
-    let companyOtherNeed : [Int] = [0 , 100 , 1000 , 2000 , 3000 , 3100 , 3001 , 3101 , 4000 , 4100 , 4001 , 4101 , 4002 , 4102 , 4003 , 4103 , 4004 , 4104 , 4005 , 4105 , 4006 , 4106 , 4007 , 5000 , 5100 , 5001 , 5101]
-    let companyOptional : [Int] = [1000, 3100, 3101, 4003, 4103, 4006, 4007, 5100]
+    let companyOtherNeed : [Int] = [0 , 100 , 1000 , 2000 , 3000 , 3100, 3200 , 3001 , 4000 , 4100, 4200 , 4001 , 4101, 4201 , 4002 , 4102, 4202 , 4003 , 4103, 4203 , 4004 , 4104, 4204 , 4005 , 4105 , 4205, 5000 , 5100 ,5200, 5001]
+    let companyOptional : [Int] = [1000, 3100, 3001, 4002, 4102, 4004, 4204, 5100]
     //
     var source = 0  // 0 创建新的，1 未通过 ， 2 本地的
     var json : JSON? // 未通过时，获取的数据
@@ -52,7 +51,6 @@ class DetectionNewViewController: UIViewController , UITableViewDataSource , UIT
     var fWebViewCellHeight : Float = 100
     var unfinished = false
     var onceOrderId = ""
-    var rejectView: RejectView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,6 +65,7 @@ class DetectionNewViewController: UIViewController , UITableViewDataSource , UIT
             price = p > 0 ? "\(p)" : ""
             remark = json?["mark"].string ?? ""
             loadUnpassData()
+            submitButton.setTitle("重新提交", for: .normal)
         }else {
             getWaterMark(tag: -1)
             
@@ -111,7 +110,6 @@ class DetectionNewViewController: UIViewController , UITableViewDataSource , UIT
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         if (!self.navigationController!.viewControllers.contains(self)) && bSave == false && source != 1 {
-            NotificationCenter.default.post(name: Notification.Name("tab"), object: 10)
             self.save(UIButton())
         }
     }
@@ -192,7 +190,6 @@ class DetectionNewViewController: UIViewController , UITableViewDataSource , UIT
                 getWaterMark(tag: tag)
             }
         }
-        
     }
     
     // 跳转到拍照界面
@@ -205,11 +202,13 @@ class DetectionNewViewController: UIViewController , UITableViewDataSource , UIT
                 self?.tableView.reloadData()
             }
         }
+        //camera.cameraType = cameraType
         camera.nTag = nTag
         camera.sectionTiltes = sectionTitles
         camera.titles = titles
-        camera.waterMarks = waterMarks
+        //camera.waterMarks = waterMarks
         camera.companyNeed = companyOtherNeed
+        //camera.transitioningDelegate = self
         self.present(camera, animated: true) {
             
         }
@@ -230,28 +229,9 @@ class DetectionNewViewController: UIViewController , UITableViewDataSource , UIT
             
         }
     }
-
-    @IBAction func move(_ sender: Any) {
-        if let button = sender as? UIButton {
-            switch button.tag {
-            case 1:
-                tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
-            case 2:
-                tableView.scrollToRow(at: IndexPath(row: 0, section: 3), at: .top, animated: true)
-            case 3:
-                tableView.scrollToRow(at: IndexPath(row: 0, section: 4), at: .top, animated: true)
-            case 4:
-                tableView.scrollToRow(at: IndexPath(row: 0, section: 5), at: .top, animated: true)
-            case 5:
-                tableView.scrollToRow(at: IndexPath(row: 0, section: 6), at: .top, animated: true)
-            default:
-                fatalError()
-            }
-        }
-    }
     
     // 保存
-    @IBAction func save(_ sender: Any) {
+    func save(_ sender: Any) {
         if source == 1 || unfinished {
             self.navigationController?.popViewController(animated: true)
             return
@@ -312,20 +292,13 @@ class DetectionNewViewController: UIViewController , UITableViewDataSource , UIT
                 UserDefaults.standard.set(orders, forKey: "orders")
                 UserDefaults.standard.set(orderKeys, forKey: "orderKeys")
                 UserDefaults.standard.synchronize()
-                if let button = sender as? UIButton , button == btnSave {
-                    showAlert(title: "温馨提示", message: "保存成功", button: "确定")
-                }
+                
                 
             }catch{
-                if let button = sender as? UIButton , button == btnSave {
-                    showAlert(title: "温馨提示", message: "保存失败，数据丢失!", button: "确定")
-                }
+                
                 
             }
-        }else{
-            if let button = sender as? UIButton , button == btnSave {
-                showAlert(title: "温馨提示", message: "您没有拍摄任何照片，或输入价格，或输入内容！", button: "保存失败")
-            }
+        }else {
             
         }
     }
@@ -335,7 +308,6 @@ class DetectionNewViewController: UIViewController , UITableViewDataSource , UIT
         let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: button, style: .cancel, handler: {[weak self] (action) in
             if message == "保存成功" {
-                NotificationCenter.default.post(name: Notification.Name("tab"), object: 10)
                 self?.navigationController?.popViewController(animated: true)
             }
         }))
@@ -471,15 +443,18 @@ class DetectionNewViewController: UIViewController , UITableViewDataSource , UIT
         }else{
             count = sectionTitles.count - 1
         }
+        if source == 1 {
+            count += 1
+        }
         return count
         
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let nMin = 0
-        let nMax = 8
+        let nMin = source == 1 ? 1 : 0
+        let nMax = source == 1 ? 9 : 8
         if section < nMax && section >= nMin {
-            let nSection = section
+            let nSection = source==1 ? section - 1 : section
             var count = titles[nSection].count + 1
             if images.count > 0 {
                 let array = images.keys.filter{$0 >= nSection * 1000 && $0 < (nSection + 1) * 1000}
@@ -495,26 +470,30 @@ class DetectionNewViewController: UIViewController , UITableViewDataSource , UIT
                 }
                 count = max(count, array1.count + n)
             }
-            return (count % 2 > 0) ? (count / 2 + 1) : (count / 2)
+            return (count % 3 > 0) ? (count / 3 + 1) : (count / 3)
         }else {
             return 1
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let nMin = 0
-        let nMax = 8
+        let nMin = source == 1 ? 1 : 0
+        let nMax = source == 1 ? 9 : 8
         if indexPath.section < nMax && indexPath.section >= nMin {
-            let nSection = indexPath.section
+            let nSection = source==1 ? indexPath.section - 1 : indexPath.section
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! DetectionTableViewCell
             cell.vCamera1.layer.cornerRadius = 6.0
             cell.vCamera2.layer.cornerRadius = 6.0
+            cell.vCamera3.layer.cornerRadius = 6.0
             cell.iv1.layer.cornerRadius = 6.0
             cell.iv2.layer.cornerRadius = 6.0
+            cell.iv3.layer.cornerRadius = 6.0
             cell.iv1.clipsToBounds = true
             cell.iv2.clipsToBounds = true
-            cell.lbl11.layer.cornerRadius = 3.0
-            cell.lbl22.layer.cornerRadius = 3.0
+            cell.iv3.clipsToBounds = true
+            cell.lbl11.layer.cornerRadius = 6.0
+            cell.lbl22.layer.cornerRadius = 6.0
+            cell.lbl33.layer.cornerRadius = 6.0
             cell.indexPath = IndexPath(row: indexPath.row, section: nSection)
             cell.delegate = self
             cell.source = source
@@ -522,7 +501,7 @@ class DetectionNewViewController: UIViewController , UITableViewDataSource , UIT
             let c = titles[nSection].count
             var count = titles[nSection].count + 1
             if nSection == 6 || nSection == 7 {
-                count -= 1
+                count -= 2
             }
             if images.count > 0 {
                 let array = images.keys.filter{$0 >= nSection * 1000 && $0 < (nSection + 1) * 1000}
@@ -538,87 +517,51 @@ class DetectionNewViewController: UIViewController , UITableViewDataSource , UIT
                 }
                 count = max(count, array1.count + n)
             }
-            if count % 2 > 0 && indexPath.row == count / 2 {
+            if count % 3 == 0 && indexPath.row == count / 3 {
                 cell.vCamera2.isHidden = true
             }else{
                 cell.vCamera2.isHidden = false
             }
-            if indexPath.row * 2 < c {
-                cell.lbl1.text = titles[nSection][indexPath.row * 2]
-                cell.lbl11.text = titles[nSection][indexPath.row * 2]
+            if (count % 3 > 0 && indexPath.row == count / 3) || count == 0  {
+                cell.vCamera3.isHidden = true
+            }else{
+                cell.vCamera3.isHidden = false
+            }
+            if indexPath.row * 3 < c {
+                cell.lbl1.text = titles[nSection][indexPath.row * 3]
+                cell.lbl11.text = titles[nSection][indexPath.row * 3]
             }else{
                 cell.lbl1.text = "添加照片"
                 cell.lbl11.text = "添加照片"
             }
-            if indexPath.row * 2 + 1 < c {
-                cell.lbl2.text = titles[nSection][(indexPath.row * 2 + 1) % titles[nSection].count]
-                cell.lbl22.text = titles[nSection][(indexPath.row * 2 + 1) % titles[nSection].count]
+            if indexPath.row * 3 + 1 < c {
+                cell.lbl2.text = titles[nSection][(indexPath.row * 3 + 1) % titles[nSection].count]
+                cell.lbl22.text = titles[nSection][(indexPath.row * 3 + 1) % titles[nSection].count]
             }else{
                 cell.lbl2.text = "添加照片"
                 cell.lbl22.text = "添加照片"
             }
-            cell.iv11.image = UIImage(named: indexPath.row * 2 < count - 1 ? "icon_camera" : "icon_add_photo")
-            cell.iv21.image = UIImage(named: indexPath.row * 2 + 1 < count - 1 ? "icon_camera" : "icon_add_photo")
+            if indexPath.row * 3 + 2 < c {
+                cell.lbl3.text = titles[nSection][(indexPath.row * 3 + 2) % titles[nSection].count]
+                cell.lbl33.text = titles[nSection][(indexPath.row * 3 + 2) % titles[nSection].count]
+            }else{
+                cell.lbl3.text = "添加照片"
+                cell.lbl33.text = "添加照片"
+            }
+            cell.iv11.image = UIImage(named: indexPath.row * 3 < count - 1 ? "icon_camera" : "icon_add_photo")
+            cell.iv21.image = UIImage(named: indexPath.row * 3 + 1 < count - 1 ? "icon_camera" : "icon_add_photo")
+            cell.iv31.image = UIImage(named: indexPath.row * 3 + 2 < count - 1 ? "icon_camera" : "icon_add_photo")
             cell.vCamera1.layer.borderWidth = 0.5
             cell.vCamera2.layer.borderWidth = 0.5
+            cell.vCamera3.layer.borderWidth = 0.5
             if source == 1 {
-                var bTem = false
-                if images.count > 0 {
-                    if let data = images[nSection * 1000 + indexPath.row] {
-                        cell.iv1.image = UIImage(data: data)
-                        bTem = true
-                    }
-                }
-                if !bTem {
-                    for  json in arrImageInfo {
-                        if json["imageClass"].string == sectionTitles[nSection] {
-                            if json["imageSeqNum"].intValue == indexPath.row * 2 {
-                                cell.iv1.sd_setImage(with: URL(string: "\(NetworkManager.sharedInstall.domain)\(json["imageThumbPath"].stringValue)")!)
-                                bTem = true
-                            }
-                        }
-                    }
-                }
-                if bTem {
-                    cell.lbl11.isHidden = false
-                    cell.lbl1.isHidden = true
-                    cell.iv11.isHidden = true
-                    cell.vCamera1.layer.borderColor = UIColor(red: 230/255.0, green: 230/255.0, blue: 230/255.0, alpha: 1).cgColor
-                }else{
-                    cell.iv1.image = UIImage(named: "camera_bg")
-                    cell.lbl1.isHidden = false
-                    cell.iv11.isHidden = false
-                    cell.lbl11.isHidden = true
-                    cell.vCamera1.layer.borderColor = UIColor(red: 230/255.0, green: 230/255.0, blue: 230/255.0, alpha: 1).cgColor
-                }
-                
+                showLeft1(cell: cell, nSection: nSection, indexPath: indexPath)
+                showMiddle1(cell: cell, nSection: nSection, indexPath: indexPath)
+                showRight1(cell: cell, nSection: nSection, indexPath: indexPath)
             }else {
-                if let data = images[nSection * 1000 + indexPath.row] {
-                    cell.iv1.image = UIImage(data: data)
-                    cell.lbl11.isHidden = false
-                    cell.lbl1.isHidden = true
-                    cell.iv11.isHidden = true
-                    cell.vCamera1.layer.borderColor = UIColor(red: 230/255.0, green: 230/255.0, blue: 230/255.0, alpha: 1).cgColor
-                }else{
-                    cell.iv1.image = UIImage(named: "camera_bg")
-                    cell.lbl1.isHidden = false
-                    cell.lbl11.isHidden = true
-                    cell.iv11.isHidden = false
-                    if bSubmit {
-                        if companyNo == 0 {
-                            if companyOtherNeed.contains(nSection * 1000 + indexPath.row) {
-                                cell.vCamera1.layer.borderColor = UIColor.red.cgColor
-                            }else{
-                                cell.vCamera1.layer.borderColor = UIColor(red: 230/255.0, green: 230/255.0, blue: 230/255.0, alpha: 1).cgColor
-                            }
-                        }else{
-                            cell.vCamera1.layer.borderColor = UIColor.red.cgColor
-                        }
-                        
-                    }else{
-                        cell.vCamera1.layer.borderColor = UIColor(red: 230/255.0, green: 230/255.0, blue: 230/255.0, alpha: 1).cgColor
-                    }
-                }
+                showLeft(cell: cell, nSection: nSection, indexPath: indexPath)
+                showMiddle(cell: cell, nSection: nSection, indexPath: indexPath)
+                showRight(cell: cell, nSection: nSection, indexPath: indexPath)
             }
             if companyOptional.contains(nSection * 1000 + indexPath.row) {
                 cell.vCamera1.layer.borderColor = UIColor.green.cgColor
@@ -626,70 +569,21 @@ class DetectionNewViewController: UIViewController , UITableViewDataSource , UIT
             }else{
                 cell.lbl1.textColor = UIColor(red: 107/255.0, green: 107/255.0, blue: 107/255.0, alpha: 1)
             }
-            if source == 1 {
-                var bTem = false
-                if images.count > 0 {
-                    if let data = images[nSection * 1000 + indexPath.row + 100] {
-                        cell.iv2.image = UIImage(data: data)
-                        bTem = true
-                    }
-                }
-                if !bTem {
-                    for  json in arrImageInfo {
-                        if json["imageClass"].string == sectionTitles[nSection] {
-                            if json["imageSeqNum"].intValue == indexPath.row * 2 + 1 {
-                                cell.iv2.sd_setImage(with: URL(string: "\(NetworkManager.sharedInstall.domain)\(json["imageThumbPath"].stringValue)")!)
-                                bTem = true
-                            }
-                        }
-                    }
-                }
-                if bTem {
-                    cell.lbl2.isHidden = true
-                    cell.lbl22.isHidden = false
-                    cell.iv21.isHidden = true
-                    cell.vCamera2.layer.borderColor = UIColor(red: 230/255.0, green: 230/255.0, blue: 230/255.0, alpha: 1).cgColor
-                }else{
-                    cell.iv2.image = UIImage(named: "camera_bg")
-                    cell.lbl2.isHidden = false
-                    cell.lbl22.isHidden = true
-                    cell.iv21.isHidden = false
-                    cell.vCamera2.layer.borderColor = UIColor(red: 230/255.0, green: 230/255.0, blue: 230/255.0, alpha: 1).cgColor
-                }
-                
-            }else{
-                if let data = images[nSection * 1000 + indexPath.row + 100] {
-                    cell.iv2.image = UIImage(data: data)
-                    cell.lbl2.isHidden = true
-                    cell.lbl22.isHidden = false
-                    cell.iv21.isHidden = true
-                    cell.vCamera2.layer.borderColor = UIColor(red: 230/255.0, green: 230/255.0, blue: 230/255.0, alpha: 1).cgColor
-                }else{
-                    cell.iv2.image = UIImage(named: "camera_bg")
-                    cell.lbl2.isHidden = false
-                    cell.lbl22.isHidden = true
-                    cell.iv21.isHidden = false
-                    if bSubmit {
-                        if companyNo == 0 {
-                            if companyOtherNeed.contains(nSection * 1000 + indexPath.row + 100) {
-                                cell.vCamera2.layer.borderColor = UIColor.red.cgColor
-                            }else{
-                                cell.vCamera2.layer.borderColor = UIColor(red: 230/255.0, green: 230/255.0, blue: 230/255.0, alpha: 1).cgColor
-                            }
-                        }else{
-                            cell.vCamera2.layer.borderColor = UIColor.red.cgColor
-                        }
-                    }else{
-                        cell.vCamera2.layer.borderColor = UIColor(red: 230/255.0, green: 230/255.0, blue: 230/255.0, alpha: 1).cgColor
-                    }
-                }
-            }
+        
             if companyOptional.contains(nSection * 1000 + indexPath.row + 100) {
                 cell.vCamera2.layer.borderColor = UIColor.green.cgColor
                 cell.lbl2.textColor = UIColor.green
             }else{
                 cell.lbl2.textColor = UIColor(red: 107/255.0, green: 107/255.0, blue: 107/255.0, alpha: 1)
             }
+            
+            if companyOptional.contains(nSection * 1000 + indexPath.row + 200) {
+                cell.vCamera3.layer.borderColor = UIColor.green.cgColor
+                cell.lbl3.textColor = UIColor.green
+            }else{
+                cell.lbl3.textColor = UIColor(red: 107/255.0, green: 107/255.0, blue: 107/255.0, alpha: 1)
+            }
+            
             if unfinished {
                 cell.isUserInteractionEnabled = false
             }
@@ -713,6 +607,17 @@ class DetectionNewViewController: UIViewController , UITableViewDataSource , UIT
             }
             return cell
         }else{
+            if source == 1 && indexPath.section == 0 {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "cell4", for: indexPath) as! Detection4TableViewCell
+                cell.contentView.layer.borderWidth = 0.5
+                cell.delegate = self
+                cell.showWebView(htmlString: json?["applyAllOpinion"].string ?? "")
+                cell.contentView.layer.borderColor = UIColor.clear.cgColor
+                if unfinished {
+                    cell.isUserInteractionEnabled = false
+                }
+                return cell
+            }
             if bGuanghui {
                 if indexPath.section == nMax + 1 {
                     let cell = tableView.dequeueReusableCell(withIdentifier: "cell3", for: indexPath) as! Detection3TableViewCell
@@ -776,28 +681,28 @@ class DetectionNewViewController: UIViewController , UITableViewDataSource , UIT
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 44
+        return 54
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let nMin = 0
-        let nMax = 8
+        let nMin = source == 1 ? 1 : 0
+        let nMax = source == 1 ? 9 : 8
         if indexPath.section < nMax && indexPath.section >= nMin {
-            return 10 + (WIDTH / 2 - 15) / 3 * 2.0
+            return 10 + (WIDTH / 3 - 7) * 0.7
         }else if indexPath.section == nMax {
             return 44
         }else{
-//            if source == 1 && indexPath.section == 0 {
-//                return CGFloat(fWebViewCellHeight + 20)
-//            }
+            if source == 1 && indexPath.section == 0 {
+                return CGFloat(fWebViewCellHeight + 20)
+            }
             if bGuanghui {
                 if indexPath.section == nMax + 1 {
                     return 60
                 }else{
-                    return 100
+                    return 60
                 }
             }else{
-                return 100
+                return 60
             }
             
         }
@@ -805,29 +710,34 @@ class DetectionNewViewController: UIViewController , UITableViewDataSource , UIT
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: "header") as! ReUseHeaderFooterView
-        view.delegate = self
-        let nMin = 0
-        let nMax = 8
-        let nSection = section
+        let nMin = source == 1 ? 1 : 0
+        let nMax = source == 1 ? 9 : 8
+        let nSection = source==1 ? section - 1 : section
         if section < nMax && section >= nMin {
             view.lblTitle.text = sectionTitles[nSection]
-            view.btnReject.isHidden = !(source == 1 && section == 0)
         }else if section == nMax {
-            view.btnReject.isHidden = true
             view.lblTitle.text = sectionTitles[nSection]
         }else{
-            view.btnReject.isHidden = true
-            if bGuanghui {
-                view.lblTitle.text = sectionTitles[nSection]
+            if source == 1 && section == 0 {
+                view.lblTitle.text = "退回原因"
             }else{
-                view.lblTitle.text = sectionTitles[nSection + 1]
+                if bGuanghui {
+                    view.lblTitle.text = sectionTitles[nSection]
+                }else{
+                    view.lblTitle.text = sectionTitles[nSection + 1]
+                }
             }
+            
         }
         return view
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 0.1
     }
 
     /*
@@ -870,33 +780,187 @@ class DetectionNewViewController: UIViewController , UITableViewDataSource , UIT
         tableView.reloadData()
     }
     
-    func lookForAttach() {
-        if let controller = self.storyboard?.instantiateViewController(withIdentifier: "FileAttachViewController") as? FileAttachViewController {
-            controller.carId = json!["carBillId"].stringValue
-            controller.status = "23,33,43,53"
-            self.navigationController?.pushViewController(controller, animated: true)
+    
+    // 判断是否显示
+    func showLeft1(cell: DetectionTableViewCell, nSection: Int, indexPath: IndexPath) {
+        var bTem = false
+        if images.count > 0 {
+            if let data = images[nSection * 1000 + indexPath.row] {
+                cell.iv1.image = UIImage(data: data)
+                bTem = true
+            }
+        }
+        if !bTem {
+            for  json in arrImageInfo {
+                if json["imageClass"].string == sectionTitles[nSection] {
+                    if json["imageSeqNum"].intValue == indexPath.row * 3 {
+                        cell.iv1.sd_setImage(with: URL(string: "\(NetworkManager.sharedInstall.domain)\(json["imageThumbPath"].stringValue)")!)
+                        bTem = true
+                    }
+                }
+            }
+        }
+        if bTem {
+            cell.lbl1.isHidden = true
+            cell.lbl11.isHidden = false
+            cell.iv11.isHidden = true
+            cell.vCamera1.layer.borderColor = UIColor(red: 230/255.0, green: 230/255.0, blue: 230/255.0, alpha: 1).cgColor
+        }else{
+            cell.iv1.image = nil
+            cell.lbl1.isHidden = false
+            cell.lbl11.isHidden = true
+            cell.iv11.isHidden = false
+            cell.vCamera1.layer.borderColor = UIColor(red: 230/255.0, green: 230/255.0, blue: 230/255.0, alpha: 1).cgColor
         }
     }
     
-}
-
-extension DetectionNewViewController: ReUseHeaderFooterViewDelegate {
-    func showRejectView() {
-        rejectView = Bundle.main.loadNibNamed("RejectView", owner: nil, options: nil)?.first as? RejectView
-        rejectView?.translatesAutoresizingMaskIntoConstraints = false
-        rejectView?.delegate = self
-        rejectView?.showWebView(htmlString: json?["applyAllOpinion"].string ?? "")
-        self.view.addSubview(rejectView!)
-            
-        self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[rejectView]|", options: .directionLeadingToTrailing, metrics: nil, views: ["rejectView": rejectView!]))
-        self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[rejectView]|", options: .directionLeadingToTrailing, metrics: nil, views: ["rejectView": rejectView!]))
-        
+    
+    func showMiddle1(cell: DetectionTableViewCell, nSection: Int, indexPath: IndexPath) {
+        var bTem = false
+        if images.count > 0 {
+            if let data = images[nSection * 1000 + indexPath.row + 100] {
+                cell.iv2.image = UIImage(data: data)
+                bTem = true
+            }
+        }
+        if !bTem {
+            for  json in arrImageInfo {
+                if json["imageClass"].string == sectionTitles[nSection] {
+                    if json["imageSeqNum"].intValue == indexPath.row * 3 + 1 {
+                        cell.iv2.sd_setImage(with: URL(string: "\(NetworkManager.sharedInstall.domain)\(json["imageThumbPath"].stringValue)")!)
+                        bTem = true
+                    }
+                }
+            }
+        }
+        if bTem {
+            cell.lbl2.isHidden = true
+            cell.lbl22.isHidden = false
+            cell.iv21.isHidden = true
+            cell.vCamera2.layer.borderColor = UIColor(red: 230/255.0, green: 230/255.0, blue: 230/255.0, alpha: 1).cgColor
+        }else{
+            cell.iv2.image = nil
+            cell.lbl2.isHidden = false
+            cell.lbl22.isHidden = true
+            cell.iv21.isHidden = false
+            cell.vCamera2.layer.borderColor = UIColor(red: 230/255.0, green: 230/255.0, blue: 230/255.0, alpha: 1).cgColor
+        }
     }
-}
-
-extension DetectionNewViewController: RejectViewDelegate {
-    func hideRejectView() {
-        rejectView?.removeFromSuperview()
-        rejectView = nil
+    
+    func showRight1(cell: DetectionTableViewCell, nSection: Int, indexPath: IndexPath) {
+        var bTem = false
+        if images.count > 0 {
+            if let data = images[nSection * 1000 + indexPath.row + 200] {
+                cell.iv3.image = UIImage(data: data)
+                bTem = true
+            }
+        }
+        if !bTem {
+            for  json in arrImageInfo {
+                if json["imageClass"].string == sectionTitles[nSection] {
+                    if json["imageSeqNum"].intValue == indexPath.row * 3 + 2 {
+                        cell.iv3.sd_setImage(with: URL(string: "\(NetworkManager.sharedInstall.domain)\(json["imageThumbPath"].stringValue)")!)
+                        bTem = true
+                    }
+                }
+            }
+        }
+        if bTem {
+            cell.lbl3.isHidden = true
+            cell.lbl33.isHidden = false
+            cell.iv31.isHidden = true
+            cell.vCamera3.layer.borderColor = UIColor(red: 230/255.0, green: 230/255.0, blue: 230/255.0, alpha: 1).cgColor
+        }else{
+            cell.iv3.image = nil
+            cell.lbl3.isHidden = false
+            cell.lbl33.isHidden = true
+            cell.iv31.isHidden = false
+            cell.vCamera3.layer.borderColor = UIColor(red: 230/255.0, green: 230/255.0, blue: 230/255.0, alpha: 1).cgColor
+        }
+    }
+    
+    func showLeft(cell: DetectionTableViewCell, nSection: Int, indexPath: IndexPath) {
+        if let data = images[nSection * 1000 + indexPath.row] {
+            cell.iv1.image = UIImage(data: data)
+            cell.lbl11.isHidden = false
+            cell.lbl1.isHidden = true
+            cell.iv11.isHidden = true
+            cell.vCamera1.layer.borderColor = UIColor(red: 230/255.0, green: 230/255.0, blue: 230/255.0, alpha: 1).cgColor
+        }else{
+            cell.iv1.image = nil
+            cell.lbl1.isHidden = false
+            cell.lbl11.isHidden = true
+            cell.iv11.isHidden = false
+            if bSubmit {
+                if companyNo == 0 {
+                    if companyOtherNeed.contains(nSection * 1000 + indexPath.row) {
+                        cell.vCamera1.layer.borderColor = UIColor.red.cgColor
+                    }else{
+                        cell.vCamera1.layer.borderColor = UIColor(red: 230/255.0, green: 230/255.0, blue: 230/255.0, alpha: 1).cgColor
+                    }
+                }else{
+                    cell.vCamera1.layer.borderColor = UIColor.red.cgColor
+                }
+                
+            }else{
+                cell.vCamera1.layer.borderColor = UIColor(red: 230/255.0, green: 230/255.0, blue: 230/255.0, alpha: 1).cgColor
+            }
+        }
+    }
+    
+    func showMiddle(cell: DetectionTableViewCell, nSection: Int, indexPath: IndexPath) {
+        if let data = images[nSection * 1000 + indexPath.row + 100] {
+            cell.iv2.image = UIImage(data: data)
+            cell.lbl2.isHidden = true
+            cell.lbl22.isHidden = false
+            cell.iv21.isHidden = true
+            cell.vCamera2.layer.borderColor = UIColor(red: 230/255.0, green: 230/255.0, blue: 230/255.0, alpha: 1).cgColor
+        }else{
+            cell.iv2.image = nil
+            cell.lbl2.isHidden = false
+            cell.lbl22.isHidden = true
+            cell.iv21.isHidden = false
+            if bSubmit {
+                if companyNo == 0 {
+                    if companyOtherNeed.contains(nSection * 1000 + indexPath.row + 100) {
+                        cell.vCamera2.layer.borderColor = UIColor.red.cgColor
+                    }else{
+                        cell.vCamera2.layer.borderColor = UIColor(red: 230/255.0, green: 230/255.0, blue: 230/255.0, alpha: 1).cgColor
+                    }
+                }else{
+                    cell.vCamera2.layer.borderColor = UIColor.red.cgColor
+                }
+            }else{
+                cell.vCamera2.layer.borderColor = UIColor(red: 230/255.0, green: 230/255.0, blue: 230/255.0, alpha: 1).cgColor
+            }
+        }
+    }
+    
+    func showRight(cell: DetectionTableViewCell, nSection: Int, indexPath: IndexPath) {
+        if let data = images[nSection * 1000 + indexPath.row + 200] {
+            cell.iv3.image = UIImage(data: data)
+            cell.lbl3.isHidden = true
+            cell.lbl33.isHidden = false
+            cell.iv31.isHidden = true
+            cell.vCamera3.layer.borderColor = UIColor(red: 230/255.0, green: 230/255.0, blue: 230/255.0, alpha: 1).cgColor
+        }else{
+            cell.iv3.image = nil
+            cell.lbl3.isHidden = false
+            cell.lbl33.isHidden = true
+            cell.iv31.isHidden = false
+            if bSubmit {
+                if companyNo == 0 {
+                    if companyOtherNeed.contains(nSection * 1000 + indexPath.row + 200) {
+                        cell.vCamera3.layer.borderColor = UIColor.red.cgColor
+                    }else{
+                        cell.vCamera3.layer.borderColor = UIColor(red: 230/255.0, green: 230/255.0, blue: 230/255.0, alpha: 1).cgColor
+                    }
+                }else{
+                    cell.vCamera3.layer.borderColor = UIColor.red.cgColor
+                }
+            }else{
+                cell.vCamera3.layer.borderColor = UIColor(red: 230/255.0, green: 230/255.0, blue: 230/255.0, alpha: 1).cgColor
+            }
+        }
     }
 }

@@ -49,7 +49,6 @@ public extension CameraViewController {
 
 public class CameraViewController: UIViewController {
     
-    var waterMarks : [JSON] = []
     var didUpdateViews = false
     var allowCropping = false
     var animationRunning = false
@@ -59,8 +58,7 @@ public class CameraViewController: UIViewController {
     var titlesImageClass : [[String]] = []
     var titlesImageSeqNum: [[Int]] = []
     var titles : [[String]] = []
-    var lcWidth : NSLayoutConstraint!
-    var lcHeight : NSLayoutConstraint!
+
     var imageInfo : (UIImage? , PHAsset?)
     var companyNeed : [Int] = []
     
@@ -109,14 +107,14 @@ public class CameraViewController: UIViewController {
     
     let leftView : UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor.rgbColorFromHex(rgb: 0x363b3f)
+        view.backgroundColor = UIColor.rgbColorFromHex(rgb: 0x401E90)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
     let rightView : UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor.rgbColorFromHex(rgb: 0x363b3f)
+        view.backgroundColor = UIColor.rgbColorFromHex(rgb: 0x401E90)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -143,6 +141,7 @@ public class CameraViewController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(UIImage(named: "btn_camera_close"),
                         for: .normal)
+        button.isHidden = true
         return button
     }()
     
@@ -199,20 +198,6 @@ public class CameraViewController: UIViewController {
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
-    }()
-    
-    let hintButton : UIButton = {
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(UIImage(named: "simple"), for: .normal)
-        return button
-    }()
-    
-    let ivDetailDesc : UIImageView = { //描述图片
-        let imageView = UIImageView()
-        imageView.backgroundColor = UIColor.white
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        return imageView
     }()
     
     let ivSnap : UIImageView = {
@@ -315,13 +300,13 @@ public class CameraViewController: UIViewController {
         [imageView,
          lblName,
          lblCurrentPage,
-         hintButton,
-         ivDetailDesc,
          ivSnap].forEach({ middleView.addSubview($0) })
+        
+        let iphoneX = HEIGHT == 812 || WIDTH == 812
         
         self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-(50)-[cameraView]-(114)-|", options: .directionLeadingToTrailing, metrics: nil, views: ["cameraView" : cameraView]))
         self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[cameraView]|", options: .directionLeadingToTrailing, metrics: nil, views: ["cameraView" : cameraView]))
-        self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[leftView(50)]", options: .directionLeadingToTrailing, metrics: nil, views: ["leftView" : leftView]))
+        self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[leftView(width)]", options: .directionLeadingToTrailing, metrics: ["width": (iphoneX ? 74 : 50)], views: ["leftView" : leftView]))
         self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[leftView]|", options: .directionLeadingToTrailing, metrics: nil, views: ["leftView" : leftView]))
         self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:[rightView(114)]|", options: .directionLeadingToTrailing, metrics: nil, views: ["rightView" : rightView]))
         self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[rightView]|", options: .directionLeadingToTrailing, metrics: nil, views: ["rightView" : rightView]))
@@ -331,12 +316,12 @@ public class CameraViewController: UIViewController {
         self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[cameraButton(79)]", options: .directionLeadingToTrailing, metrics: nil, views: ["cameraButton" : cameraButton]))
         self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:[nextButton(114)]", options: .directionLeadingToTrailing, metrics: nil, views: ["nextButton" : nextButton]))
         self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[nextButton(60)]", options: .directionLeadingToTrailing, metrics: nil, views: ["nextButton" : nextButton]))
-        self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:[libraryButton(114)]", options: .directionLeadingToTrailing, metrics: nil, views: ["libraryButton" : libraryButton]))
-        self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[libraryButton(60)]", options: .directionLeadingToTrailing, metrics: nil, views: ["libraryButton" : libraryButton]))
+        self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:[libraryButton(50)]", options: .directionLeadingToTrailing, metrics: nil, views: ["libraryButton" : libraryButton]))
+        self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[libraryButton(50)]", options: .directionLeadingToTrailing, metrics: nil, views: ["libraryButton" : libraryButton]))
         self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:[closeButton(50)]", options: .directionLeadingToTrailing, metrics: nil, views: ["closeButton" : closeButton]))
         self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[closeButton(50)]", options: .directionLeadingToTrailing, metrics: nil, views: ["closeButton" : closeButton]))
-        self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:[flashButton(50)]", options: .directionLeadingToTrailing, metrics: nil, views: ["flashButton" : flashButton]))
-        self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[flashButton(50)]", options: .directionLeadingToTrailing, metrics: nil, views: ["flashButton" : flashButton]))
+        self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:[flashButton(114)]", options: .directionLeadingToTrailing, metrics: nil, views: ["flashButton" : flashButton]))
+        self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[flashButton(60)]", options: .directionLeadingToTrailing, metrics: nil, views: ["flashButton" : flashButton]))
         
         middleView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[ivSnap]|", options: .directionLeadingToTrailing, metrics: nil, views: ["ivSnap" : ivSnap]))
         middleView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[ivSnap]|", options: .directionLeadingToTrailing, metrics: nil, views: ["ivSnap" : ivSnap]))
@@ -348,15 +333,6 @@ public class CameraViewController: UIViewController {
         middleView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[lblName]-(40)-|", options: .directionLeadingToTrailing, metrics: nil, views: ["lblName" : lblName]))
         middleView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[lblCurrentPage]|", options: .directionLeadingToTrailing, metrics: nil, views: ["lblCurrentPage" : lblCurrentPage]))
         middleView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[lblCurrentPage]-(10)-|", options: .directionLeadingToTrailing, metrics: nil, views: ["lblCurrentPage" : lblCurrentPage]))
-        middleView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:[hintButton(80)]-(10)-|", options: .directionLeadingToTrailing, metrics: nil, views: ["hintButton" : hintButton]))
-        middleView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[hintButton(80)]-(10)-|", options: .directionLeadingToTrailing, metrics: nil, views: ["hintButton" : hintButton]))
-        
-        middleView.addConstraint(NSLayoutConstraint(item: ivDetailDesc, attribute: .bottom, relatedBy: .equal, toItem: hintButton, attribute: .top, multiplier: 1, constant: 20))
-        middleView.addConstraint(NSLayoutConstraint(item: ivDetailDesc, attribute: .right, relatedBy: .equal, toItem: hintButton, attribute: .right, multiplier: 1, constant: -15))
-        lcWidth = NSLayoutConstraint(item: ivDetailDesc, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 0)
-        lcHeight = NSLayoutConstraint(item: ivDetailDesc, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 0)
-        middleView.addConstraint(lcWidth)
-        middleView.addConstraint(lcHeight)
         
         ivSnap.isHidden = true
         
@@ -375,18 +351,6 @@ public class CameraViewController: UIViewController {
         if titles.count > section && titles[section].count > index {
             lblName.text = titles[section][row * 2 + bright]
             lblCurrentPage.text = "\(index + 1)/\(titles[section].count)"
-            for json in waterMarks {
-                let bTem = titlesImageClass.count > 0 ? (json["imageClass"].stringValue == titlesImageClass[section][index] && titlesImageSeqNum[section][index] == json["imageSeqNum"].intValue) : (json["imageClass"].stringValue == sectionTiltes[section] && index == json["imageSeqNum"].intValue)
-                if bTem {
-                    var imageUrl = "\(NetworkManager.sharedInstall.domain)\(json["imageDesc"].stringValue)"
-                    var url = URL(string: imageUrl.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)
-                    ivDetailDesc.sd_setImage(with: url)
-                    imageUrl = "\(NetworkManager.sharedInstall.domain)\(json["waterMark"].stringValue)"
-                    print("水印：\(imageUrl)")
-                    url = URL(string: imageUrl.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)
-                    imageView.sd_setImage(with: url, placeholderImage: UIImage(named: "transport"))
-                }
-            }
         }else{
             lblName.text = "添加照片"
             lblCurrentPage.text = "\(row * 2 + bright + 1)/\(row * 2 + bright + 1)"
@@ -494,34 +458,7 @@ public class CameraViewController: UIViewController {
         libraryButton.action = { [weak self] in self?.showLibrary() }
         closeButton.action = { [weak self] in self?.close() }
         flashButton.action = { [weak self] in self?.toggleFlash() }
-        hintButton.action = {
-            [weak self] in
-            if self!.lcWidth.constant == 0 {
-                self?.lcWidth.constant = MAX - 164 - 20 - 22 - 10
-                self?.lcHeight.constant = MIN - 20 - 60
-                UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.8, options: .curveLinear, animations: {
-                    [weak self] in
-                    self?.view.layoutIfNeeded()
-                    }, completion: { (finish) in
-                        
-                })
-            }else{
-                self?.hideDesc()
-            }
-        }
     }
-    
-    func hideDesc() {
-        self.lcWidth.constant = 0
-        self.lcHeight.constant = 0
-        UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.8, options: .curveLinear, animations: {
-            [weak self] in
-            self?.view.layoutIfNeeded()
-            }, completion: { (finish) in
-                
-        })
-    }
-
     
     /**
      * Toggle the buttons status, based on the actual
@@ -537,55 +474,6 @@ public class CameraViewController: UIViewController {
     func rotateCameraView() {
         cameraView.rotatePreview()
     }
-    
-    /**
-     * This method will rotate the buttons based on
-     * the last and actual orientation of the device.
-     */
-//    internal func rotate(actualInterfaceOrientation: UIInterfaceOrientation) {
-//        
-//        if lastInterfaceOrientation != nil {
-//            let lastTransform = CGAffineTransform(rotationAngle: CGFloat(radians(currentRotation(
-//                lastInterfaceOrientation!, newOrientation: actualInterfaceOrientation))))
-//            self.setTransform(transform: lastTransform)
-//        }
-//
-//        let transform = CGAffineTransform(rotationAngle: 0)
-//        animationRunning = true
-//        
-//        /**
-//         * Dispach delay to avoid any conflict between the CATransaction of rotation of the screen
-//         * and CATransaction of animation of buttons.
-//         */
-//
-//        let time: DispatchTime = DispatchTime.now() + Double(1 * UInt64(NSEC_PER_SEC)/10)
-//        DispatchQueue.main.asyncAfter(deadline: time) {
-//            
-//            CATransaction.begin()
-//            CATransaction.setDisableActions(false)
-//            CATransaction.commit()
-//            
-//            UIView.animate(
-//                withDuration: self.animationDuration,
-//                delay: 0.1,
-//                usingSpringWithDamping: self.animationSpring,
-//                initialSpringVelocity: 0,
-//                options: self.rotateAnimation,
-//                animations: {
-//                self.setTransform(transform: transform)
-//                }, completion: { _ in
-//                    self.animationRunning = false
-//            })
-//            
-//        }
-//    }
-    
-//    func setTransform(transform: CGAffineTransform) {
-//        self.closeButton.transform = transform
-//        //self.swapButton.transform = transform
-//        self.libraryButton.transform = transform
-//        self.flashButton.transform = transform
-//    }
     
     /**
      * Validate the permissions of the camera and
@@ -640,10 +528,6 @@ public class CameraViewController: UIViewController {
      * the picture on the device.
      */
     internal func capturePhoto() {
-        if self.lcWidth.constant != 0 {
-            self.hideDesc()
-            return
-        }
         guard let output = cameraView.imageOutput,
             let connection = output.connection(withMediaType: AVMediaTypeVideo) else {
             return
@@ -674,10 +558,6 @@ public class CameraViewController: UIViewController {
     
     // 关闭按钮事件
     internal func close() {
-        if self.lcWidth.constant != 0 {
-            self.hideDesc()
-            return
-        }
         onCompletion?(imageInfo.0, imageInfo.1)
         self.dismiss(animated: true) { 
             
@@ -686,10 +566,7 @@ public class CameraViewController: UIViewController {
     
     // 相册按钮事件
     internal func showLibrary() {
-        if self.lcWidth.constant != 0 {
-            self.hideDesc()
-            return
-        }
+        
         if libraryButton.title(for: .normal) == "重拍" {
             cameraView.startSession()
             ivSnap.isHidden = true
@@ -755,10 +632,6 @@ public class CameraViewController: UIViewController {
     
     // 闪光灯按钮
     internal func toggleFlash() {
-        if self.lcWidth.constant != 0 {
-            self.hideDesc()
-            return
-        }
         cameraView.cycleFlash()
         
         guard let device = cameraView.device else {
@@ -806,10 +679,6 @@ public class CameraViewController: UIViewController {
     
     // 拍下一张或者取消
     func doNextOrCancel()  {
-        if self.lcWidth.constant != 0 {
-            self.hideDesc()
-            return
-        }
         if nextButton.title(for: .normal) == "取消" {
             onCompletion?(nil , nil)
             self.dismiss(animated: true, completion: { 
@@ -845,18 +714,6 @@ public class CameraViewController: UIViewController {
                     if titles.count > section && titles[section].count > index2 {
                         lblName.text = titles[section][row * 2 + bright]
                         lblCurrentPage.text = "\(index2 + 1)/\(titles[section].count)"
-                        for json in waterMarks {
-                            let bTem = titlesImageClass.count > 0 ? (json["imageClass"].stringValue == titlesImageClass[section][index2] && json["imageSeqNum"].intValue == titlesImageSeqNum[section][index2]) : (json["imageClass"].stringValue == sectionTiltes[section] && index2 == json["imageSeqNum"].intValue)
-                            if bTem {
-                                var imageUrl = "\(NetworkManager.sharedInstall.domain)\(json["imageDesc"].stringValue)"
-                                var url = URL(string: imageUrl.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)
-                                ivDetailDesc.sd_setImage(with: url)
-                                imageUrl = "\(NetworkManager.sharedInstall.domain)\(json["waterMark"].stringValue)"
-                                print("水印：\(imageUrl)")
-                                url = URL(string: imageUrl.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)
-                                imageView.sd_setImage(with: url, placeholderImage: UIImage(named: "transport"))
-                            }
-                        }
                     }else{
                         lblName.text = "添加照片"
                         lblCurrentPage.text = "\(row * 2 + bright + 1)/\(row * 2 + bright + 1)"

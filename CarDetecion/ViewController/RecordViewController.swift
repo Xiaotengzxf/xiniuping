@@ -80,6 +80,7 @@ class RecordViewController: UIViewController , DZNEmptyDataSetDelegate , DZNEmpt
     }
     
     @IBAction func chooseStatus(_ sender: Any) {
+        searchBar.resignFirstResponder()
         modalPopView(type: .right)
     }
     
@@ -96,6 +97,7 @@ class RecordViewController: UIViewController , DZNEmptyDataSetDelegate , DZNEmpt
     }
     
     @IBAction func refresh(_ sender: Any) {
+        searchBar.resignFirstResponder()
         switch statusIndexButton.titleLabel!.text!.trimmingCharacters(in: .whitespacesAndNewlines) {
         case arrTitle[0]:
             data.removeAll()
@@ -180,6 +182,7 @@ class RecordViewController: UIViewController , DZNEmptyDataSetDelegate , DZNEmpt
         if data.count == 0 && data2.count == 0 {
             nShowEmpty = 1
         }
+        searchBar.resignFirstResponder()
         self.tableView0.reloadData()
     }
     
@@ -200,6 +203,7 @@ class RecordViewController: UIViewController , DZNEmptyDataSetDelegate , DZNEmpt
                 print(error!.localizedDescription)
                 if self!.curPage2 == 1 {
                     self?.nShowEmpty = 3
+                    self?.searchBar.resignFirstResponder()
                     self?.tableView0.reloadData()
                 }
             }else{
@@ -226,6 +230,7 @@ class RecordViewController: UIViewController , DZNEmptyDataSetDelegate , DZNEmpt
                         self?.nShowEmpty = 1
                     }
                 }
+                self?.searchBar.resignFirstResponder()
                 self?.tableView0.reloadData()
             }
         }
@@ -283,28 +288,10 @@ class RecordViewController: UIViewController , DZNEmptyDataSetDelegate , DZNEmpt
             }
             
             if let imageView = cell.contentView.viewWithTag(20) as? UIImageView {
-                if strOrderNo.count > 0 {
-                    if let unfinished = json["unfinished"].string, unfinished == "1" {
-                        imageView.image = UIImage(named: "icon_unfinished")
-                    } else {
-                        imageView.image = UIImage(named: "icon_refresh")
-                    }
-                    
-                }else{
-                    imageView.image = UIImage(named: "icon_unfinished")
-                }
+                imageView.image = UIImage(named: "icon_reject2")
             }
             if let label = cell.contentView.viewWithTag(21) as? UILabel {
-                if strOrderNo.count > 0 {
-                    if let unfinished = json["unfinished"].string, unfinished == "1" {
-                        label.text = "未完成"
-                    } else {
-                        label.text = ""
-                    }
-                    
-                }else{
-                    label.text = "未完成"
-                }
+                label.text = ""
             }
         } else {
             cell.tag = indexPath.row
@@ -341,6 +328,7 @@ class RecordViewController: UIViewController , DZNEmptyDataSetDelegate , DZNEmpt
  
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        searchBar.resignFirstResponder()
         if indexPath.row >= data.count {
             if let controller = self.storyboard?.instantiateViewController(withIdentifier: "detectionnew") as? DetectionNewViewController {
                 controller.source = 1
@@ -447,6 +435,7 @@ class RecordViewController: UIViewController , DZNEmptyDataSetDelegate , DZNEmpt
             if self!.data.count == 0 {
                 self!.nShowEmpty = 1
             }
+            self?.searchBar.resignFirstResponder()
             self?.tableView0.reloadData()
             var orders = UserDefaults.standard.object(forKey: "orders") as! [[String : String]]
             var orderkeys = UserDefaults.standard.object(forKey: "orderKeys") as! [String]
@@ -459,6 +448,7 @@ class RecordViewController: UIViewController , DZNEmptyDataSetDelegate , DZNEmpt
         alert.addAction(UIAlertAction(title: "置顶", style: .default, handler: {[weak self] (action) in
             let json = self?.data.remove(at: tag)
             self?.data.insert(json!, at: 0)
+            self?.searchBar.resignFirstResponder()
             self?.tableView0.reloadData()
             var orders = UserDefaults.standard.object(forKey: "orders") as! [[String : String]]
             var orderKeys = UserDefaults.standard.object(forKey: "orderKeys") as! [String]
@@ -548,5 +538,12 @@ extension RecordViewController: DidSelectPopViewCellDelegate {
         popVc?.dismiss(animated: true, completion: {
 
         })
+    }
+}
+
+
+extension RecordViewController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
     }
 }

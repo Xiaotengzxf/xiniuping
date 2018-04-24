@@ -393,28 +393,13 @@ extension CameraViewController {
      */
     func configLibraryEdgeButtonConstraint(_ statusBarOrientation : UIInterfaceOrientation) {
 
-        let attributeOne : NSLayoutAttribute
-        
-        switch statusBarOrientation {
-        case .portrait:
-            attributeOne = .top
-            break
-        case .landscapeRight:
-            attributeOne = .centerX
-            break
-        case .landscapeLeft:
-            attributeOne = .right
-            break
-        default:
-            attributeOne = .bottom
-            break
-        }
+        let attributeOne : NSLayoutAttribute = .right
         
         libraryButtonEdgeOneConstraint = NSLayoutConstraint(
             item: libraryButton,
             attribute: attributeOne,
             relatedBy: .equal,
-            toItem: rightView,
+            toItem: leftView,
             attribute: attributeOne,
             multiplier: 1.0,
             constant: 0)
@@ -429,12 +414,12 @@ extension CameraViewController {
     func configLibraryGravityButtonConstraint(_ portrait: Bool) {
         libraryButtonGravityConstraint = NSLayoutConstraint(
             item: libraryButton,
-            attribute: .top,
+            attribute: .centerY,
             relatedBy: .equal,
-            toItem: view,
-            attribute: .top,
+            toItem: leftView,
+            attribute: .centerY,
             multiplier: 1.0,
-            constant: 20)
+            constant: 0)
         view.addConstraint(libraryButtonGravityConstraint!)
     }
     
@@ -453,7 +438,7 @@ extension CameraViewController {
             item: flashButton,
             attribute: attribute,
             relatedBy: .equal,
-            toItem: leftView,
+            toItem: rightView,
             attribute: attribute,
             multiplier: 1.0,
             constant:  0)
@@ -470,16 +455,16 @@ extension CameraViewController {
     func configFlashGravityButtonConstraint(_ statusBarOrientation: UIInterfaceOrientation) {
         view.autoRemoveConstraint(flashButtonGravityConstraint)
         
-        let attribute : NSLayoutAttribute = .bottom
+        let attribute : NSLayoutAttribute = .top
         
         flashButtonGravityConstraint = NSLayoutConstraint(
             item: flashButton,
             attribute: attribute,
             relatedBy: .equal,
-            toItem: leftView,
+            toItem: rightView,
             attribute: attribute,
             multiplier: 1.0,
-            constant: -3)
+            constant: 20)
         view.addConstraint(flashButtonGravityConstraint!)
     }
     

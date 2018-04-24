@@ -16,6 +16,7 @@ class ChatViewController: UIViewController, UIWebViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = "客服"
         if let username = UserDefaults.standard.object(forKey: "username") as? String {
             let url = URL(string: NetworkManager.sharedInstall.domain + "/view/external/chat/chatlist.php?clientUser=moth\(username)")
             let request = URLRequest(url: url!)
@@ -33,7 +34,7 @@ class ChatViewController: UIViewController, UIWebViewDelegate {
     }
     
     func webViewDidFinishLoad(_ webView: UIWebView) {
-        title = webView.stringByEvaluatingJavaScript(from: "document.title")
+        //title = webView.stringByEvaluatingJavaScript(from: "document.title")
     }
 
     /*

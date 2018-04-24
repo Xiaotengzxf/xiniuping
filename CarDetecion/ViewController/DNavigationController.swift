@@ -12,8 +12,6 @@ class DNavigationController: UINavigationController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-//        UIDevice.current.beginGeneratingDeviceOrientationNotifications()
-//        NotificationCenter.default.addObserver(self, selector: #selector(DNavigationController.deviceOrientationDidChange), name: NSNotification.Name.UIDeviceOrientationDidChange, object: self)
     }
 
     override func didReceiveMemoryWarning() {
@@ -37,17 +35,4 @@ class DNavigationController: UINavigationController {
             })
         }
     }
-    /*CGFloat width = [UIScreen mainScreen].bounds.size.width;
-     CGFloat height = [UIScreen mainScreen].bounds.size.height;
-     if (landscapeRight) {
-     [UIView animateWithDuration:0.2f animations:^{
-     self.view.transform = CGAffineTransformMakeRotation(M_PI_2);
-     self.view.bounds = CGRectMake(0, 0, width, height);
-     }];
-     } else {
-     [UIView animateWithDuration:0.2f animations:^{
-     self.view.transform = CGAffineTransformMakeRotation(0);
-     self.view.bounds = CGRectMake(0, 0, width, height);
-     }];
-     }*/
 }

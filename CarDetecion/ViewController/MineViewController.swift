@@ -43,27 +43,19 @@ class MineViewController: UIViewController {
             let tag = recognizer.view?.tag ?? 0
             switch tag {
             case 1:
-                if let controller = self.storyboard?.instantiateViewController(withIdentifier: "default") as? DefaultViewController {
-                    controller.title = "关于"
+                if let controller = self.storyboard?.instantiateViewController(withIdentifier: "aboutus") as? AboutUsViewController {
+                    controller.title = "关于我们"
                     controller.hidesBottomBarWhenPushed = true
-                    controller.flag = 1
                     self.navigationController?.pushViewController(controller, animated: true)
                 }
                 break
             case 2:
-                let pageDetail = "external/pageelement/pageDetail.html"
-                NetworkManager.sharedInstall.request(url: pageDetail, params: ["id" : 4, "clientName" : "iOS"]) {[weak self](json, error) in
-                    if error != nil {
-                        print(error!.localizedDescription)
-                    }else{
-                        if let data = json {
-                            if let controller = self?.storyboard?.instantiateViewController(withIdentifier: "newsdetail") as? NewsDetailController {
-                                controller.title = "拒评规则"
-                                controller.json = data
-                                self?.navigationController?.pushViewController(controller, animated: true)
-                            }
-                        }
-                    }
+                let strUrl = "\(NetworkManager.sharedInstall.domain)/external/source/refuserules/1.json"
+                if let controller = self.storyboard?.instantiateViewController(withIdentifier: "detectionweb") as? DetectionWebViewController {
+                    controller.title = "拒评规则"
+                    controller.strUrl = strUrl
+                    controller.hidesBottomBarWhenPushed = true
+                    self.navigationController?.pushViewController(controller, animated: true)
                 }
                 break
             case 3:
@@ -74,14 +66,11 @@ class MineViewController: UIViewController {
                 }
                 break
             case 4:
-                if let username = UserDefaults.standard.object(forKey: "username") as? String {
-                    let strUrl = "\(NetworkManager.sharedInstall.domain)/external/app/getAppPageElement.html?id=3&userName=\(username)&clientName=iOS"
-                    if let controller = self.storyboard?.instantiateViewController(withIdentifier: "detectionweb") as? DetectionWebViewController {
-                        controller.title = "拍照手册"
-                        controller.strUrl = strUrl
-                        controller.hidesBottomBarWhenPushed = true
-                        self.navigationController?.pushViewController(controller, animated: true)
-                    }
+                if let controller = self.storyboard?.instantiateViewController(withIdentifier: "detectionweb") as? DetectionWebViewController {
+                    controller.title = "拍照手册"
+                    controller.strUrl = ""
+                    controller.hidesBottomBarWhenPushed = true
+                    self.navigationController?.pushViewController(controller, animated: true)
                 }
                 break
             default:

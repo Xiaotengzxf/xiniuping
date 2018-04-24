@@ -73,6 +73,7 @@ class RecordSuccessViewController: UIViewController , DZNEmptyDataSetDelegate , 
     }
     
     @IBAction func chooseStatus(_ sender: Any) {
+        searchBar.resignFirstResponder()
         modalPopView(type: .right)
     }
     
@@ -88,6 +89,7 @@ class RecordSuccessViewController: UIViewController , DZNEmptyDataSetDelegate , 
     }
     
     @IBAction func refresh(_ sender: Any) {
+        searchBar.resignFirstResponder()
         tableView1.mj_header.beginRefreshing()
     }
     
@@ -204,6 +206,7 @@ class RecordSuccessViewController: UIViewController , DZNEmptyDataSetDelegate , 
  
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        searchBar.resignFirstResponder()
         let status = "\(data1[indexPath.row]["status"].int ?? 0)"
         if status3.contains(status) {
             if let controller = self.storyboard?.instantiateViewController(withIdentifier: "recorddetail") as? RecordDetailViewController {
@@ -214,13 +217,7 @@ class RecordSuccessViewController: UIViewController , DZNEmptyDataSetDelegate , 
                 self.navigationController?.pushViewController(controller, animated: true)
             }
         } else {
-            if let controller = self.storyboard?.instantiateViewController(withIdentifier: "recorddetail") as? RecordDetailViewController {
-                controller.json = data1[indexPath.row]
-                controller.statusInfo = statusInfo
-                controller.flag = 1
-                controller.hidesBottomBarWhenPushed = true
-                self.navigationController?.pushViewController(controller, animated: true)
-            }
+            Toast(text: "正在评估，请稍等").show()
         }
     }
 
@@ -287,6 +284,12 @@ extension RecordSuccessViewController: DidSelectPopViewCellDelegate {
         popVc?.dismiss(animated: true, completion: {
             
         })
+    }
+}
+
+extension RecordSuccessViewController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
     }
 }
 

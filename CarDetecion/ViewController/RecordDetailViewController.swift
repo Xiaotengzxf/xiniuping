@@ -12,106 +12,34 @@ import WebKit
 
 class RecordDetailViewController: UIViewController, WKNavigationDelegate {
 
-    @IBOutlet weak var lcSuggestionHieght: NSLayoutConstraint!
-    @IBOutlet weak var lcTop: NSLayoutConstraint!
-    @IBOutlet weak var lblPriceTip: UILabel!
-    @IBOutlet weak var lblBillNo: UILabel!
-    @IBOutlet weak var lblBillStatus: UILabel!
-    @IBOutlet weak var lblPrice: UILabel!
-    @IBOutlet weak var lblTime: UILabel!
-    @IBOutlet weak var lblRemark: UILabel!
-    @IBOutlet weak var vAllSuggestion: UIView!
+    @IBOutlet weak var lblBillNo: UILabel! // 单号
+    @IBOutlet weak var lblBrand: UILabel! // 品牌
+    @IBOutlet weak var lblStrain: UILabel! // 车系
+    @IBOutlet weak var lblCarType: UILabel! // 车型
+    @IBOutlet weak var lblKM: UILabel! // 使用公里数
+    @IBOutlet weak var lblTime: UILabel! // 登记日期
+    @IBOutlet weak var lblPrice: UILabel! // 新车参考价
     @IBOutlet weak var vContent: UIView!
-    @IBOutlet weak var vZuLin: UIView!
-    @IBOutlet weak var lblLeaseTerm: UILabel!
-    @IBOutlet weak var lblLeasePrice: UILabel!
-    @IBOutlet weak var lcPriceTop: NSLayoutConstraint!
-    @IBOutlet weak var lcPriceTipTop: NSLayoutConstraint!
+    @IBOutlet weak var lblPrePrice: UILabel! // 评估价格
+    @IBOutlet weak var lblPreTime: UILabel! // 评估日期
+    
     var json : JSON!
     var statusInfo : [String : String]!
     var flag = 0
-    var webView: WKWebView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        vContent.layer.borderWidth = 0.5
-        vContent.layer.borderColor = UIColor(red: 230/255.0, green: 230/255.0, blue: 230/255.0, alpha: 1).cgColor
-        self.view.backgroundColor = UIColor(red: 240/255.0, green: 240/255.0, blue: 240/255.0, alpha: 1)
-        vContent.backgroundColor = UIColor(red: 240/255.0, green: 240/255.0, blue: 240/255.0, alpha: 1)
         
         lblBillNo.text = json["carBillId"].string
-        lblBillStatus.text = statusInfo["\(json["status"].int ?? 0)"]
-        lblPrice.text = "\(json["evaluatePrice"].int ?? 0)"
+        lblBrand.text = json["carBrandName"].string
+        lblStrain.text = json["carSetName"].string
+        lblCarType.text = json["carTypeName"].string
+        lblKM.text = json["runNum"].string
+        lblTime.text = json["regDate"].string
+        lblPrice.text = format(price: json["newCarPrice"].int ?? 0)
         lblTime.text = json["createTime"].string
-        lblRemark.text = json["mark"].string?.removingPercentEncoding
-        showWebView(htmlString: json["applyAllOpinion"].stringValue)
-        if flag == 1 {
-            lblPrice.isHidden = true
-            lblPriceTip.isHidden = true
-            let leaseTerm = json["leaseTerm"].int ?? 0
-            let residualPrice = json["residualPrice"].int ?? 0
-            if leaseTerm == 0 {
-                vZuLin.isHidden = true
-                lcTop.constant = 5-59-20-10
-            }else{
-                lblLeaseTerm.text = "\(leaseTerm)月"
-                lblLeasePrice.text = "\(residualPrice)元"
-                lcPriceTop.constant = -25
-            }
-        }else{
-            let leaseTerm = json["leaseTerm"].int ?? 0
-            let residualPrice = json["residualPrice"].int ?? 0
-            if leaseTerm == 0 {
-                vZuLin.isHidden = true
-                lcTop.constant = 5-59
-            }else{
-                lblLeaseTerm.text = "\(leaseTerm)月"
-                lblLeasePrice.text = "\(residualPrice)元"
-            }
-        }
-        
-        if let userinfo = UserDefaults.standard.object(forKey: "userinfo") as? [String : Any] {
-            let userSuperCompany = userinfo["userSuperCompany"] as? Int ?? 0
-            let userCompany = userinfo["userCompany"] as? Int ?? 0
-            if userSuperCompany == 803 || userCompany == 803 { // 日产金融机器子公司
-                lcPriceTipTop.constant = 0
-                lblPriceTip.isHidden = true
-                lblPrice.isHidden = true
-            }
-        }
-        
-    }
-    
-    func showWebView(htmlString : String) {
-        if webView == nil {
-            webView = WKWebView()
-            webView.navigationDelegate = self
-            webView.scrollView.isScrollEnabled = false
-            webView.translatesAutoresizingMaskIntoConstraints = false
-            vAllSuggestion.addSubview(webView!)
-            vAllSuggestion.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-10-[webView]-10-|", options: .directionLeadingToTrailing, metrics: nil, views: ["webView" : webView]))
-            vAllSuggestion.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-10-[webView]-10-|", options: .directionLeadingToTrailing, metrics: nil, views: ["webView" : webView]))
-            webView.loadHTMLString(htmlStringToHtml5(htmlString: htmlString), baseURL: nil)
-        }
-    }
-    
-    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        
-        let js = "var script = document.createElement('script');script.type = 'text/javascript';script.text = \"function ResizeImages() { var myimg,oldwidth;for(i=0;i <document.images.length;i++){myimg = document.images[i];myimg.setAttribute('style','max-width:\(UIScreen.main.bounds.size.width - 60);height:auto')}}\";document.getElementsByTagName('head')[0].appendChild(script);"
-        webView.evaluateJavaScript(js) { (height, error) in
-            
-        }
-        
-        webView.evaluateJavaScript("ResizeImages();") { (height, error) in
-            
-        }
-        
-        webView.evaluateJavaScript("document.body.offsetHeight;") {[weak self] (height, error) in
-            if let fHeight = height as? CGFloat {
-                self?.lcSuggestionHieght.constant = fHeight + 40
-            }
-        }
+        lblPrePrice.text = format(price: json["evaluatePrice"].int ?? 0)
+        lblPreTime.text = "评估日期：\(json["evaluateDate"].string ?? "")"
         
     }
 
@@ -120,10 +48,11 @@ class RecordDetailViewController: UIViewController, WKNavigationDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-    func htmlStringToHtml5(htmlString : String) -> String {
-        return "<html><head><meta name=\"viewport\" content=\"width=device-width,initial-scale=1.0,user-scalable=no\"></head><body>\(htmlString.removingPercentEncoding ?? "")</body></html>"
+    private func format(price: Int) -> String {
+        let format = NumberFormatter()
+        format.numberStyle = .currency
+        return  format.string(from: NSNumber(value: price)) ?? ""
     }
-    
 
     /*
     // MARK: - Navigation
@@ -135,4 +64,54 @@ class RecordDetailViewController: UIViewController, WKNavigationDelegate {
     }
     */
 
+    /* {
+     applyAllOpinion = "2017-05-24 10:12:28 \U9ad8\U8bc4-\U6731\U9e4f[\U9ad8\U8bc4-\U901a\U8fc7]: <br /><br />2017-05-24 10:10:20 \U4e2d\U8bc4-\U5f20\U78ca[\U4e2d\U8bc4-\U901a\U8fc7]: <br /><br />2017-05-24 10:07:10 \U521d\U8bc4-\U827e\U5f6a[\U521d\U8bc4-\U901a\U8fc7]: <br /><br />2017-05-24 09:43:56 Moth[\U91c7\U96c6]: <br /><br />null";
+     applyCarBillId = "<null>";
+     applyResult = "<null>";
+     applyResultName = "<null>";
+     carBillId = NS201705240002;
+     carBrandId = "<null>";
+     carBrandName = "<null>";
+     carDisplace = "<null>";
+     carFrameNum = "<null>";
+     carNo = "<null>";
+     carSetId = "<null>";
+     carSetName = "<null>";
+     carTypeId = "<null>";
+     carTypeName = "<null>";
+     carUserName = "<null>";
+     companyId = "<null>";
+     companyName = "<null>";
+     consumeTime = "<null>";
+     createTime = "2017-05-24 09:43:40";
+     createUser = "<null>";
+     createUserName = "<null>";
+     csTime = "<null>";
+     curApplyOpinion = "<null>";
+     curOperator = "<null>";
+     curOperatorName = "<null>";
+     evaluateDate = "<null>";
+     evaluatePrice = 193833;
+     imageNum = "<null>";
+     imageThumbPath = "/source/upload/users/9/2017/05/24/moth/NS201705240002/thumb_cut_4020cc43eb834ff98080762180bb2d3f.jpeg";
+     leaseTerm = 0;
+     mark = "";
+     modifyTime = "2017-05-24 10:12:28";
+     modifyUser = "<null>";
+     nextUser = "<null>";
+     nextUserName = "<null>";
+     preSalePrice = 90000;
+     productionDate = "<null>";
+     province = "<null>";
+     provinceName = "<null>";
+     regDate = "<null>";
+     residualPrice = 0;
+     runNum = "<null>";
+     status = 54;
+     statusName = "<null>";
+     webchat = "<null>";
+     zsTime = "<null>";
+     }
+*/
+    
 }
